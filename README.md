@@ -34,7 +34,7 @@ python3系 で以下をインストールして下さい
 3D骨格情報は、[Human3.6M](http://vision.imar.ro/human3.6m/description.php) に基づいて作成されます。 
 以下より圧縮ファイルをダウンロードして、解凍後、`data`以下に配置して下さい。
 
-[学習データzip (GoogleDrive)]() 
+[学習データzip (GoogleDrive)](https://drive.google.com/file/d/1v7ccpms3ZR8ExWWwVfcSpjMsGscDYH7_/view?usp=sharing) 
 
 ## 実行方法
 
