@@ -20,6 +20,11 @@ order = [15, 12, 25, 26, 27, 17, 18, 19, 1, 2, 3, 6, 7, 8]
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
+level = {0:logging.ERROR,
+            1:logging.WARNING,
+            2:logging.INFO,
+            3:logging.DEBUG}
+
 def show_anim_curves(anim_dict, _plt):
     val = np.array(list(anim_dict.values()))
     for o in range(0,36,2):
@@ -302,13 +307,14 @@ def main(_):
             png_lib.append(imageio.imread(pngName))
             before_pose = poses3d
 
-            for azim in [0, 45, 90, 135, 180, 225, 270, 315, 360]:
-                ax2 = plt.subplot(gs1[subplot_idx - 1], projection='3d')
-                ax2.view_init(18, azim)
-                viz.show3Dpose(p3d, ax2, lcolor="#FF0000", rcolor="#0000FF", add_labels=True)
+            if level[FLAGS.verbose] == logging.DEBUG:
+                for azim in [0, 45, 90, 135, 180, 225, 270, 315, 360]:
+                    ax2 = plt.subplot(gs1[subplot_idx - 1], projection='3d')
+                    ax2.view_init(18, azim)
+                    viz.show3Dpose(p3d, ax2, lcolor="#FF0000", rcolor="#0000FF", add_labels=True)
 
-                pngName2 = subdir + '/tmp_{0:012d}_{1:03d}.png'.format(frame, azim)
-                plt.savefig(pngName2)
+                    pngName2 = subdir + '/tmp_{0:012d}_{1:03d}.png'.format(frame, azim)
+                    plt.savefig(pngName2)
             
             #関節位置情報の出力
             write_pos_data(poses3d, ax, posf)
@@ -370,11 +376,6 @@ def write_pos_data(channels, ax, posf):
 if __name__ == "__main__":
 
     openpose_output_dir = FLAGS.openpose
-
-    level = {0:logging.ERROR,
-             1:logging.WARNING,
-             2:logging.INFO,
-             3:logging.DEBUG}
 
     logger.setLevel(level[FLAGS.verbose])
 
