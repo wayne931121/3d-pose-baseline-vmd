@@ -22,17 +22,17 @@ python3系 で以下をインストールして下さい
 * [h5py](http://www.h5py.org/)
 * [tensorflow](https://www.tensorflow.org/) 1.0 or later
 
-### 学習データ
-
-オリジナルの学習データは、Windowsの260文字パス制限にひっかかるため、パスを簡略化して再生成しました。
-以下より圧縮ファイルをダウンロードして、解凍後、`experiments`以下に配置して下さい。
-
-[H36Mデータzip (Dropbox)](https://www.dropbox.com/s/e35qv3n6zlkouki/h36m.zip) 
-
 ### H36Mデータ
 
 3D骨格情報は、[Human3.6M](http://vision.imar.ro/human3.6m/description.php) に基づいて作成されます。 
 以下より圧縮ファイルをダウンロードして、解凍後、`data`以下に配置して下さい。
+
+[H36Mデータzip (Dropbox)](https://www.dropbox.com/s/e35qv3n6zlkouki/h36m.zip) 
+
+### 学習データ
+
+オリジナルの学習データは、Windowsの260文字パス制限にひっかかるため、パスを簡略化して再生成しました。
+以下より圧縮ファイルをダウンロードして、解凍後、`experiments`以下に配置して下さい。
 
 [学習データzip (GoogleDrive)](https://drive.google.com/file/d/1v7ccpms3ZR8ExWWwVfcSpjMsGscDYH7_/view?usp=sharing) 
 
