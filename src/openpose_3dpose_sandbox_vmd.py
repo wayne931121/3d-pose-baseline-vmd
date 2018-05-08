@@ -186,7 +186,7 @@ def main(_):
     logger.debug("FLAGS.person_idx={0}".format(FLAGS.person_idx))
 
     # 日付+indexディレクトリ作成
-    subdir = 'result/{0}_{1}_idx{2:02d}'.format(os.path.basename(openpose_output_dir), now_str, FLAGS.person_idx)
+    subdir = '{0}/3d_{1}_idx{2:02d}'.format(os.path.dirname(openpose_output_dir), now_str, FLAGS.person_idx)
     os.makedirs(subdir)
 
     #関節位置情報ファイル
@@ -213,6 +213,7 @@ def main(_):
     train_set_3d, test_set_3d, data_mean_3d, data_std_3d, dim_to_ignore_3d, dim_to_use_3d, train_root_positions, test_root_positions = data_utils.read_3d_data(
         actions, FLAGS.data_dir, FLAGS.camera_frame, rcams, FLAGS.predict_14)
 
+    before_pose = None
     device_count = {"GPU": 1}
     png_lib = []
     with tf.Session(config=tf.ConfigProto(
@@ -292,9 +293,9 @@ def main(_):
 
             # Plot 3d predictions
             ax = plt.subplot(gs1[subplot_idx - 1], projection='3d')
-            ax.view_init(18, 270)    
+            ax.view_init(18, 280)    
             logger.debug(np.min(poses3d))
-            if np.min(poses3d) < -1000:
+            if np.min(poses3d) < -1000 and before_pose is not None:
                 poses3d = before_pose
 
             p3d = poses3d
@@ -302,11 +303,13 @@ def main(_):
             # logger.debug(poses3d)
             viz.show3Dpose(p3d, ax, lcolor="#9b59b6", rcolor="#2ecc71")
 
+            # 各フレームの単一視点からのは常に出力
             pngName = subdir + '/tmp_{0:012d}.png'.format(frame)
             plt.savefig(pngName)
-            png_lib.append(imageio.imread(pngName))
+            png_lib.append(imageio.imread(pngName))            
             before_pose = poses3d
 
+            # 各フレームの角度別出力はデバッグ時のみ
             if level[FLAGS.verbose] == logging.DEBUG:
                 for azim in [0, 45, 90, 135, 180, 225, 270, 315, 360]:
                     ax2 = plt.subplot(gs1[subplot_idx - 1], projection='3d')
