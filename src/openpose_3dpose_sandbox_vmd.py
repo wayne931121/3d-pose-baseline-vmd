@@ -13,6 +13,7 @@ import cv2
 import imageio
 import logging
 import datetime
+from collections import Counter
 FLAGS = tf.app.flags.FLAGS
 
 order = [15, 12, 25, 26, 27, 17, 18, 19, 1, 2, 3, 6, 7, 8]
@@ -56,14 +57,44 @@ def read_openpose_json(now_str, idx, subdir, smooth=True, *args):
         _file = os.path.join(openpose_output_dir, file_name)
         if not os.path.isfile(_file): raise Exception("No file found!!, {0}".format(_file))
         data = json.load(open(_file))
-        #take first person
 
-        # 複数人数の読み取りの為、Indexに変更
-        if len(data["people"]) > idx:
-            _data = data["people"][idx]["pose_keypoints_2d"]
+        # 12桁の数字文字列から、フレームINDEX取得
+        frame_indx = re.findall("(\d{12})", file_name)
+        
+        if int(frame_indx[0]) <= 0:
+            # 最初のフレームはそのまま登録するため、INDEXをそのまま指定
+            target_idx = idx
         else:
-            #なかったらスキップ
-            continue
+
+            # 前フレームと一番近い人物データを採用する
+            past_xy = cache[int(frame_indx[0]) - 1]
+
+            # 同一フレーム内の全人物データを一旦保持する
+            _tmp_points = [[0 for i in range(len(data["people"]))] for j in range(36)]
+            for _data_idx in range(len(data["people"])):
+                _tmp_data = data["people"][_data_idx]["pose_keypoints_2d"]
+
+                n = 0
+                for o in range(0,len(_tmp_data),3):
+                    # logger.debug("o: {0}".format(o))
+                    # logger.debug("len(_tmp_points): {0}".format(len(_tmp_points)))
+                    # logger.debug("len(_tmp_points[o]): {0}".format(len(_tmp_points[n])))
+                    _tmp_points[n][_data_idx] = _tmp_data[o]
+                    n += 1
+                    _tmp_points[n][_data_idx] = _tmp_data[o+1]
+                    n += 1                        
+
+            # 各INDEXの前回と最も近い値を持つINDEXを取得
+            nearest_idx_list = []
+            for n, plist in enumerate(_tmp_points):
+                nearest_idx_list.append(get_nearest_idx(plist, past_xy[n]))
+
+            most_common_idx = Counter(nearest_idx_list).most_common(1)
+            
+            # 最も多くヒットしたINDEXを処理対象とする
+            target_idx = most_common_idx[0][0]
+
+        _data = data["people"][target_idx]["pose_keypoints_2d"]
         
         xy = []
         #ignore confidence score
@@ -71,8 +102,6 @@ def read_openpose_json(now_str, idx, subdir, smooth=True, *args):
             xy.append(_data[o])
             xy.append(_data[o+1])
 
-        # get frame index from openpose 12 padding
-        frame_indx = re.findall("(\d{12})", file_name)
         logger.debug("found {0} for frame {1}".format(xy, str(int(frame_indx[0]))))
         #add xy to frame
         cache[int(frame_indx[0])] = xy
@@ -179,6 +208,19 @@ def read_openpose_json(now_str, idx, subdir, smooth=True, *args):
     # return frames cache incl. smooth 18 joints (x,y)
     return smoothed
 
+def get_nearest_idx(list, num):
+    """
+    概要: リストからある値に最も近い値のINDEXを返却する関数
+    @param list: データ配列
+    @param num: 対象値
+    @return 対象値に最も近い値のINDEX
+    """
+
+    # リスト要素と対象値の差分を計算し最小値のインデックスを取得
+    idx = np.abs(np.asarray(list) - num).argmin()
+    return idx
+
+
 def main(_):
     # 出力用日付
     now_str = "{0:%Y%m%d_%H%M%S}".format(datetime.datetime.now())
@@ -192,6 +234,9 @@ def main(_):
     #関節位置情報ファイル
     posf = open(subdir +'/pos.txt', 'w')
 
+    #正規化済みOpenpose位置情報ファイル
+    smoothedf = open(subdir +'/smoothed.txt', 'w')
+
     idx = FLAGS.person_idx - 1
     smoothed = read_openpose_json(now_str, idx, subdir)
     logger.info("reading and smoothing done. start feeding 3d-pose-baseline")
@@ -200,7 +245,7 @@ def main(_):
     smooth_curves_plot = show_anim_curves(smoothed, plt)
     pngName = subdir + '/smooth_plot.png'
     smooth_curves_plot.savefig(pngName)
-
+    
     enc_in = np.zeros((1, 64))
     enc_in[0] = [0 for i in range(64)]
 
@@ -224,6 +269,7 @@ def main(_):
         model = create_model(sess, actions, batch_size)
         for n, (frame, xy) in enumerate(smoothed.items()):
             logger.info("calc idx {0}, frame {1}".format(idx, frame))
+
             # map list into np array  
             joints_array = np.zeros((1, 36))
             joints_array[0] = [0 for i in range(36)]
@@ -231,6 +277,10 @@ def main(_):
                 #feed array with xy array
                 joints_array[0][o] = xy[o]
             _data = joints_array[0]
+
+            smoothedf.write(' '.join(map(str, _data)))
+            smoothedf.write("\n")
+
             # mapping all body parts or 3d-pose-baseline format
             for i in range(len(order)):
                 for j in range(2):
@@ -301,16 +351,17 @@ def main(_):
             p3d = poses3d
             # logger.debug("poses3d")
             # logger.debug(poses3d)
-            viz.show3Dpose(p3d, ax, lcolor="#9b59b6", rcolor="#2ecc71")
-
-            # 各フレームの単一視点からのは常に出力
-            pngName = subdir + '/tmp_{0:012d}.png'.format(frame)
-            plt.savefig(pngName)
-            png_lib.append(imageio.imread(pngName))            
-            before_pose = poses3d
 
             # 各フレームの角度別出力はデバッグ時のみ
             if level[FLAGS.verbose] == logging.DEBUG:
+                viz.show3Dpose(p3d, ax, lcolor="#9b59b6", rcolor="#2ecc71")
+
+                # 各フレームの単一視点からのもデバッグ時のみ
+                pngName = subdir + '/tmp_{0:012d}.png'.format(frame)
+                plt.savefig(pngName)
+                png_lib.append(imageio.imread(pngName))            
+                before_pose = poses3d
+
                 for azim in [0, 45, 90, 135, 180, 225, 270, 315, 360]:
                     ax2 = plt.subplot(gs1[subplot_idx - 1], projection='3d')
                     ax2.view_init(18, azim)
@@ -324,8 +375,11 @@ def main(_):
 
         posf.close()
 
-        logger.info("creating Gif {0}/movie_smoothing.gif, please Wait!".format(subdir))
-        imageio.mimsave('{0}/movie_smoothing.gif'.format(subdir), png_lib, fps=FLAGS.gif_fps)
+        # デバッグ時は、アニメーションGIF生成
+        if level[FLAGS.verbose] == logging.DEBUG:
+            logger.info("creating Gif {0}/movie_smoothing.gif, please Wait!".format(subdir))
+            imageio.mimsave('{0}/movie_smoothing.gif'.format(subdir), png_lib, fps=FLAGS.gif_fps)
+
         logger.info("Done!".format(pngName))
 
 def write_pos_data(channels, ax, posf):

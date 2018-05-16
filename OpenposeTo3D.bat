@@ -34,8 +34,10 @@ rem ---  詳細ログ有無
 echo --------------
 echo 詳細なログを出すか、yes か no を入力して下さい。
 echo 何も入力せず、ENTERを押下した場合、通常ログのみ出力します。
-echo 詳細ログの場合、各フレームごとのデバッグ画像が出力されます。（その分時間がかかります）
+echo 詳細ログの場合、モーションのアニメーションGIFと各フレームごとのデバッグ画像が出力されます。
+echo （その分時間がかかります）
 set VERBOSE=2
+set IS_DEBUG=no
 set /P IS_DEBUG="詳細ログ[yes/no]: "
 
 IF /I "%IS_DEBUG%" EQU "yes" (
