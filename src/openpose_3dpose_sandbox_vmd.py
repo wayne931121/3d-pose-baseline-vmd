@@ -186,7 +186,7 @@ def main(_):
     logger.debug("FLAGS.person_idx={0}".format(FLAGS.person_idx))
 
     # 日付+indexディレクトリ作成
-    subdir = '{0}/3d_{1}_idx{2:02d}'.format(os.path.dirname(openpose_output_dir), now_str, FLAGS.person_idx)
+    subdir = '{0}/{1}_3d_{2}_idx{3:02d}'.format(os.path.dirname(openpose_output_dir), os.path.basename(openpose_output_dir), now_str, FLAGS.person_idx)
     os.makedirs(subdir)
 
     #関節位置情報ファイル
