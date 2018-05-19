@@ -386,15 +386,17 @@ def main(_):
             # logger.debug("poses3d")
             # logger.debug(poses3d)
 
-            # 各フレームの角度別出力はデバッグ時のみ
-            if level[FLAGS.verbose] == logging.DEBUG:
+            if level[FLAGS.verbose] == logging.INFO:
                 viz.show3Dpose(p3d, ax, lcolor="#9b59b6", rcolor="#2ecc71")
 
-                # 各フレームの単一視点からのもデバッグ時のみ
+                # 各フレームの単一視点からのはINFO時のみ
                 pngName = subdir + '/tmp_{0:012d}.png'.format(frame)
                 plt.savefig(pngName)
                 png_lib.append(imageio.imread(pngName))            
                 before_pose = poses3d
+
+            # 各フレームの角度別出力はデバッグ時のみ
+            if level[FLAGS.verbose] == logging.DEBUG:
 
                 for azim in [0, 45, 90, 135, 180, 225, 270, 315, 360]:
                     ax2 = plt.subplot(gs1[subplot_idx - 1], projection='3d')
@@ -409,8 +411,8 @@ def main(_):
 
         posf.close()
 
-        # デバッグ時は、アニメーションGIF生成
-        if level[FLAGS.verbose] == logging.DEBUG:
+        # INFO時は、アニメーションGIF生成
+        if level[FLAGS.verbose] == logging.INFO:
             logger.info("creating Gif {0}/movie_smoothing.gif, please Wait!".format(subdir))
             imageio.mimsave('{0}/movie_smoothing.gif'.format(subdir), png_lib, fps=FLAGS.gif_fps)
 

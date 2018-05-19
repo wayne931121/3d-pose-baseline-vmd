@@ -45,11 +45,13 @@ python3系 で以下をインストールして下さい
 1. `出力対象人物INDEX` が聞かれるので、Openposeで読み取った人物のうち、何番目の人物を出力したいか、1始まりで指定する。
 	- 未指定の場合、デフォルトで1が設定される(１人目の解析)
 1. `詳細なログを出すか` 聞かれるので、出す場合、`yes` を入力する
-    - 未指定 もしくは `no` の場合、通常ログ
-    - 詳細ログの場合、ログメッセージの他、デバッグ用画像も出力される
+    - 未指定 もしくは `no` の場合、通常ログ（各パラメータファイルと3D化アニメーションGIF）
+    - `warn` の場合、3D化アニメーションGIFも生成しない（その分早い）
+    - `yes`の場合、詳細ログを出力し、ログメッセージの他、デバッグ用画像も出力される（その分遅い）
 1. 処理開始
 1. 処理が終了すると、`解析結果JSONディレクトリパス` と同階層に `3d_{実行日時}_{人物INDEX}` のディレクトリが作成され、以下の結果が出力される。
-    - pos.txt … 全フレームの関節データ([VMD-3d-pose-baseline-multi](https://github.com/miu200521358/VMD-3d-pose-baseline-multi) に読み込ませるファイル)
+    - pos.txt … 全フレームの関節データ([VMD-3d-pose-baseline-multi](https://github.com/miu200521358/VMD-3d-pose-baseline-multi) に必要)
+    - smoothed.txt … 全フレームの2D位置データ([VMD-3d-pose-baseline-multi](https://github.com/miu200521358/VMD-3d-pose-baseline-multi) に必要)
     - movie_smoothing.gif … フレームごとの姿勢を結合したアニメーションGIF
     - dirty_plot.png　… 移動量のグラフ
     - smooth_plot.png … 移動量をなめらかにしたグラフ
