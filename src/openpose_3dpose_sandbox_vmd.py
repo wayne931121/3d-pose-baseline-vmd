@@ -270,6 +270,9 @@ def main(_):
     subdir = '{0}/{1}_3d_{2}_idx{3:02d}'.format(os.path.dirname(openpose_output_dir), os.path.basename(openpose_output_dir), now_str, FLAGS.person_idx)
     os.makedirs(subdir)
 
+    frame3d_dir = "{0}/frame3d".format(subdir)
+    os.makedirs(frame3d_dir)
+
     #関節位置情報ファイル
     posf = open(subdir +'/pos.txt', 'w')
 
@@ -395,7 +398,7 @@ def main(_):
                 viz.show3Dpose(p3d, ax, lcolor="#9b59b6", rcolor="#2ecc71")
 
                 # 各フレームの単一視点からのはINFO時のみ
-                pngName = subdir + '/tmp_{0:012d}.png'.format(frame)
+                pngName = frame3d_dir + '/tmp_{0:012d}.png'.format(frame)
                 plt.savefig(pngName)
                 png_lib.append(imageio.imread(pngName))            
                 before_pose = poses3d
@@ -408,7 +411,7 @@ def main(_):
                     ax2.view_init(18, azim)
                     viz.show3Dpose(p3d, ax2, lcolor="#FF0000", rcolor="#0000FF", add_labels=True)
 
-                    pngName2 = subdir + '/tmp_{0:012d}_{1:03d}.png'.format(frame, azim)
+                    pngName2 = frame3d_dir + '/tmp_{0:012d}_{1:03d}.png'.format(frame, azim)
                     plt.savefig(pngName2)
             
             #関節位置情報の出力
