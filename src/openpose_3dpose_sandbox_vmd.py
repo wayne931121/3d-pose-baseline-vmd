@@ -61,8 +61,16 @@ def main(_):
     #正規化済みOpenpose位置情報ファイル
     smoothedf = open(subdir +'/smoothed.txt', 'w')
 
+    #開始フレームインデックスファイル
+    start_frame_f = open(subdir +'/start_frame.txt', 'w')
+
     idx = FLAGS.person_idx - 1
-    smoothed = openpose_utils.read_openpose_json(openpose_output_dir, idx, level[FLAGS.verbose] == 3)
+    start_frame_index, smoothed = openpose_utils.read_openpose_json(openpose_output_dir, idx, level[FLAGS.verbose] == 3)
+
+    # 開始フレームインデックスを保存
+    start_frame_f.write(str(start_frame_index))
+    start_frame_f.close()
+
     logger.info("reading and smoothing done. start feeding 3d-pose-baseline")
     logger.debug(smoothed)
     plt.figure(2)
@@ -200,6 +208,7 @@ def main(_):
             write_pos_data(poses3d, ax, posf)
 
         posf.close()
+        smoothedf.close()
 
         # INFO時は、アニメーションGIF生成
         if level[FLAGS.verbose] == logging.INFO:
