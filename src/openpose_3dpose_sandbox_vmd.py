@@ -17,6 +17,7 @@ import imageio
 import logging
 import datetime
 import openpose_utils
+import sys
 FLAGS = tf.app.flags.FLAGS
 
 order = [15, 12, 25, 26, 27, 17, 18, 19, 1, 2, 3, 6, 7, 8]
@@ -49,7 +50,11 @@ def main(_):
     logger.debug("FLAGS.person_idx={0}".format(FLAGS.person_idx))
 
     # 日付+indexディレクトリ作成
-    subdir = '{0}/{1}_3d_{2}_idx{3:02d}'.format(os.path.dirname(openpose_output_dir), os.path.basename(openpose_output_dir), now_str, FLAGS.person_idx)
+    if FLAGS.output is None:
+        subdir = '{0}/{1}_3d_{2}_idx{3:02d}'.format(os.path.dirname(openpose_output_dir), os.path.basename(openpose_output_dir), now_str, FLAGS.person_idx)
+    else:
+        subdir = FLAGS.output
+        
     os.makedirs(subdir)
 
     frame3d_dir = "{0}/frame3d".format(subdir)
@@ -211,7 +216,7 @@ def main(_):
         smoothedf.close()
 
         # INFO時は、アニメーションGIF生成
-        if level[FLAGS.verbose] == logging.INFO:
+        if level[FLAGS.verbose] <= logging.INFO:
             logger.info("creating Gif {0}/movie_smoothing.gif, please Wait!".format(subdir))
             imageio.mimsave('{0}/movie_smoothing.gif'.format(subdir), png_lib, fps=FLAGS.gif_fps)
 
@@ -271,5 +276,6 @@ if __name__ == "__main__":
 
     logger.setLevel(level[FLAGS.verbose])
 
-
     tf.app.run()
+
+    sys.exit(0)

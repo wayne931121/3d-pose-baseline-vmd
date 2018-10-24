@@ -56,7 +56,7 @@ tf.app.flags.DEFINE_string("openpose", "openpose_output", "openpose output Data 
 tf.app.flags.DEFINE_integer("gif_fps", 30, "output gif framerate")
 tf.app.flags.DEFINE_integer("verbose", 2, "0:Error, 1:Warning, 2:INFO*(default), 3:debug")
 tf.app.flags.DEFINE_integer('person_idx', 1, """取得人物INDEX""")
-
+tf.app.flags.DEFINE_string("output", None, "3d-pose-baseline output Data directory")
 
 # Train or load
 tf.app.flags.DEFINE_boolean("sample", False, "Set to True for sampling.")
