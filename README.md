@@ -41,6 +41,7 @@ python3系 で以下をインストールして下さい
 
 1. [Openpose簡易起動バッチ](https://github.com/miu200521358/openpose-simple) で データを解析する
 1. [OpenposeTo3D.bat](OpenposeTo3D.bat) を実行する
+	- [OpenposeTo3D_en.bat](OpenposeTo3D_en.bat) is in English. !! The logs remain in Japanese.
 1. `解析結果JSONディレクトリパス` が聞かれるので、2.の`json出力ディレクトリパス`のフルパスを指定する
 1. `出力対象人物INDEX` が聞かれるので、Openposeで読み取った人物のうち、何番目の人物を出力したいか、1始まりで指定する。
 	- 未指定の場合、デフォルトで1が設定される(１人目の解析)
@@ -51,9 +52,9 @@ python3系 で以下をインストールして下さい
 1. 処理開始
 1. 処理が終了すると、`解析結果JSONディレクトリパス` と同階層に `3d_{実行日時}_{人物INDEX}` のディレクトリが作成され、以下の結果が出力される。
     - pos.txt … 全フレームの関節データ([VMD-3d-pose-baseline-multi](https://github.com/miu200521358/VMD-3d-pose-baseline-multi) に必要) 詳細：[Output](doc/Output.md)
+    - start_frame.txt … 開始フレームインデックス([VMD-3d-pose-baseline-multi](https://github.com/miu200521358/VMD-3d-pose-baseline-multi) に必要) 
     - smoothed.txt … 全フレームの2D位置データ([VMD-3d-pose-baseline-multi](https://github.com/miu200521358/VMD-3d-pose-baseline-multi) に必要) 詳細：[Output](doc/Output.md)
     - movie_smoothing.gif … フレームごとの姿勢を結合したアニメーションGIF
-    - dirty_plot.png　… 移動量のグラフ
     - smooth_plot.png … 移動量をなめらかにしたグラフ
     - frame3d/tmp_0000000000xx.png … 各フレームの3D姿勢
     - frame3d/tmp_0000000000xx_xxx.png … 各フレームの角度別3D姿勢(詳細ログyes時のみ)
