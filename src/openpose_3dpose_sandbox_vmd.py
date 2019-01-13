@@ -70,7 +70,7 @@ def main(_):
     start_frame_f = open(subdir +'/start_frame.txt', 'w')
 
     idx = FLAGS.person_idx - 1
-    start_frame_index, smoothed = openpose_utils.read_openpose_json(openpose_output_dir, idx, level[FLAGS.verbose] == 3)
+    start_frame_index, smoothed = openpose_utils.read_openpose_json(openpose_output_dir, idx, FLAGS.verbose == 3)
 
     # 開始フレームインデックスを保存
     start_frame_f.write(str(start_frame_index))
