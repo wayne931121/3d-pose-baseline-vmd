@@ -91,11 +91,12 @@ train_dir = os.path.join( FLAGS.train_dir,
   # 'use_stacked_hourglass' if FLAGS.use_sh else 'not_stacked_hourglass',
   'predict_14' if FLAGS.predict_14 else 'predict_17')
 
-print( train_dir )
+#print( train_dir )
 summaries_dir = os.path.join( train_dir, "log" ) # Directory for TB summaries
 
 # To avoid race conditions: https://github.com/tensorflow/tensorflow/issues/7448
-os.system('mkdir -p {}'.format(summaries_dir))
+#os.system('mkdir -p {}'.format(summaries_dir))
+os.makedirs(summaries_dir, exist_ok=True)
 
 def create_model( session, actions, batch_size ):
   """
