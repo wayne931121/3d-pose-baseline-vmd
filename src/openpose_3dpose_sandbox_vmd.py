@@ -20,7 +20,7 @@ import openpose_utils
 import sys
 FLAGS = tf.app.flags.FLAGS
 
-order = [15, 12, 25, 26, 27, 17, 18, 19, 1, 2, 3, 6, 7, 8]
+order = [15, 13, 25, 26, 27, 17, 18, 19, 1, 2, 3, 6, 7, 8]
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -126,10 +126,13 @@ def main(_):
             for j in range(2):
                 # Hip
                 enc_in[0][0 * 2 + j] = (enc_in[0][1 * 2 + j] + enc_in[0][6 * 2 + j]) / 2
-                # Neck/Nose
-                enc_in[0][14 * 2 + j] = (enc_in[0][15 * 2 + j] + enc_in[0][12 * 2 + j]) / 2
                 # Thorax
-                enc_in[0][13 * 2 + j] = 2 * enc_in[0][12 * 2 + j] - enc_in[0][14 * 2 + j]
+                # 3dPoseBaselineのThoraxの位置は、OpenPoseのNeckの位置より少し上のため調整する
+                enc_in[0][13 * 2 + j] = 1.1 * enc_in[0][13 * 2 + j] - 0.1 * enc_in[0][0 * 2 + j]
+                # Neck/Nose
+                enc_in[0][14 * 2 + j] = (enc_in[0][15 * 2 + j] + enc_in[0][13 * 2 + j]) / 2
+                # Spine
+                enc_in[0][12 * 2 + j] = (enc_in[0][0 * 2 + j] + enc_in[0][13 * 2 + j]) / 2
 
             # set spine
             spine_x = enc_in[0][24]
