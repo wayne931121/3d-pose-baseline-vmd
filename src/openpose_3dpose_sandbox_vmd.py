@@ -104,6 +104,10 @@ def main(_):
         #plt.figure(3)
         batch_size = 128
         model = create_model(sess, actions, batch_size)
+
+        # 入力画像のスケール調整のため、NeckからHipまでの距離を測定
+        length_neck2hip_mean = get_length_neck2hip_mean(smoothed)
+
         for n, (frame, xy) in enumerate(smoothed.items()):
             logger.info("calc idx {0}, frame {1}".format(idx, frame))
 
@@ -140,6 +144,12 @@ def main(_):
 
             # logger.debug("enc_in - 1")
             # logger.debug(enc_in)
+
+            # 入力データの拡大
+            # neckからHipまでが110ピクセル程度になるように入力を拡大する
+            # (教師データとスケールが大きく異なると精度が落ちるため)
+            input_scaling_factor = 110 / length_neck2hip_mean
+            enc_in = enc_in * input_scaling_factor
 
             enc_in = enc_in[:, dim_to_use_2d]
             mu = data_mean_2d[dim_to_use_2d]
@@ -224,6 +234,19 @@ def main(_):
             imageio.mimsave('{0}/movie_smoothing.gif'.format(subdir), png_lib, fps=FLAGS.gif_fps)
 
         logger.info("Done!".format(pngName))
+
+# 2次元でのNeckからHipまでの長さの平均を取得
+def get_length_neck2hip_mean(smoothed):
+    length = []
+    for frame, xy in smoothed.items():
+        neck_x = xy[1 * 2]
+        neck_y = xy[1 * 2 + 1]
+        # Hip = RHip * 0.5 + LHip * 0.5
+        hip_x = xy[8 * 2] * 0.5 + xy[11 * 2] * 0.5
+        hip_y = xy[8 * 2 + 1] * 0.5 + xy[11 * 2 + 1] * 0.5
+        length.append(((neck_x - hip_x) ** 2 + (neck_y - hip_y) ** 2) ** 0.5)
+
+    return np.mean(length)
 
 def write_pos_data(channels, ax, posf):
 
