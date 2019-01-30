@@ -305,9 +305,12 @@ def main(_):
             p3d = poses3d
             # logger.debug("poses3d")
             # logger.debug(poses3d)
+            if frame == start_frame_index:
+                first_xyz = [0,0,0]
+                first_xyz[0], first_xyz[1], first_xyz[2]= p3d[0], p3d[1], p3d[2]
 
             if level[FLAGS.verbose] == logging.INFO:
-                viz.show3Dpose(p3d, ax, lcolor="#9b59b6", rcolor="#2ecc71", add_labels=True)
+                viz.show3Dpose(p3d, ax, lcolor="#9b59b6", rcolor="#2ecc71", add_labels=True, root_xyz=first_xyz)
 
                 # 各フレームの単一視点からのはINFO時のみ
                 pngName = frame3d_dir + '/tmp_{0:012d}.png'.format(frame)
@@ -321,7 +324,7 @@ def main(_):
                 for azim in [0, 45, 90, 135, 180, 225, 270, 315, 360]:
                     ax2 = plt.subplot(gs1[subplot_idx - 1], projection='3d')
                     ax2.view_init(18, azim)
-                    viz.show3Dpose(p3d, ax2, lcolor="#FF0000", rcolor="#0000FF", add_labels=True)
+                    viz.show3Dpose(p3d, ax2, lcolor="#FF0000", rcolor="#0000FF", add_labels=True, root_xyz=first_xyz)
 
                     pngName2 = frame3d_dir + '/tmp_{0:012d}_{1:03d}.png'.format(frame, azim)
                     plt.savefig(pngName2)
