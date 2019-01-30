@@ -248,6 +248,28 @@ def main(_):
 
             poses3d_list[frame] = poses3d_op_xy
 
+        logger.info("calc ground y")
+        # 最も高さが低い足の部位のYを取得(この座標系ではY値が大きい方が低い)
+        foot_joint_no = [1, 2, 3, 6, 7, 8]
+        max_pos = []
+        for frame, poses3d in enumerate(poses3d_list):
+            max_pos.append(np.max([poses3d[i * 3 + 1] for i in foot_joint_no]))
+
+        # 地面についている部位の位置（通常は足首）をY軸の0になるように移動する
+        for frame, poses3d in enumerate(poses3d_list):
+            # 120フレーム分の位置を取得
+            max_pos_slice = max_pos[int(np.max([0, frame-60])):frame+60]
+            # 半分以上のフレームでは着地していると仮定し、メディアンを着地時の足の位置とする
+            ankle_pos = np.median(max_pos_slice)
+
+            poses3d_ground = np.zeros(96)
+            for i in range(len(data_utils.H36M_NAMES)):
+                poses3d_ground[i * 3] = poses3d[i * 3]
+                poses3d_ground[i * 3 + 1] = poses3d[i * 3 + 1] - ankle_pos
+                poses3d_ground[i * 3 + 2] = poses3d[i * 3 + 2]
+
+            poses3d_list[frame] = poses3d_ground
+
         for frame, (poses3d, poses2d) in enumerate(zip(poses3d_list, poses2d_list)):
             if frame % 30 == 0:
                 logger.info("output frame {}".format(frame))
