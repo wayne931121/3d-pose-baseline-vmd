@@ -18,6 +18,7 @@ import logging
 import datetime
 import openpose_utils
 import sys
+import shutil
 import math
 FLAGS = tf.app.flags.FLAGS
 
@@ -50,15 +51,18 @@ def main(_):
 
     logger.debug("FLAGS.person_idx={0}".format(FLAGS.person_idx))
 
-    # 日付+indexディレクトリ作成
+    # ディレクトリ構成が変わったので、JSON出力と同階層に出力(2/9)
     if FLAGS.output is None:
-        subdir = '{0}/{1}_3d_{2}_idx{3:02d}'.format(os.path.dirname(openpose_output_dir), os.path.basename(openpose_output_dir), now_str, FLAGS.person_idx)
+        subdir = openpose_output_dir
     else:
         subdir = FLAGS.output
         
-    os.makedirs(subdir)
+    os.makedirs(subdir, exist_ok=True)
 
     frame3d_dir = "{0}/frame3d".format(subdir)
+    if os.path.exists(frame3d_dir):
+        # 既にディレクトリがある場合、一旦削除
+        shutil.rmtree(frame3d_dir)
     os.makedirs(frame3d_dir)
 
     #関節位置情報ファイル
@@ -71,7 +75,7 @@ def main(_):
     start_frame_f = open(subdir +'/start_frame.txt', 'w')
 
     idx = FLAGS.person_idx - 1
-    start_frame_index, smoothed = openpose_utils.read_openpose_json(openpose_output_dir, idx, FLAGS.verbose == 3)
+    start_frame_index, smoothed = openpose_utils.read_openpose_json("{0}/json".format(openpose_output_dir), idx, FLAGS.verbose == 3)
 
     # 開始フレームインデックスを保存
     start_frame_f.write(str(start_frame_index))
@@ -118,7 +122,8 @@ def main(_):
         length_3d_list = []
 
         for n, (frame, xy) in enumerate(smoothed.items()):
-            logger.info("calc idx {0}, frame {1}".format(idx, frame))
+            if frame % 200 == 0:
+                logger.info("calc idx {0}, frame {1}".format(idx, frame))
             #if frame % 300 == 0:
             #    print(frame)
 
@@ -271,7 +276,7 @@ def main(_):
             poses3d_list[frame] = poses3d_ground
 
         for frame, (poses3d, poses2d) in enumerate(zip(poses3d_list, poses2d_list)):
-            if frame % 30 == 0:
+            if frame % 200 == 0:
                 logger.info("output frame {}".format(frame))
 
             # max = 0
@@ -309,7 +314,7 @@ def main(_):
                 first_xyz = [0,0,0]
                 first_xyz[0], first_xyz[1], first_xyz[2]= p3d[0], p3d[1], p3d[2]
 
-            if level[FLAGS.verbose] == logging.INFO:
+            if level[FLAGS.verbose] <= logging.INFO:
                 viz.show3Dpose(p3d, ax, lcolor="#9b59b6", rcolor="#2ecc71", add_labels=True, root_xyz=first_xyz)
 
                 # 各フレームの単一視点からのはINFO時のみ
