@@ -44,7 +44,7 @@ python3系 で以下をインストールして下さい
 1. [深度推定](https://github.com/miu200521358/FCRN-DepthPrediction-vmd)で 深度推定と人物インデックス別のデータを生成する
 1. [OpenposeTo3D.bat](OpenposeTo3D.bat) を実行する
 	- [OpenposeTo3D_en.bat](OpenposeTo3D_en.bat) is in English. !! The logs remain in Japanese.
-1. `INDEX別ディレクトリパス` が聞かれるので、3.の`人物インデックス別パス`のフルパスを指定する
+1. `INDEX別ディレクトリパス` が聞かれるので、2.の`人物インデックス別パス`のフルパスを指定する
 	- `{動画ファイル名}_json_{実行日時}_index{0F目の左からの順番}`
 	- 複数人数のトレースの場合、別々に実行が必要
 1. `詳細なログを出すか` 聞かれるので、出す場合、`yes` を入力する
