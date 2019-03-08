@@ -1,5 +1,6 @@
 data/
 experiments/
+experiments2/
 result/
 -p/
 *~
@@ -12,3 +13,6 @@ result/
 *.zip
 *.html
 
+command.txt
+OpenposeToVmd.bat
+openpose_3dpose_sandbox_vmd2.py

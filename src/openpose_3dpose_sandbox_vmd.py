@@ -373,7 +373,7 @@ def calc_move_average(data, n):
         move_avg = np.convolve(data, np.ones(n)/n, 'valid')
         result = np.hstack((np.tile([move_avg[0]], fore_n), move_avg, np.tile([move_avg[-1]], back_n)))
     else:
-        ave = mean(data)
+        ave = np.mean(data)
         result = np.tile([ave], len(data))
 
     return result
