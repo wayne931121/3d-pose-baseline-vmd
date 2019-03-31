@@ -205,7 +205,7 @@ def main(_):
         xy_scale = move_ave_length_3d / move_ave_length_2d
 
         # 以下の４つは仮の値で計算。多少違っていても、精度に影響はないと思う
-        center_2d_x, center_2d_y  = camera_center_temp(smoothed) #動画の中心座標（動画の解像度の半分）
+        center_2d_x, center_2d_y  = camera_center(openpose_output_dir) #動画の中心座標（動画の解像度の半分）
         logger.info("center_2d_x {0}".format(center_2d_x))
         z_distance = 4000 # カメラから体までの距離(mm) 遠近の影響計算で使用
         camera_incline = 0 # カメラの水平方向に対する下への傾き（度）
@@ -391,6 +391,16 @@ def get_length_neck2hip_mean(smoothed):
 
     return np.mean(length)
 
+# 映像サイズを返す
+def camera_center(openpose_output_dir):
+    x = 0
+    y = 0
+
+    with open(openpose_output_dir +'/size.txt', 'r') as sf:
+        x = float(sf.readline().replace('\n', '')) / 2
+        y = float(sf.readline().replace('\n', '')) / 2
+
+    return x, y
 
 # カメラの中心座標（仮）を返す
 def camera_center_temp(smoothed):
@@ -461,7 +471,6 @@ def write_pos_data(channels, ax, posf):
 
     #終わったら改行
     posf.write("\n")
-
 
 if __name__ == "__main__":
 
