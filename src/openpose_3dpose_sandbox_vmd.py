@@ -310,7 +310,7 @@ def main(_):
             p3d = poses3d
             # logger.debug("poses3d")
             # logger.debug(poses3d)
-            if frame == start_frame_index:
+            if frame == 0:
                 first_xyz = [0,0,0]
                 first_xyz[0], first_xyz[1], first_xyz[2]= p3d[0], p3d[1], p3d[2]
 
