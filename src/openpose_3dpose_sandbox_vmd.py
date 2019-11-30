@@ -412,9 +412,11 @@ def camera_center_temp(smoothed):
 
     average_x = np.mean(neck_x)
     average_y = np.mean(neck_y)
+    before_x = 0
+    before_y = 0
 
     # 中心候補
-    center_list = [(320,180), (640,360), (960,540), (1920,1080)] # 解像度 (640, 360),(1280, 720),(1920, 1080), (3840, 2160)
+    center_list = [(320,180), (640,360), (960,540), (1280, 720), (1920,1080)] # 解像度 (640, 360),(1280, 720),(1920, 1080), (3840, 2160)
     for i, (x, y) in enumerate(center_list):
         # Neckの中心位置が、今回の中心より前回の中心に近い場合は、前回の中心を返す
         if i != 0 and average_x < (x + before_x) / 2 and average_y < (y + before_y) / 2:

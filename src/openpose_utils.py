@@ -48,71 +48,13 @@ def read_openpose_json(openpose_output_dir, idx, is_debug=False):
         frame_idx = int(re.findall("(\d{12})", file_name)[0])
         
         if frame_idx <= 0 or is_started == False:
-            # 最初のフレームはそのまま登録するため、INDEXをそのまま指定
-            _tmp_data = data["people"][idx]["pose_keypoints_2d"]
             # 開始したらフラグを立てる
             is_started = True
             # 開始フレームインデックス保持
             start_frame_index = frame_idx
-        else:
-            # 前フレームと一番近い人物データを採用する
-            past_xy = cache[frame_idx - 1]
 
-            # データが取れていたら、そのINDEX数分配列を生成。取れてなかったら、とりあえずINDEX分確保
-            target_num = len(data["people"]) if len(data["people"]) >= idx + 1 else idx + 1
-            # 同一フレーム内の全人物データを一旦保持する
-            _tmp_points = [[0 for i in range(target_num)] for j in range(36)]
-            
-            # logger.debug("_past_tmp_points")
-            # logger.debug(_past_tmp_points)
-
-            for _data_idx in range(idx + 1):
-                if len(data["people"]) - 1 < _data_idx:
-                    for o in range(len(_past_tmp_points)):
-                        # 人物データが取れていない場合、とりあえず前回のをコピっとく
-                        # logger.debug("o={0}, _data_idx={1}".format(o, _data_idx))
-                        # logger.debug(_tmp_points)
-                        # logger.debug(_tmp_points[o][_data_idx])
-                        # logger.debug(_past_tmp_points[o][_data_idx])
-                        _tmp_points[o][_data_idx] = _past_tmp_points[o][_data_idx]
-                    
-                    # データも前回のを引き継ぐ
-                    _tmp_data = _past_tmp_data
-                else:
-                    # ちゃんと取れている場合、データ展開
-                    _tmp_data = data["people"][_data_idx]["pose_keypoints_2d"]
-
-                    n = 0
-                    for o in range(0,len(_tmp_data),3):
-                        # logger.debug("o: {0}".format(o))
-                        # logger.debug("len(_tmp_points): {0}".format(len(_tmp_points)))
-                        # logger.debug("len(_tmp_points[o]): {0}".format(len(_tmp_points[n])))
-                        # logger.debug("_tmp_data[o]")
-                        # logger.debug(_tmp_data[o])
-                        _tmp_points[n][_data_idx] = _tmp_data[o]
-                        n += 1
-                        _tmp_points[n][_data_idx] = _tmp_data[o+1]
-                        n += 1            
-
-                    # とりあえず前回のを保持
-                    _past_tmp_data = _tmp_data            
-                    _past_tmp_points = _tmp_points
-
-            # logger.debug("_tmp_points")
-            # logger.debug(_tmp_points)
-
-            # 各INDEXの前回と最も近い値を持つINDEXを取得
-            nearest_idx_list = []
-            for n, plist in enumerate(_tmp_points):
-                nearest_idx_list.append(get_nearest_idx(plist, past_xy[n]))
-
-            most_common_idx = Counter(nearest_idx_list).most_common(1)
-            
-            # 最も多くヒットしたINDEXを処理対象とする
-            target_idx = most_common_idx[0][0]
-            logger.debug("target_idx={0}".format(target_idx))
-
-        _data = _tmp_data
+        # 最初のフレームはそのまま登録するため、INDEXをそのまま指定
+        _data = data["people"][idx]["pose_keypoints_2d"]
 
         xy = []
         confidence = []
@@ -235,19 +177,3 @@ def read_openpose_json(openpose_output_dir, idx, is_debug=False):
 
     # return frames cache incl. smooth 18 joints (x,y)
     return start_frame_index, smoothed
-
-def get_nearest_idx(target_list, num):
-    """
-    概要: リストからある値に最も近い値のINDEXを返却する関数
-    @param target_list: データ配列
-    @param num: 対象値
-    @return 対象値に最も近い値のINDEX
-    """
-
-    # logger.debug(target_list)
-    # logger.debug(num)
-
-    # リスト要素と対象値の差分を計算し最小値のインデックスを取得
-    idx = np.abs(np.asarray(target_list) - num).argmin()
-    return idx
-
