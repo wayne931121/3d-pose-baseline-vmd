@@ -20,6 +20,7 @@ import openpose_utils
 import sys
 import shutil
 import math
+import copy
 FLAGS = tf.app.flags.FLAGS
 
 order = [15, 13, 25, 26, 27, 17, 18, 19, 1, 2, 3, 6, 7, 8]
@@ -275,6 +276,29 @@ def main(_):
             poses3d_op_xy[15 * 3] += 0.7 * (poses3d_op_xy[14 * 3] - poses3d_op_xy[13 * 3])
             poses3d_op_xy[15 * 3 + 1] += 0.7 * (poses3d_op_xy[14 * 3 + 1] - poses3d_op_xy[13 * 3 + 1])
             poses3d_op_xy[15 * 3 + 2] += 0.7 * (poses3d_op_xy[14 * 3 + 2] - poses3d_op_xy[13 * 3 + 2])
+
+            # for i,j in [(0,12),(1,6),(1,2),(2,3),(6,7),(7,8),(12,13),(17,18),(18,19),(25,26),(26,27)]:
+            #     # 元々の長さと同じになるように揃える
+            #     bi_vec = np.array([poses3d[i * 3], poses3d[i * 3 + 1], poses3d[i * 3 + 2]])
+            #     bj_vec = np.array([poses3d[j * 3], poses3d[j * 3 + 1], poses3d[j * 3 + 2]])
+            #     oi_vec = np.array([poses3d_op_xy[i * 3], poses3d_op_xy[i * 3 + 1], poses3d_op_xy[i * 3 + 2]])
+            #     oj_vec = np.array([poses3d_op_xy[j * 3], poses3d_op_xy[j * 3 + 1], poses3d_op_xy[j * 3 + 2]])
+
+            #     b_length = np.linalg.norm(bi_vec - bj_vec)
+            #     o_length = np.linalg.norm(oi_vec - oj_vec)
+            #     diff_length = abs(o_length - b_length)
+
+            #     logger.debug("b_length: %s, o_length: %s", b_length, o_length)
+                
+            #     # XYZを等区間に区切る
+            #     max_length = max(abs(poses3d_op_xy[i * 3] - poses3d_op_xy[j * 3]), abs(poses3d_op_xy[i * 3 + 2] - poses3d_op_xy[j * 3 + 2]))
+            #     ox = (poses3d_op_xy[i * 3] - poses3d_op_xy[j * 3]) / max_length * diff_length
+            #     # oy = (poses3d_op_xy[i * 3 + 1] - poses3d_op_xy[j * 3 + 1]) / max_length * diff_length
+            #     oz = (poses3d_op_xy[i * 3 + 2] - poses3d_op_xy[j * 3 + 2]) / max_length * diff_length
+                
+            #     poses3d_op_xy[j * 3] -= ox 
+            #     # poses3d_op_xy[j * 3 + 1] += oy
+            #     poses3d_op_xy[j * 3 + 2] -= oz
 
             poses3d_list[frame] = poses3d_op_xy
 

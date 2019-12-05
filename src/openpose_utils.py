@@ -103,7 +103,7 @@ def read_openpose_json(openpose_output_dir, idx, is_debug=False):
         _len = len(xy) # 36
 
         # frame range
-        smooth_n = 7 # odd number
+        smooth_n = 3 # odd number
         one_side_n = int((smooth_n - 1)/2)
         one_side_n = min([one_side_n, frame-start_frame_index, end_frame_index-frame])
 
@@ -129,8 +129,10 @@ def read_openpose_json(openpose_output_dir, idx, is_debug=False):
             if len(x_v) >= 1:
                 # 配列の長さを奇数にする
                 if len(x_v) % 2 == 0:
-                    x_v.append(cache[frame][x])
-                    y_v.append(cache[frame][y])
+                    # x_v.append(cache[frame][x])
+                    # y_v.append(cache[frame][y])
+                    x_v.append(np.mean(x_v))
+                    y_v.append(np.mean(y_v))
 
                 # get median of vector
                 x_med = np.median(sorted(x_v))
