@@ -23,7 +23,7 @@
                 "--gif_fps", "30",
                 "--person_idx", "1",
                 "--verbose", "2",
-                "--openpose", "E:/MMD/MikuMikuDance_v926x64/Work/201805_auto/07/alkali/alkali_20191202_081122/alkali_json_20191203_232051_idx01",
+                "--openpose", "E:/MMD/MikuMikuDance_v926x64/Work/201805_auto/07/alkali/alkali_20191202_081122/alkali_json_20191214_231957_idx01",
             ]
         },
         {

@@ -152,16 +152,10 @@ def main(_):
                 enc_in[0][13 * 2 + j] = 1.1 * enc_in[0][13 * 2 + j] - 0.1 * enc_in[0][0 * 2 + j]
                 # # Neck/Nose
                 # enc_in[0][14 * 2 + j] = (enc_in[0][15 * 2 + j] + enc_in[0][13 * 2 + j]) / 2
-                # # Head
-                # Neck/Nose
-                if j == 0:
-                    # HeadのXは両耳の間
-                    enc_in[0][15 * 2] = (_data[16 * 2] + _data[17 * 2]) / 2
-                    # Neck/NoseのXはOpenposeのHead
-                    enc_in[0][14 * 2] = _data[0 * 2]
-                elif j == 1:
-                    # Neck/NoseのYは頭と首の間
-                    enc_in[0][14 * 2 + j] = (enc_in[0][15 * 2 + j] + enc_in[0][13 * 2 + j]) / 2
+                # Neck/NoseはOpenposeのHead
+                enc_in[0][14 * 2 + j] = _data[0 * 2 + j]
+                # Headは両耳の間
+                enc_in[0][15 * 2 + j] = (_data[16 * 2 + j] + _data[17 * 2 + j]) / 2
                 # Spine
                 enc_in[0][12 * 2 + j] = (enc_in[0][0 * 2 + j] + enc_in[0][13 * 2 + j]) / 2
 
@@ -242,7 +236,7 @@ def main(_):
                 # zはBaselineの値から計算
                 poses3d_op_xy[i * 3 + 2] = dz
 
-                if i == 14:
+                if i in [14, 15]:
                     # 差分
                     dx = poses3d[i * 3] - poses3d[13 * 3]
                     dy = poses3d[i * 3 + 1] - poses3d[13 * 3 + 1]
@@ -250,13 +244,13 @@ def main(_):
                     # 教師データのカメラ傾きを補正
                     dz = dz - dy * math.tan(math.radians(teacher_camera_incline - camera_incline))
 
-                    # NeckのXYはXYはOpenposeでZはThoraxベース
+                    # HeadとNeckのXYはOpenposeでZはThoraxベース
                     poses3d_op_xy[i * 3] = (poses2d[i * 2] - center_2d_x) * xy_scale[frame] * z_ratio
                     poses3d_op_xy[i * 3 + 1] = (poses2d[i * 2 + 1] - center_2d_y) * xy_scale[frame] * z_ratio
                     poses3d_op_xy[i * 3 + 2] = poses3d_op_xy[13 * 3 + 2] + dz
 
-            # 12(Spine), 15(Head)はOpenPoseの出力にないため、baseline(poses3d)から計算する
-            for i in [12, 15]:
+            # 12(Spine)はOpenPoseの出力にないため、baseline(poses3d)から計算する
+            for i in [12]:
                 # 13(Thorax)は認識されることが多いため基準とする
                 # 差分
                 dx = poses3d[i * 3] - poses3d[13 * 3]
@@ -269,13 +263,13 @@ def main(_):
                 poses3d_op_xy[i * 3 + 1] = poses3d_op_xy[13 * 3 + 1] + dy
                 poses3d_op_xy[i * 3 + 2] = poses3d_op_xy[13 * 3 + 2] + dz
 
-            # Noseを少しさげる
-            poses3d_op_xy[14 * 3 + 1] -= 0.5 * (poses3d_op_xy[15 * 3 + 1] - poses3d_op_xy[14 * 3 + 1])
+            # # Noseを少しさげる
+            # poses3d_op_xy[14 * 3 + 1] -= 0.5 * (poses3d_op_xy[15 * 3 + 1] - poses3d_op_xy[14 * 3 + 1])
 
-            # MMD上で少し顎を引くための処理
-            poses3d_op_xy[15 * 3] += 0.7 * (poses3d_op_xy[14 * 3] - poses3d_op_xy[13 * 3])
-            poses3d_op_xy[15 * 3 + 1] += 0.7 * (poses3d_op_xy[14 * 3 + 1] - poses3d_op_xy[13 * 3 + 1])
-            poses3d_op_xy[15 * 3 + 2] += 0.7 * (poses3d_op_xy[14 * 3 + 2] - poses3d_op_xy[13 * 3 + 2])
+            # # MMD上で少し顎を引くための処理
+            # poses3d_op_xy[15 * 3] += 0.5 * (poses3d_op_xy[14 * 3] - poses3d_op_xy[13 * 3])
+            # poses3d_op_xy[15 * 3 + 1] += 0.5 * (poses3d_op_xy[14 * 3 + 1] - poses3d_op_xy[13 * 3 + 1])
+            # poses3d_op_xy[15 * 3 + 2] += 0.5 * (poses3d_op_xy[14 * 3 + 2] - poses3d_op_xy[13 * 3 + 2])
 
             # for i,j in [(0,12),(1,6),(1,2),(2,3),(6,7),(7,8),(12,13),(17,18),(18,19),(25,26),(26,27)]:
             #     # 元々の長さと同じになるように揃える

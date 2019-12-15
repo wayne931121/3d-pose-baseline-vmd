@@ -103,7 +103,7 @@ def read_openpose_json(openpose_output_dir, idx, is_debug=False):
         _len = len(xy) # 36
 
         # frame range
-        smooth_n = 3 # odd number
+        smooth_n = 7 # odd number
         one_side_n = int((smooth_n - 1)/2)
         one_side_n = min([one_side_n, frame-start_frame_index, end_frame_index-frame])
 
@@ -149,8 +149,10 @@ def read_openpose_json(openpose_output_dir, idx, is_debug=False):
                         last_value_y = smoothed[last_frame[joint_no] - start_frame_index][y]
 
                     for frame_linear_in in range(last_frame[joint_no] + 1, frame):
-                        smoothed[frame_linear_in - start_frame_index][x] = last_value_x + (x_med - last_value_x) * (frame_linear_in - last_frame[joint_no]) / (frame - last_frame[joint_no])
-                        smoothed[frame_linear_in - start_frame_index][y] = last_value_y + (y_med - last_value_y) * (frame_linear_in - last_frame[joint_no]) / (frame - last_frame[joint_no])
+                        # smoothed[frame_linear_in - start_frame_index][x] = last_value_x + (x_med - last_value_x) * (frame_linear_in - last_frame[joint_no]) / (frame - last_frame[joint_no])
+                        # smoothed[frame_linear_in - start_frame_index][y] = last_value_y + (y_med - last_value_y) * (frame_linear_in - last_frame[joint_no]) / (frame - last_frame[joint_no])
+                        smoothed[frame_linear_in - start_frame_index][x] = last_value_x
+                        smoothed[frame_linear_in - start_frame_index][y] = last_value_y
 
                 last_frame[joint_no] = frame
 
@@ -174,8 +176,16 @@ def read_openpose_json(openpose_output_dir, idx, is_debug=False):
             frames_joint_median[x] = x_med 
             frames_joint_median[x+1] = y_med 
 
-
         smoothed[frame - start_frame_index] = frames_joint_median
+
+    for n, (frame, xy) in enumerate(smoothed.items()):
+        # 顔と耳のX位置を補正する
+        joints = [(16, 1, 17, 17), (17, 1, 16, 16), (0, 1, 16, 17)]
+        for (fromj, tojx, tojy1, tojy2) in joints:
+            if cache_confidence[frame + start_frame_index][fromj] < confidence_th:
+                # Fromが取れてない場合、Toから引っ張ってくる
+                smoothed[frame][fromj*2] = smoothed[frame][tojx*2]
+                smoothed[frame][fromj*2+1] = (smoothed[frame][tojy1*2+1] + smoothed[frame][tojy2*2+1]) / 2
 
     # return frames cache incl. smooth 18 joints (x,y)
     return start_frame_index, smoothed
