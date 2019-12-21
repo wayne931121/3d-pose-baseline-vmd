@@ -20,6 +20,7 @@ import openpose_utils
 import sys
 import shutil
 import math
+import copy
 FLAGS = tf.app.flags.FLAGS
 
 order = [15, 13, 25, 26, 27, 17, 18, 19, 1, 2, 3, 6, 7, 8]
@@ -149,8 +150,12 @@ def main(_):
                 # Thorax
                 # 3dPoseBaselineのThoraxの位置は、OpenPoseのNeckの位置より少し上のため調整する
                 enc_in[0][13 * 2 + j] = 1.1 * enc_in[0][13 * 2 + j] - 0.1 * enc_in[0][0 * 2 + j]
-                # Neck/Nose
-                enc_in[0][14 * 2 + j] = (enc_in[0][15 * 2 + j] + enc_in[0][13 * 2 + j]) / 2
+                # # Neck/Nose
+                # enc_in[0][14 * 2 + j] = (enc_in[0][15 * 2 + j] + enc_in[0][13 * 2 + j]) / 2
+                # Neck/NoseはOpenposeのHead
+                enc_in[0][14 * 2 + j] = _data[0 * 2 + j]
+                # Headは両耳の間
+                enc_in[0][15 * 2 + j] = (_data[16 * 2 + j] + _data[17 * 2 + j]) / 2
                 # Spine
                 enc_in[0][12 * 2 + j] = (enc_in[0][0 * 2 + j] + enc_in[0][13 * 2 + j]) / 2
 
@@ -215,9 +220,9 @@ def main(_):
         for frame, (poses3d, poses2d) in enumerate(zip(poses3d_list, poses2d_list)):
 
             # 誤差を減らすため、OpenPose出力の(x, y)と3dPoseBaseline出力のzから、3次元の位置を計算する
-
+            # 14(Neck/Nose)も含める
             poses3d_op_xy = np.zeros(96)
-            for i in [0, 1, 2, 3, 6, 7, 8, 13, 15, 17, 18, 19, 25, 26, 27]:
+            for i in [0, 1, 2, 3, 6, 7, 8, 13, 14, 15, 17, 18, 19, 25, 26, 27]:
                 # Hipとの差分
                 dy = poses3d[i * 3 + 1] - poses3d[0 * 3 + 1]
                 dz = poses3d[i * 3 + 2] - poses3d[0 * 3 + 2]
@@ -231,9 +236,21 @@ def main(_):
                 # zはBaselineの値から計算
                 poses3d_op_xy[i * 3 + 2] = dz
 
-            # 12(Spine)、14(Neck/Nose)、15(Head)はOpenPoseの出力にないため、baseline(poses3d)から計算する
-            for i in [12, 14, 15]:
+                if i in [14, 15]:
+                    # 差分
+                    dx = poses3d[i * 3] - poses3d[13 * 3]
+                    dy = poses3d[i * 3 + 1] - poses3d[13 * 3 + 1]
+                    dz = poses3d[i * 3 + 2] - poses3d[13 * 3 + 2]
+                    # 教師データのカメラ傾きを補正
+                    dz = dz - dy * math.tan(math.radians(teacher_camera_incline - camera_incline))
 
+                    # HeadとNeckのXYはOpenposeでZはThoraxベース
+                    poses3d_op_xy[i * 3] = (poses2d[i * 2] - center_2d_x) * xy_scale[frame] * z_ratio
+                    poses3d_op_xy[i * 3 + 1] = (poses2d[i * 2 + 1] - center_2d_y) * xy_scale[frame] * z_ratio
+                    poses3d_op_xy[i * 3 + 2] = poses3d_op_xy[13 * 3 + 2] + dz
+
+            # 12(Spine)はOpenPoseの出力にないため、baseline(poses3d)から計算する
+            for i in [12]:
                 # 13(Thorax)は認識されることが多いため基準とする
                 # 差分
                 dx = poses3d[i * 3] - poses3d[13 * 3]
@@ -246,10 +263,36 @@ def main(_):
                 poses3d_op_xy[i * 3 + 1] = poses3d_op_xy[13 * 3 + 1] + dy
                 poses3d_op_xy[i * 3 + 2] = poses3d_op_xy[13 * 3 + 2] + dz
 
-            # MMD上で少し顎を引くための処理
-            poses3d_op_xy[15 * 3] += 0.5 * (poses3d_op_xy[14 * 3] - poses3d_op_xy[13 * 3])
-            poses3d_op_xy[15 * 3 + 1] += 0.5 * (poses3d_op_xy[14 * 3 + 1] - poses3d_op_xy[13 * 3 + 1])
-            poses3d_op_xy[15 * 3 + 2] += 0.5 * (poses3d_op_xy[14 * 3 + 2] - poses3d_op_xy[13 * 3 + 2])
+            # # Noseを少しさげる
+            # poses3d_op_xy[14 * 3 + 1] -= 0.5 * (poses3d_op_xy[15 * 3 + 1] - poses3d_op_xy[14 * 3 + 1])
+
+            # # MMD上で少し顎を引くための処理
+            # poses3d_op_xy[15 * 3] += 0.5 * (poses3d_op_xy[14 * 3] - poses3d_op_xy[13 * 3])
+            # poses3d_op_xy[15 * 3 + 1] += 0.5 * (poses3d_op_xy[14 * 3 + 1] - poses3d_op_xy[13 * 3 + 1])
+            # poses3d_op_xy[15 * 3 + 2] += 0.5 * (poses3d_op_xy[14 * 3 + 2] - poses3d_op_xy[13 * 3 + 2])
+
+            # for i,j in [(0,12),(1,6),(1,2),(2,3),(6,7),(7,8),(12,13),(17,18),(18,19),(25,26),(26,27)]:
+            #     # 元々の長さと同じになるように揃える
+            #     bi_vec = np.array([poses3d[i * 3], poses3d[i * 3 + 1], poses3d[i * 3 + 2]])
+            #     bj_vec = np.array([poses3d[j * 3], poses3d[j * 3 + 1], poses3d[j * 3 + 2]])
+            #     oi_vec = np.array([poses3d_op_xy[i * 3], poses3d_op_xy[i * 3 + 1], poses3d_op_xy[i * 3 + 2]])
+            #     oj_vec = np.array([poses3d_op_xy[j * 3], poses3d_op_xy[j * 3 + 1], poses3d_op_xy[j * 3 + 2]])
+
+            #     b_length = np.linalg.norm(bi_vec - bj_vec)
+            #     o_length = np.linalg.norm(oi_vec - oj_vec)
+            #     diff_length = abs(o_length - b_length)
+
+            #     logger.debug("b_length: %s, o_length: %s", b_length, o_length)
+                
+            #     # XYZを等区間に区切る
+            #     max_length = max(abs(poses3d_op_xy[i * 3] - poses3d_op_xy[j * 3]), abs(poses3d_op_xy[i * 3 + 2] - poses3d_op_xy[j * 3 + 2]))
+            #     ox = (poses3d_op_xy[i * 3] - poses3d_op_xy[j * 3]) / max_length * diff_length
+            #     # oy = (poses3d_op_xy[i * 3 + 1] - poses3d_op_xy[j * 3 + 1]) / max_length * diff_length
+            #     oz = (poses3d_op_xy[i * 3 + 2] - poses3d_op_xy[j * 3 + 2]) / max_length * diff_length
+                
+            #     poses3d_op_xy[j * 3] -= ox 
+            #     # poses3d_op_xy[j * 3 + 1] += oy
+            #     poses3d_op_xy[j * 3 + 2] -= oz
 
             poses3d_list[frame] = poses3d_op_xy
 
@@ -412,9 +455,11 @@ def camera_center_temp(smoothed):
 
     average_x = np.mean(neck_x)
     average_y = np.mean(neck_y)
+    before_x = 0
+    before_y = 0
 
     # 中心候補
-    center_list = [(320,180), (640,360), (960,540), (1920,1080)] # 解像度 (640, 360),(1280, 720),(1920, 1080), (3840, 2160)
+    center_list = [(320,180), (640,360), (960,540), (1280, 720), (1920,1080)] # 解像度 (640, 360),(1280, 720),(1920, 1080), (3840, 2160)
     for i, (x, y) in enumerate(center_list):
         # Neckの中心位置が、今回の中心より前回の中心に近い場合は、前回の中心を返す
         if i != 0 and average_x < (x + before_x) / 2 and average_y < (y + before_y) / 2:
