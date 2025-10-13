@@ -23,7 +23,9 @@ https://github.com/CMU-Perceptual-Computing-Lab/openpose/issues/1204
 
 https://github.com/miu200521358/VMD-3d-pose-baseline-multi
 
-https://github.com/errno-mmd/VMD-Lifting
+⭐ https://github.com/errno-mmd/VMD-Lifting
 
 https://github.com/DenisTome/Lifting-from-the-Deep-release
+
+https://github.com/peterljq/OpenMMD
 
