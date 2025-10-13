@@ -1,6 +1,6 @@
 # 3d-pose-baseline-vmd
 
-Official Website: https://github.com/miu200521358/3d-pose-baseline-vmd
+Official Website: https://github.com/una-dinosauria/3d-pose-baseline
 
 # wayne931121/3d-pose-baseline-vmd
 forked from https://github.com/miu200521358/3d-pose-baseline-vmd
