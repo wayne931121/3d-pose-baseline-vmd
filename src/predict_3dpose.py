@@ -16,7 +16,7 @@ import copy
 import matplotlib.pyplot as plt
 import numpy as np
 from six.moves import xrange  # pylint: disable=redefined-builtin
-import tensorflow as tf
+import tensorflow.compat.v1 as tf
 import procrustes
 
 import viz
@@ -56,7 +56,7 @@ tf.app.flags.DEFINE_string("openpose", "openpose_output", "openpose output Data 
 tf.app.flags.DEFINE_integer("gif_fps", 30, "output gif framerate")
 tf.app.flags.DEFINE_integer("verbose", 2, "0:Error, 1:Warning, 2:INFO*(default), 3:debug")
 tf.app.flags.DEFINE_integer('person_idx', 1, """取得人物INDEX""")
-tf.app.flags.DEFINE_string("output", None, "3d-pose-baseline output Data directory")
+
 
 # Train or load
 tf.app.flags.DEFINE_boolean("sample", False, "Set to True for sampling.")
@@ -91,12 +91,11 @@ train_dir = os.path.join( FLAGS.train_dir,
   # 'use_stacked_hourglass' if FLAGS.use_sh else 'not_stacked_hourglass',
   'predict_14' if FLAGS.predict_14 else 'predict_17')
 
-#print( train_dir )
+print( train_dir )
 summaries_dir = os.path.join( train_dir, "log" ) # Directory for TB summaries
 
 # To avoid race conditions: https://github.com/tensorflow/tensorflow/issues/7448
-#os.system('mkdir -p {}'.format(summaries_dir))
-os.makedirs(summaries_dir, exist_ok=True)
+os.system('mkdir -p {}'.format(summaries_dir))
 
 def create_model( session, actions, batch_size ):
   """

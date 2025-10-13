@@ -115,8 +115,12 @@ def load_camera_params( hf, path ):
   p = hf[ path.format('p') ][:]
 
   name = hf[ path.format('Name') ][:]
-  name = "".join( [chr(item) for item in name] )
-
+  #import cdebug
+  #cdebug.main(locals())
+  #name = "".join( [chr(item) for item in name] )
+  #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!edit by wayne931121 20251013
+  name = [[int(i[0])] for i in name]
+  name = "".join( [chr(item[0]) for item in name] )
   return R, T, f, c, k, p, name
 
 def load_cameras( bpath='cameras.h5', subjects=[1,5,6,7,8,9,11] ):

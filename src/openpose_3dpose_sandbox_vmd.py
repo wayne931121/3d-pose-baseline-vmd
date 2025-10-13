@@ -6,24 +6,22 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.gridspec as gridspec
-import tensorflow as tf
+import tensorflow.compat.v1 as tf
 import data_utils
 import viz
+import re
 import cameras
+import json
 import os
 from predict_3dpose import create_model
 import cv2
 import imageio
 import logging
 import datetime
-import openpose_utils
-import sys
-import shutil
-import math
-import copy
+from collections import Counter
 FLAGS = tf.app.flags.FLAGS
 
-order = [15, 13, 25, 26, 27, 17, 18, 19, 1, 2, 3, 6, 7, 8]
+order = [15, 12, 25, 26, 27, 17, 18, 19, 1, 2, 3, 6, 7, 8]
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -46,24 +44,240 @@ def show_anim_curves(anim_dict, _plt):
         _plt.plot(y, 'g', linewidth=0.2)
     return _plt
 
+def read_openpose_json(now_str, idx, subdir, smooth=True, *args):
+    # openpose output format:
+    # [x1,y1,c1,x2,y2,c2,...]
+    # ignore confidence score, take x and y [x1,y1,x2,y2,...]
+
+    logger.info("start reading data")
+    #load json files
+    json_files = os.listdir(openpose_output_dir)
+    # check for other file types
+    json_files = sorted([filename for filename in json_files if filename.endswith(".json")])
+    cache = {}
+    smoothed = {}
+    _past_tmp_points = []
+    _past_tmp_data = []
+    _tmp_data = []
+    ### extract x,y and ignore confidence score
+    for file_name in json_files:
+        logger.debug("reading {0}".format(file_name))
+        _file = os.path.join(openpose_output_dir, file_name)
+        if not os.path.isfile(_file): raise Exception("No file found!!, {0}".format(_file))
+        data = json.load(open(_file))
+
+        # 12桁の数字文字列から、フレームINDEX取得
+        frame_indx = re.findall("(\d{12})", file_name)
+        
+        if int(frame_indx[0]) <= 0:
+            # 最初のフレームはそのまま登録するため、INDEXをそのまま指定
+            _tmp_data = data["people"][idx]["pose_keypoints_2d"]
+        else:
+            # 前フレームと一番近い人物データを採用する
+            past_xy = cache[int(frame_indx[0]) - 1]
+
+            # データが取れていたら、そのINDEX数分配列を生成。取れてなかったら、とりあえずINDEX分確保
+            target_num = len(data["people"]) if len(data["people"]) >= idx + 1 else idx + 1
+            # 同一フレーム内の全人物データを一旦保持する
+            _tmp_points = [[0 for i in range(target_num)] for j in range(36)]
+            #_tmp_points = [[0 for i in range(target_num)] for j in range(len(_tmp_data))]
+            
+            # logger.debug("_past_tmp_points")
+            # logger.debug(_past_tmp_points)
+
+            for _data_idx in range(idx + 1):
+                if len(data["people"]) - 1 < _data_idx:
+                    for o in range(len(_past_tmp_points)):
+                        # 人物データが取れていない場合、とりあえず前回のをコピっとく
+                        # logger.debug("o={0}, _data_idx={1}".format(o, _data_idx))
+                        # logger.debug(_tmp_points)
+                        # logger.debug(_tmp_points[o][_data_idx])
+                        # logger.debug(_past_tmp_points[o][_data_idx])
+                        _tmp_points[o][_data_idx] = _past_tmp_points[o][_data_idx]
+                    
+                    # データも前回のを引き継ぐ
+                    _tmp_data = _past_tmp_data
+                else:
+                    # ちゃんと取れている場合、データ展開
+                    _tmp_data = data["people"][_data_idx]["pose_keypoints_2d"]
+
+                    n = 0
+                    #import cdebug
+                    #cdebug.main(locals())
+                    #import cdebug
+                    #cdebug.main(locals())
+                    #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!edit by wayne931121 20251013
+                    for o in range(0,36,3):
+                    #for o in range(0,len(_tmp_data),3):
+                        # logger.debug("o: {0}".format(o))
+                        # logger.debug("len(_tmp_points): {0}".format(len(_tmp_points)))
+                        # logger.debug("len(_tmp_points[o]): {0}".format(len(_tmp_points[n])))
+                        # logger.debug("_tmp_data[o]")
+                        # logger.debug(_tmp_data[o])
+                        _tmp_points[n][_data_idx] = _tmp_data[o]
+                        n += 1
+                        _tmp_points[n][_data_idx] = _tmp_data[o+1]
+                        n += 1            
+
+                    # とりあえず前回のを保持
+                    _past_tmp_data = _tmp_data            
+                    _past_tmp_points = _tmp_points
+
+            # logger.debug("_tmp_points")
+            # logger.debug(_tmp_points)
+
+            # 各INDEXの前回と最も近い値を持つINDEXを取得
+            nearest_idx_list = []
+            for n, plist in enumerate(_tmp_points):
+                nearest_idx_list.append(get_nearest_idx(plist, past_xy[n]))
+
+            most_common_idx = Counter(nearest_idx_list).most_common(1)
+            
+            # 最も多くヒットしたINDEXを処理対象とする
+            target_idx = most_common_idx[0][0]
+            logger.debug("target_idx={0}".format(target_idx))
+
+        _data = _tmp_data
+        
+        xy = []
+        #ignore confidence score
+        for o in range(0,len(_data),3):
+            xy.append(_data[o])
+            xy.append(_data[o+1])
+
+        logger.debug("found {0} for frame {1}".format(xy, str(int(frame_indx[0]))))
+        #add xy to frame
+        cache[int(frame_indx[0])] = xy
+    plt.figure(1)
+    drop_curves_plot = show_anim_curves(cache, plt)
+    pngName = '{0}/dirty_plot.png'.format(subdir)
+    drop_curves_plot.savefig(pngName)
+
+    # exit if no smoothing
+    if not smooth:
+        # return frames cache incl. 18 joints (x,y)
+        return cache
+
+    if len(json_files) == 1:
+        logger.info("found single json file")
+        # return frames cache incl. 18 joints (x,y) on single image\json
+        return cache
+
+    if len(json_files) <= 8:
+        raise Exception("need more frames, min 9 frames/json files for smoothing!!!")
+
+    logger.info("start smoothing")
+
+    # create frame blocks
+    first_frame_block = [int(re.findall("(\d{12})", o)[0]) for o in json_files[:4]]
+    last_frame_block = [int(re.findall("(\d{12})", o)[0]) for o in json_files[-4:]]
+
+    ### smooth by median value, n frames 
+    for frame, xy in cache.items():
+
+        # create neighbor array based on frame index
+        forward, back = ([] for _ in range(2))
+
+        # joints x,y array
+        _len = len(xy) # 36
+
+        # create array of parallel frames (-3<n>3)
+        for neighbor in range(1,4):
+            # first n frames, get value of xy in postive lookahead frames(current frame + 3)
+            if frame in first_frame_block:
+                # print ("first_frame_block: len(cache)={0}, frame={1}, neighbor={2}".format(len(cache), frame, neighbor))
+                forward += cache[frame+neighbor]
+            # last n frames, get value of xy in negative lookahead frames(current frame - 3)
+            elif frame in last_frame_block:
+                # print ("last_frame_block: len(cache)={0}, frame={1}, neighbor={2}".format(len(cache), frame, neighbor))
+                back += cache[frame-neighbor]
+            else:
+                # between frames, get value of xy in bi-directional frames(current frame -+ 3)     
+                forward += cache[frame+neighbor]
+                back += cache[frame-neighbor]
+
+        # build frame range vector 
+        frames_joint_median = [0 for i in range(_len)]
+        # more info about mapping in src/data_utils.py
+        # for each 18joints*x,y  (x1,y1,x2,y2,...)~36 
+        for x in range(0,_len,2):
+            # set x and y
+            y = x+1
+            if frame in first_frame_block:
+                # get vector of n frames forward for x and y, incl. current frame
+                x_v = [xy[x], forward[x], forward[x+_len], forward[x+_len*2]]
+                y_v = [xy[y], forward[y], forward[y+_len], forward[y+_len*2]]
+            elif frame in last_frame_block:
+                # get vector of n frames back for x and y, incl. current frame
+                x_v =[xy[x], back[x], back[x+_len], back[x+_len*2]]
+                y_v =[xy[y], back[y], back[y+_len], back[y+_len*2]]
+            else:
+                # get vector of n frames forward/back for x and y, incl. current frame
+                # median value calc: find neighbor frames joint value and sorted them, use numpy median module
+                # frame[x1,y1,[x2,y2],..]frame[x1,y1,[x2,y2],...], frame[x1,y1,[x2,y2],..]
+                #                 ^---------------------|-------------------------^
+                x_v =[xy[x], forward[x], forward[x+_len], forward[x+_len*2],
+                        back[x], back[x+_len], back[x+_len*2]]
+                y_v =[xy[y], forward[y], forward[y+_len], forward[y+_len*2],
+                        back[y], back[y+_len], back[y+_len*2]]
+
+            # get median of vector
+            x_med = np.median(sorted(x_v))
+            y_med = np.median(sorted(y_v))
+
+            # holding frame drops for joint
+            if not x_med:
+                # allow fix from first frame
+                if frame:
+                    # get x from last frame
+                    x_med = smoothed[frame-1][x]
+            # if joint is hidden y
+            if not y_med:
+                # allow fix from first frame
+                if frame:
+                    # get y from last frame
+                    y_med = smoothed[frame-1][y]
+
+            #logger.debug("old X {0} sorted neighbor {1} new X {2}".format(xy[x],sorted(x_v), x_med))
+            #logger.debug("old Y {0} sorted neighbor {1} new Y {2}".format(xy[y],sorted(y_v), y_med))
+
+            # build new array of joint x and y value
+            frames_joint_median[x] = x_med 
+            frames_joint_median[x+1] = y_med 
+
+
+        smoothed[frame] = frames_joint_median
+
+    # return frames cache incl. smooth 18 joints (x,y)
+    return smoothed
+
+def get_nearest_idx(target_list, num):
+    """
+    概要: リストからある値に最も近い値のINDEXを返却する関数
+    @param target_list: データ配列
+    @param num: 対象値
+    @return 対象値に最も近い値のINDEX
+    """
+
+    # logger.debug(target_list)
+    # logger.debug(num)
+
+    # リスト要素と対象値の差分を計算し最小値のインデックスを取得
+    idx = np.abs(np.asarray(target_list) - num).argmin()
+    return idx
+
+
 def main(_):
     # 出力用日付
     now_str = "{0:%Y%m%d_%H%M%S}".format(datetime.datetime.now())
 
     logger.debug("FLAGS.person_idx={0}".format(FLAGS.person_idx))
 
-    # ディレクトリ構成が変わったので、JSON出力と同階層に出力(2/9)
-    if FLAGS.output is None:
-        subdir = openpose_output_dir
-    else:
-        subdir = FLAGS.output
-        
-    os.makedirs(subdir, exist_ok=True)
+    # 日付+indexディレクトリ作成
+    subdir = '{0}/{1}_3d_{2}_idx{3:02d}'.format(os.path.dirname(openpose_output_dir), os.path.basename(openpose_output_dir), now_str, FLAGS.person_idx)
+    os.makedirs(subdir)
 
     frame3d_dir = "{0}/frame3d".format(subdir)
-    if os.path.exists(frame3d_dir):
-        # 既にディレクトリがある場合、一旦削除
-        shutil.rmtree(frame3d_dir)
     os.makedirs(frame3d_dir)
 
     #関節位置情報ファイル
@@ -72,16 +286,8 @@ def main(_):
     #正規化済みOpenpose位置情報ファイル
     smoothedf = open(subdir +'/smoothed.txt', 'w')
 
-    #開始フレームインデックスファイル
-    start_frame_f = open(subdir +'/start_frame.txt', 'w')
-
     idx = FLAGS.person_idx - 1
-    start_frame_index, smoothed = openpose_utils.read_openpose_json("{0}/json".format(openpose_output_dir), idx, FLAGS.verbose == 3)
-
-    # 開始フレームインデックスを保存
-    start_frame_f.write(str(start_frame_index))
-    start_frame_f.close()
-
+    smoothed = read_openpose_json(now_str, idx, subdir)
     logger.info("reading and smoothing done. start feeding 3d-pose-baseline")
     logger.debug(smoothed)
     plt.figure(2)
@@ -101,7 +307,7 @@ def main(_):
     train_set_3d, test_set_3d, data_mean_3d, data_std_3d, dim_to_ignore_3d, dim_to_use_3d, train_root_positions, test_root_positions = data_utils.read_3d_data(
         actions, FLAGS.data_dir, FLAGS.camera_frame, rcams, FLAGS.predict_14)
 
-    # before_pose = None
+    before_pose = None
     device_count = {"GPU": 1}
     png_lib = []
     with tf.Session(config=tf.ConfigProto(
@@ -110,23 +316,8 @@ def main(_):
         #plt.figure(3)
         batch_size = 128
         model = create_model(sess, actions, batch_size)
-
-        # 入力画像のスケール調整のため、NeckからHipまでの距離を測定
-        length_neck2hip_mean = get_length_neck2hip_mean(smoothed)
-
-        # 2D、3D結果の保存用リスト
-        poses3d_list = []
-        poses2d_list = []
-
-        # 2dと3dのスケール比率計算のためのリスト
-        length_2d_list = []
-        length_3d_list = []
-
         for n, (frame, xy) in enumerate(smoothed.items()):
-            if frame % 200 == 0:
-                logger.info("calc idx {0}, frame {1}".format(idx, frame))
-            #if frame % 300 == 0:
-            #    print(frame)
+            logger.info("calc idx {0}, frame {1}".format(idx, frame))
 
             # map list into np array  
             joints_array = np.zeros((1, 36))
@@ -147,32 +338,17 @@ def main(_):
             for j in range(2):
                 # Hip
                 enc_in[0][0 * 2 + j] = (enc_in[0][1 * 2 + j] + enc_in[0][6 * 2 + j]) / 2
+                # Neck/Nose
+                enc_in[0][14 * 2 + j] = (enc_in[0][15 * 2 + j] + enc_in[0][12 * 2 + j]) / 2
                 # Thorax
-                # 3dPoseBaselineのThoraxの位置は、OpenPoseのNeckの位置より少し上のため調整する
-                enc_in[0][13 * 2 + j] = 1.1 * enc_in[0][13 * 2 + j] - 0.1 * enc_in[0][0 * 2 + j]
-                # # Neck/Nose
-                # enc_in[0][14 * 2 + j] = (enc_in[0][15 * 2 + j] + enc_in[0][13 * 2 + j]) / 2
-                # Neck/NoseはOpenposeのHead
-                enc_in[0][14 * 2 + j] = _data[0 * 2 + j]
-                # Headは両耳の間
-                enc_in[0][15 * 2 + j] = (_data[16 * 2 + j] + _data[17 * 2 + j]) / 2
-                # Spine
-                enc_in[0][12 * 2 + j] = (enc_in[0][0 * 2 + j] + enc_in[0][13 * 2 + j]) / 2
+                enc_in[0][13 * 2 + j] = 2 * enc_in[0][12 * 2 + j] - enc_in[0][14 * 2 + j]
 
             # set spine
-            # spine_x = enc_in[0][24]
-            # spine_y = enc_in[0][25]
+            spine_x = enc_in[0][24]
+            spine_y = enc_in[0][25]
 
             # logger.debug("enc_in - 1")
             # logger.debug(enc_in)
-
-            poses2d = enc_in
-
-            # 入力データの拡大
-            # neckからHipまでが110ピクセル程度になるように入力を拡大する
-            # (教師データとスケールが大きく異なると精度が落ちるため)
-            input_scaling_factor = 110 / length_neck2hip_mean
-            enc_in = enc_in * input_scaling_factor
 
             enc_in = enc_in[:, dim_to_use_2d]
             mu = data_mean_2d[dim_to_use_2d]
@@ -192,179 +368,47 @@ def main(_):
             all_poses_3d.append( poses3d )
             enc_in, poses3d = map( np.vstack, [enc_in, all_poses_3d] )
             subplot_idx, exidx = 1, 1
-
-            poses3d_list.append(poses3d[0])
-            poses2d_list.append(poses2d[0])
-
-            length_2d_list.append(sum_length_xy(poses2d[0],2))
-            length_3d_list.append(sum_length_xy(poses3d[0],3))
-
-        # OpenPose出力の(x, y)とBaseline出力のzから、3次元の位置を計算する
-
-        # OpenPose出力値とBaseline出力値のスケール比率
-        # 骨格の長さの合計の比較することで、比率を推定
-        # 前後の91フレームで移動平均をとることで、結果を安定化する
-        move_ave_length_2d = calc_move_average(length_2d_list, 91)
-        move_ave_length_3d = calc_move_average(length_3d_list, 91)
-        move_ave_length_2d[move_ave_length_2d == 0] = 1 # error防止
-        xy_scale = move_ave_length_3d / move_ave_length_2d
-
-        # 以下の４つは仮の値で計算。多少違っていても、精度に影響はないと思う
-        center_2d_x, center_2d_y  = camera_center(openpose_output_dir) #動画の中心座標（動画の解像度の半分）
-        logger.info("center_2d_x {0}".format(center_2d_x))
-        z_distance = 4000 # カメラから体までの距離(mm) 遠近の影響計算で使用
-        camera_incline = 0 # カメラの水平方向に対する下への傾き（度）
-
-        teacher_camera_incline = 13 # 教師データ(Human3.6M)のカメラの傾き（下向きに平均13度）
-
-        for frame, (poses3d, poses2d) in enumerate(zip(poses3d_list, poses2d_list)):
-
-            # 誤差を減らすため、OpenPose出力の(x, y)と3dPoseBaseline出力のzから、3次元の位置を計算する
-            # 14(Neck/Nose)も含める
-            poses3d_op_xy = np.zeros(96)
-            for i in [0, 1, 2, 3, 6, 7, 8, 13, 14, 15, 17, 18, 19, 25, 26, 27]:
-                # Hipとの差分
-                dy = poses3d[i * 3 + 1] - poses3d[0 * 3 + 1]
-                dz = poses3d[i * 3 + 2] - poses3d[0 * 3 + 2]
-                # 教師データのカメラ傾きを補正
-                dz = dz - dy * math.tan(math.radians(teacher_camera_incline - camera_incline))
-                # 遠近によるx,yの拡大率
-                z_ratio = (z_distance + dz) / z_distance
-                # x, yはOpenposeの値から計算
-                poses3d_op_xy[i * 3] = (poses2d[i * 2] - center_2d_x) * xy_scale[frame] * z_ratio
-                poses3d_op_xy[i * 3 + 1] = (poses2d[i * 2 + 1] - center_2d_y) * xy_scale[frame] * z_ratio
-                # zはBaselineの値から計算
-                poses3d_op_xy[i * 3 + 2] = dz
-
-                if i in [14, 15]:
-                    # 差分
-                    dx = poses3d[i * 3] - poses3d[13 * 3]
-                    dy = poses3d[i * 3 + 1] - poses3d[13 * 3 + 1]
-                    dz = poses3d[i * 3 + 2] - poses3d[13 * 3 + 2]
-                    # 教師データのカメラ傾きを補正
-                    dz = dz - dy * math.tan(math.radians(teacher_camera_incline - camera_incline))
-
-                    # HeadとNeckのXYはOpenposeでZはThoraxベース
-                    poses3d_op_xy[i * 3] = (poses2d[i * 2] - center_2d_x) * xy_scale[frame] * z_ratio
-                    poses3d_op_xy[i * 3 + 1] = (poses2d[i * 2 + 1] - center_2d_y) * xy_scale[frame] * z_ratio
-                    poses3d_op_xy[i * 3 + 2] = poses3d_op_xy[13 * 3 + 2] + dz
-
-            # 12(Spine)はOpenPoseの出力にないため、baseline(poses3d)から計算する
-            for i in [12]:
-                # 13(Thorax)は認識されることが多いため基準とする
-                # 差分
-                dx = poses3d[i * 3] - poses3d[13 * 3]
-                dy = poses3d[i * 3 + 1] - poses3d[13 * 3 + 1]
-                dz = poses3d[i * 3 + 2] - poses3d[13 * 3 + 2]
-                # 教師データのカメラ傾きを補正
-                dz = dz - dy * math.tan(math.radians(teacher_camera_incline - camera_incline))
-                # 13(Thorax)からの差分でx, y ,zを求める
-                poses3d_op_xy[i * 3] = poses3d_op_xy[13 * 3] + dx
-                poses3d_op_xy[i * 3 + 1] = poses3d_op_xy[13 * 3 + 1] + dy
-                poses3d_op_xy[i * 3 + 2] = poses3d_op_xy[13 * 3 + 2] + dz
-
-            # # Noseを少しさげる
-            # poses3d_op_xy[14 * 3 + 1] -= 0.5 * (poses3d_op_xy[15 * 3 + 1] - poses3d_op_xy[14 * 3 + 1])
-
-            # # MMD上で少し顎を引くための処理
-            # poses3d_op_xy[15 * 3] += 0.5 * (poses3d_op_xy[14 * 3] - poses3d_op_xy[13 * 3])
-            # poses3d_op_xy[15 * 3 + 1] += 0.5 * (poses3d_op_xy[14 * 3 + 1] - poses3d_op_xy[13 * 3 + 1])
-            # poses3d_op_xy[15 * 3 + 2] += 0.5 * (poses3d_op_xy[14 * 3 + 2] - poses3d_op_xy[13 * 3 + 2])
-
-            # for i,j in [(0,12),(1,6),(1,2),(2,3),(6,7),(7,8),(12,13),(17,18),(18,19),(25,26),(26,27)]:
-            #     # 元々の長さと同じになるように揃える
-            #     bi_vec = np.array([poses3d[i * 3], poses3d[i * 3 + 1], poses3d[i * 3 + 2]])
-            #     bj_vec = np.array([poses3d[j * 3], poses3d[j * 3 + 1], poses3d[j * 3 + 2]])
-            #     oi_vec = np.array([poses3d_op_xy[i * 3], poses3d_op_xy[i * 3 + 1], poses3d_op_xy[i * 3 + 2]])
-            #     oj_vec = np.array([poses3d_op_xy[j * 3], poses3d_op_xy[j * 3 + 1], poses3d_op_xy[j * 3 + 2]])
-
-            #     b_length = np.linalg.norm(bi_vec - bj_vec)
-            #     o_length = np.linalg.norm(oi_vec - oj_vec)
-            #     diff_length = abs(o_length - b_length)
-
-            #     logger.debug("b_length: %s, o_length: %s", b_length, o_length)
-                
-            #     # XYZを等区間に区切る
-            #     max_length = max(abs(poses3d_op_xy[i * 3] - poses3d_op_xy[j * 3]), abs(poses3d_op_xy[i * 3 + 2] - poses3d_op_xy[j * 3 + 2]))
-            #     ox = (poses3d_op_xy[i * 3] - poses3d_op_xy[j * 3]) / max_length * diff_length
-            #     # oy = (poses3d_op_xy[i * 3 + 1] - poses3d_op_xy[j * 3 + 1]) / max_length * diff_length
-            #     oz = (poses3d_op_xy[i * 3 + 2] - poses3d_op_xy[j * 3 + 2]) / max_length * diff_length
-                
-            #     poses3d_op_xy[j * 3] -= ox 
-            #     # poses3d_op_xy[j * 3 + 1] += oy
-            #     poses3d_op_xy[j * 3 + 2] -= oz
-
-            poses3d_list[frame] = poses3d_op_xy
-
-        logger.info("calc ground y")
-        # 最も高さが低い足の部位のYを取得(この座標系ではY値が大きい方が低い)
-        foot_joint_no = [1, 2, 3, 6, 7, 8]
-        max_pos = []
-        for frame, poses3d in enumerate(poses3d_list):
-            max_pos.append(np.max([poses3d[i * 3 + 1] for i in foot_joint_no]))
-
-        # 地面についている部位の位置（通常は足首）をY軸の0になるように移動する
-        for frame, poses3d in enumerate(poses3d_list):
-            # 120フレーム分の位置を取得
-            max_pos_slice = max_pos[int(np.max([0, frame-60])):frame+60]
-            # 半分以上のフレームでは着地していると仮定し、メディアンを着地時の足の位置とする
-            ankle_pos = np.median(max_pos_slice)
-
-            poses3d_ground = np.zeros(96)
-            for i in range(len(data_utils.H36M_NAMES)):
-                poses3d_ground[i * 3] = poses3d[i * 3]
-                poses3d_ground[i * 3 + 1] = poses3d[i * 3 + 1] - ankle_pos
-                poses3d_ground[i * 3 + 2] = poses3d[i * 3 + 2]
-
-            poses3d_list[frame] = poses3d_ground
-
-        for frame, (poses3d, poses2d) in enumerate(zip(poses3d_list, poses2d_list)):
-            if frame % 200 == 0:
-                logger.info("output frame {}".format(frame))
-
-            # max = 0
-            # min = 10000
+            max = 0
+            min = 10000
 
             # logger.debug("enc_in - 2")
             # logger.debug(enc_in)
 
-            for j in range(32):
-                tmp = poses3d[j * 3 + 2]
-                poses3d[j * 3 + 2] = -poses3d[j * 3 + 1]
-                poses3d[j * 3 + 1] = tmp
-            #         if poses3d[i][j * 3 + 2] > max:
-            #             max = poses3d[i][j * 3 + 2]
-            #         if poses3d[i][j * 3 + 2] < min:
-            #             min = poses3d[i][j * 3 + 2]
+            for i in range(poses3d.shape[0]):
+                for j in range(32):
+                    tmp = poses3d[i][j * 3 + 2]
+                    poses3d[i][j * 3 + 2] = poses3d[i][j * 3 + 1]
+                    poses3d[i][j * 3 + 1] = tmp
+                    if poses3d[i][j * 3 + 2] > max:
+                        max = poses3d[i][j * 3 + 2]
+                    if poses3d[i][j * 3 + 2] < min:
+                        min = poses3d[i][j * 3 + 2]
 
-            # for i in range(poses3d.shape[0]):
-            #     for j in range(32):
-            #         poses3d[i][j * 3 + 2] = max - poses3d[i][j * 3 + 2] + min
-            #         poses3d[i][j * 3] += (spine_x - 630)
-            #         poses3d[i][j * 3 + 2] += (500 - spine_y)
+            for i in range(poses3d.shape[0]):
+                for j in range(32):
+                    poses3d[i][j * 3 + 2] = max - poses3d[i][j * 3 + 2] + min
+                    poses3d[i][j * 3] += (spine_x - 630)
+                    poses3d[i][j * 3 + 2] += (500 - spine_y)
 
             # Plot 3d predictions
             ax = plt.subplot(gs1[subplot_idx - 1], projection='3d')
             ax.view_init(18, 280)    
-            # logger.debug(np.min(poses3d))
-            # if np.min(poses3d) < -1000 and before_pose is not None:
-            #    poses3d = before_pose
+            logger.debug(np.min(poses3d))
+            if np.min(poses3d) < -1000 and before_pose is not None:
+                poses3d = before_pose
 
             p3d = poses3d
             # logger.debug("poses3d")
             # logger.debug(poses3d)
-            if frame == 0:
-                first_xyz = [0,0,0]
-                first_xyz[0], first_xyz[1], first_xyz[2]= p3d[0], p3d[1], p3d[2]
 
-            if level[FLAGS.verbose] <= logging.INFO:
-                viz.show3Dpose(p3d, ax, lcolor="#9b59b6", rcolor="#2ecc71", add_labels=True, root_xyz=first_xyz)
+            if level[FLAGS.verbose] == logging.INFO:
+                viz.show3Dpose(p3d, ax, lcolor="#9b59b6", rcolor="#2ecc71")
 
                 # 各フレームの単一視点からのはINFO時のみ
                 pngName = frame3d_dir + '/tmp_{0:012d}.png'.format(frame)
                 plt.savefig(pngName)
                 png_lib.append(imageio.imread(pngName))            
-                # before_pose = poses3d
+                before_pose = poses3d
 
             # 各フレームの角度別出力はデバッグ時のみ
             if level[FLAGS.verbose] == logging.DEBUG:
@@ -372,7 +416,7 @@ def main(_):
                 for azim in [0, 45, 90, 135, 180, 225, 270, 315, 360]:
                     ax2 = plt.subplot(gs1[subplot_idx - 1], projection='3d')
                     ax2.view_init(18, azim)
-                    viz.show3Dpose(p3d, ax2, lcolor="#FF0000", rcolor="#0000FF", add_labels=True, root_xyz=first_xyz)
+                    viz.show3Dpose(p3d, ax2, lcolor="#FF0000", rcolor="#0000FF", add_labels=True)
 
                     pngName2 = frame3d_dir + '/tmp_{0:012d}_{1:03d}.png'.format(frame, azim)
                     plt.savefig(pngName2)
@@ -381,94 +425,13 @@ def main(_):
             write_pos_data(poses3d, ax, posf)
 
         posf.close()
-        smoothedf.close()
 
         # INFO時は、アニメーションGIF生成
-        if level[FLAGS.verbose] <= logging.INFO:
+        if level[FLAGS.verbose] == logging.INFO:
             logger.info("creating Gif {0}/movie_smoothing.gif, please Wait!".format(subdir))
             imageio.mimsave('{0}/movie_smoothing.gif'.format(subdir), png_lib, fps=FLAGS.gif_fps)
 
         logger.info("Done!".format(pngName))
-
-# 骨格の長さ合計（xy平面上）
-def sum_length_xy(channels, dim):
-    if dim == 3:
-        assert channels.size == len(data_utils.H36M_NAMES)*3, "channels should have 96 entries, it has %d instead" % channels.size
-    else:
-        assert channels.size == len(data_utils.H36M_NAMES)*2, "channels should have 64 entries, it has %d instead" % channels.size
-    vals = np.reshape( channels, (len(data_utils.H36M_NAMES), -1) )
-
-    I  = np.array([1,2,3,1,7,8,1, 13,14,14,18,19,14,26,27])-1 # start points
-    J  = np.array([2,3,4,7,8,9,13,14,16,18,19,20,26,27,28])-1 # end points
-
-    # xy平面上の骨格の長さの合計
-    length_sum = 0
-    for i in np.arange( len(I) ):
-        length = np.sqrt((vals[I[i]][0] - vals[J[i]][0]) ** 2 + (vals[I[i]][1] - vals[J[i]][1]) ** 2)
-        length_sum += length
-
-    return length_sum
-
-def calc_move_average(data, n):
-    if len(data) > n:
-        fore_n = int((n - 1)/2)
-        back_n = n - 1 - fore_n
-        move_avg = np.convolve(data, np.ones(n)/n, 'valid')
-        result = np.hstack((np.tile([move_avg[0]], fore_n), move_avg, np.tile([move_avg[-1]], back_n)))
-    else:
-        ave = np.mean(data)
-        result = np.tile([ave], len(data))
-
-    return result
-
-# 2次元でのNeckからHipまでの長さの平均を取得
-def get_length_neck2hip_mean(smoothed):
-    length = []
-    for frame, xy in smoothed.items():
-        neck_x = xy[1 * 2]
-        neck_y = xy[1 * 2 + 1]
-        # Hip = RHip * 0.5 + LHip * 0.5
-        hip_x = xy[8 * 2] * 0.5 + xy[11 * 2] * 0.5
-        hip_y = xy[8 * 2 + 1] * 0.5 + xy[11 * 2 + 1] * 0.5
-        length.append(((neck_x - hip_x) ** 2 + (neck_y - hip_y) ** 2) ** 0.5)
-
-    return np.mean(length)
-
-# 映像サイズを返す
-def camera_center(openpose_output_dir):
-    x = 0
-    y = 0
-
-    with open(openpose_output_dir +'/size.txt', 'r') as sf:
-        x = float(sf.readline().replace('\n', '')) / 2
-        y = float(sf.readline().replace('\n', '')) / 2
-
-    return x, y
-
-# カメラの中心座標（仮）を返す
-def camera_center_temp(smoothed):
-    neck_x = []
-    neck_y = []
-    for (frame, xy) in smoothed.items():
-        neck_x.append(xy[1 * 2])
-        neck_y.append(xy[1 * 2 + 1])
-
-    average_x = np.mean(neck_x)
-    average_y = np.mean(neck_y)
-    before_x = 0
-    before_y = 0
-
-    # 中心候補
-    center_list = [(320,180), (640,360), (960,540), (1280, 720), (1920,1080)] # 解像度 (640, 360),(1280, 720),(1920, 1080), (3840, 2160)
-    for i, (x, y) in enumerate(center_list):
-        # Neckの中心位置が、今回の中心より前回の中心に近い場合は、前回の中心を返す
-        if i != 0 and average_x < (x + before_x) / 2 and average_y < (y + before_y) / 2:
-            return before_x, before_y
-        before_x = x
-        before_y = y
-
-    return x, y
-
 
 def write_pos_data(channels, ax, posf):
 
@@ -517,12 +480,12 @@ def write_pos_data(channels, ax, posf):
     #終わったら改行
     posf.write("\n")
 
+
 if __name__ == "__main__":
 
     openpose_output_dir = FLAGS.openpose
 
     logger.setLevel(level[FLAGS.verbose])
 
-    tf.app.run()
 
-    sys.exit(0)
+    tf.app.run()

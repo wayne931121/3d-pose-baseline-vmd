@@ -8,7 +8,7 @@ import h5py
 import os
 from mpl_toolkits.mplot3d import Axes3D
 
-def show3Dpose(channels, ax, lcolor="#3498db", rcolor="#e74c3c", add_labels=False, root_xyz=None): # blue, orange
+def show3Dpose(channels, ax, lcolor="#3498db", rcolor="#e74c3c", add_labels=False): # blue, orange
   """
   Visualize a 3d skeleton
 
@@ -33,16 +33,11 @@ def show3Dpose(channels, ax, lcolor="#3498db", rcolor="#e74c3c", add_labels=Fals
     x, y, z = [np.array( [vals[I[i], j], vals[J[i], j]] ) for j in range(3)]
     ax.plot(x, y, z, marker='o', markersize=2, lw=1, c=lcolor if LR[i] else rcolor)
 
-  if root_xyz is not None:
-    ax.set_xlim3d([-1500+root_xyz[0], 1500+root_xyz[0]])
-    ax.set_zlim3d([-1000+root_xyz[2], 1000+root_xyz[2]])
-    ax.set_ylim3d([-1200+root_xyz[1], 1200+root_xyz[1]])
-  else:
-    RADIUS = 750 # space around the subject
-    xroot, yroot, zroot = vals[0,0], vals[0,1], vals[0,2]
-    ax.set_xlim3d([-RADIUS+xroot, RADIUS+xroot])
-    ax.set_zlim3d([-RADIUS+zroot, RADIUS+zroot])
-    ax.set_ylim3d([-RADIUS+yroot, RADIUS+yroot])
+  RADIUS = 750 # space around the subject
+  xroot, yroot, zroot = vals[0,0], vals[0,1], vals[0,2]
+  ax.set_xlim3d([-RADIUS+xroot, RADIUS+xroot])
+  ax.set_zlim3d([-RADIUS+zroot, RADIUS+zroot])
+  ax.set_ylim3d([-RADIUS+yroot, RADIUS+yroot])
 
   if add_labels:
     ax.set_xlabel("x")
@@ -57,8 +52,7 @@ def show3Dpose(channels, ax, lcolor="#3498db", rcolor="#e74c3c", add_labels=Fals
   ax.get_xaxis().set_ticklabels([])
   ax.get_yaxis().set_ticklabels([])
   ax.set_zticklabels([])
-  # 3.1.0で3Dには指定不可(6/1)
-  # ax.set_aspect('equal')
+  ax.set_aspect('equal')
 
   # Get rid of the panes (actually, make them white)
   white = (1.0, 1.0, 0.1, 0.0)

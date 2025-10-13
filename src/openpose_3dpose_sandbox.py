@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.gridspec as gridspec
-import tensorflow as tf
+import tensorflow.compat.v1 as tf
 import data_utils
 import viz
 import re

@@ -19,23 +19,23 @@ TEST_SUBJECTS  = [9,11]
 
 # Joints in H3.6M -- data has 32 joints, but only 17 that move; these are the indices.
 H36M_NAMES = ['']*32
-H36M_NAMES[0]  = 'Hip' #1
-H36M_NAMES[1]  = 'RHip' #2
-H36M_NAMES[2]  = 'RKnee' #3
-H36M_NAMES[3]  = 'RFoot' #4
-H36M_NAMES[6]  = 'LHip' #7
-H36M_NAMES[7]  = 'LKnee' #8
-H36M_NAMES[8]  = 'LFoot' #9
-H36M_NAMES[12] = 'Spine' #13
-H36M_NAMES[13] = 'Thorax' #14
-H36M_NAMES[14] = 'Neck/Nose' #15
-H36M_NAMES[15] = 'Head' #16 
-H36M_NAMES[17] = 'LShoulder' #18
-H36M_NAMES[18] = 'LElbow' #19
-H36M_NAMES[19] = 'LWrist' #20
-H36M_NAMES[25] = 'RShoulder' #26
-H36M_NAMES[26] = 'RElbow' #27
-H36M_NAMES[27] = 'RWrist' #28
+H36M_NAMES[0]  = 'Hip'
+H36M_NAMES[1]  = 'RHip'
+H36M_NAMES[2]  = 'RKnee'
+H36M_NAMES[3]  = 'RFoot'
+H36M_NAMES[6]  = 'LHip'
+H36M_NAMES[7]  = 'LKnee'
+H36M_NAMES[8]  = 'LFoot'
+H36M_NAMES[12] = 'Spine'
+H36M_NAMES[13] = 'Thorax'
+H36M_NAMES[14] = 'Neck/Nose'
+H36M_NAMES[15] = 'Head'
+H36M_NAMES[17] = 'LShoulder'
+H36M_NAMES[18] = 'LElbow'
+H36M_NAMES[19] = 'LWrist'
+H36M_NAMES[25] = 'RShoulder'
+H36M_NAMES[26] = 'RElbow'
+H36M_NAMES[27] = 'RWrist'
 
 # Stacked Hourglass produces 16 joints. These are the names.
 SH_NAMES = ['']*16
@@ -80,10 +80,10 @@ def load_data( bpath, subjects, actions, dim=3 ):
   for subj in subjects:
     for action in actions:
 
-      # print('Reading subject {0}, action {1}'.format(subj, action))
+      print('Reading subject {0}, action {1}'.format(subj, action))
 
       dpath = os.path.join( bpath, 'S{0}'.format(subj), 'MyPoses/{0}D_positions'.format(dim), '{0}*.h5'.format(action) )
-      # print( dpath )
+      print( dpath )
 
       fnames = glob.glob( dpath )
 
@@ -98,7 +98,7 @@ def load_data( bpath, subjects, actions, dim=3 ):
         # This rule makes sure that WalkDog and WalkTogeter are not loaded when
         # Walking is requested.
         if seqname.startswith( action ):
-          # print( fname )
+          print( fname )
           loaded_seqs = loaded_seqs + 1
 
           with h5py.File( fname, 'r' ) as h5f:
@@ -138,10 +138,10 @@ def load_stacked_hourglass(data_dir, subjects, actions):
   for subj in subjects:
     for action in actions:
 
-      # print('Reading subject {0}, action {1}'.format(subj, action))
+      print('Reading subject {0}, action {1}'.format(subj, action))
 
       dpath = os.path.join( data_dir, 'S{0}'.format(subj), 'StackedHourglass/{0}*.h5'.format(action) )
-      # print( dpath )
+      print( dpath )
 
       fnames = glob.glob( dpath )
 
@@ -157,7 +157,7 @@ def load_stacked_hourglass(data_dir, subjects, actions):
         # This rule makes sure that WalkDog and WalkTogeter are not loaded when
         # Walking is requested.
         if seqname.startswith( action ):
-          # print( fname )
+          print( fname )
           loaded_seqs = loaded_seqs + 1
 
           # Load the poses from the .h5 file
@@ -380,8 +380,10 @@ def read_2d_predictions( actions, data_dir ):
 
   train_set = load_stacked_hourglass( data_dir, TRAIN_SUBJECTS, actions)
   test_set  = load_stacked_hourglass( data_dir, TEST_SUBJECTS,  actions)
-
-  complete_train = copy.deepcopy( np.vstack( train_set.values() ))
+  #import cdebug
+  #cdebug.main(locals())
+  #!!!!!!!!!!!!!!!!!!!!!!!!!edit by wayne931121 20251013
+  complete_train = copy.deepcopy( np.vstack( list(train_set.values() )))
   data_mean, data_std,  dim_to_ignore, dim_to_use = normalization_stats( complete_train, dim=2 )
 
   train_set = normalize_data( train_set, data_mean, data_std, dim_to_use )
@@ -416,7 +418,8 @@ def create_2d_data( actions, data_dir, rcams ):
   test_set  = project_to_cameras( test_set, rcams )
 
   # Compute normalization statistics.
-  complete_train = copy.deepcopy( np.vstack( train_set.values() ))
+  #!!!!!!!!!!!!!!!!!!!!!!!!!edit by wayne931121 20251013
+  complete_train = copy.deepcopy( np.vstack( list(train_set.values() )))
   data_mean, data_std, dim_to_ignore, dim_to_use = normalization_stats( complete_train, dim=2 )
 
   # Divide every dimension independently
@@ -459,7 +462,8 @@ def read_3d_data( actions, data_dir, camera_frame, rcams, predict_14=False ):
   test_set,  test_root_positions  = postprocess_3d( test_set )
 
   # Compute normalization statistics
-  complete_train = copy.deepcopy( np.vstack( train_set.values() ))
+  #!!!!!!!!!!!!!!!!!!!!!!!!!edit by wayne931121 20251013
+  complete_train = copy.deepcopy( np.vstack( list(train_set.values() )))
   data_mean, data_std, dim_to_ignore, dim_to_use = normalization_stats( complete_train, dim=3, predict_14=predict_14 )
 
   # Divide every dimension independently
