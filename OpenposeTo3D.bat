@@ -1,43 +1,104 @@
-@echo off
-rem --- 
-rem ---  OpenPose ‚Ì jsonƒf[ƒ^‚©‚ç 3Dƒf[ƒ^‚É•ÏŠ·
+ï»¿es (40 sloc) 1.62 KB 
+
+call activate C://ai1
+rem idk why echo is off after conda activate
+@echo on
+rem idk why chcp 65001 need run after conda activate, or it will activate failed
+chcp 65001
+set USE_LIBUV=0
+set KMP_DUPLICATE_LIB_OK=TRUE
+
+
 rem --- 
 
-rem ---  ƒJƒŒƒ“ƒgƒfƒBƒŒƒNƒgƒŠ‚ğÀsæ‚É•ÏX
+rem --- 
+
+rem --- 
+
+
+
 cd /d %~dp0
 
-rem ---  INDEX•ÊƒfƒBƒŒƒNƒgƒŠƒpƒX
-echo INDEX•ÊƒfƒBƒŒƒNƒgƒŠ‚Ìƒtƒ‹ƒpƒX‚ğ“ü—Í‚µ‚Ä‰º‚³‚¢B({“®‰æ–¼}_json_{Às“ú}_idx00)
-echo ‚±‚Ìİ’è‚Í”¼Šp‰p”š‚Ì‚İİ’è‰Â”\‚ÅA•K{€–Ú‚Å‚·B
-set TARGET_DIR=
-set /P TARGET_DIR=¡INDEX•ÊƒfƒBƒŒƒNƒgƒŠƒpƒX: 
-rem echo TARGET_DIRF%TARGET_DIR%
 
-IF /I "%TARGET_DIR%" EQU "" (
-    ECHO INDEX•ÊƒfƒBƒŒƒNƒgƒŠƒpƒX‚ªİ’è‚³‚ê‚Ä‚¢‚È‚¢‚½‚ßAˆ—‚ğ’†’f‚µ‚Ü‚·B
+
+rem ---  JSON
+
+echo Please input the path of result from OpenPose Execution: JSON folder
+
+echo Input is limited to English characters and numbers.
+
+set OPENPOSE_JSON=
+
+set /P OPENPOSE_JSON=â– the path of result from OpenPose Execution (JSON folder): 
+
+rem echo OPENPOSE_JSONï¼š%OPENPOSE_JSON%
+
+
+
+IF /I "%OPENPOSE_JSON%" EQU "" (
+
+    ECHO the path you input is invalid. The runtime error occurs.
+
     EXIT /B
+
 )
 
-rem ---  Ú×ƒƒO—L–³
+
+
+rem ---  The max number of people in your video
+
+
 
 echo --------------
-echo Ú×‚ÈƒƒO‚ğo‚·‚©Ayes ‚© no ‚ğ“ü—Í‚µ‚Ä‰º‚³‚¢B
-echo ‰½‚à“ü—Í‚¹‚¸AENTER‚ğ‰Ÿ‰º‚µ‚½ê‡A’ÊíƒƒO‚Æƒ‚[ƒVƒ‡ƒ“‚ÌƒAƒjƒ[ƒVƒ‡ƒ“GIF‚ğo—Í‚µ‚Ü‚·B
-echo Ú×ƒƒO‚Ìê‡AŠeƒtƒŒ[ƒ€‚²‚Æ‚ÌƒfƒoƒbƒO‰æ‘œ‚à’Ç‰Áo—Í‚³‚ê‚Ü‚·Bi‚»‚Ì•ªŠÔ‚ª‚©‚©‚è‚Ü‚·j
-echo warn ‚Æw’è‚·‚é‚ÆAƒAƒjƒ[ƒVƒ‡ƒ“GIF‚ào—Í‚µ‚Ü‚¹‚ñBi‚»‚Ì•ª‘‚¢‚Å‚·j
+
+echo The max number of people in your video.
+
+echo If no input and press Enter, the number of be set to default: 1 person.
+
+set PERSON_IDX=1
+
+set /P PERSON_IDX="The max number of people in your video: "
+
+
+
+rem --echo PERSON_IDX: %PERSON_IDX%
+
+
+
+
+
+
+echo --------------
+
+echo If you want the detailed information of GIF, input yes.
+echo If no input and press Enter, the generation setting of GIF will be set to default.
+echo warn If you input warn, then no GIF will be generated.
+
 set VERBOSE=2
+
 set IS_DEBUG=no
-set /P IS_DEBUG="¡Ú×ƒƒO[yes/no/warn]: "
+
+set /P IS_DEBUG="the detailed information[yes/no/warn]: "
+
+
 
 IF /I "%IS_DEBUG%" EQU "yes" (
+
     set VERBOSE=3
+
 )
+
+
 
 IF /I "%IS_DEBUG%" EQU "warn" (
+
     set VERBOSE=1
+
 )
 
-rem ---  python Às
-python src/openpose_3dpose_sandbox_vmd.py --camera_frame --residual --batch_norm --dropout 0.5 --max_norm --evaluateActionWise --use_sh --epochs 200 --load 4874200 --gif_fps 30 --verbose %VERBOSE% --openpose %TARGET_DIR% --person_idx 1
 
 
+python src/openpose_3dpose_sandbox_vmd.py --camera_frame --residual --batch_norm --dropout 0.5 --max_norm --evaluateActionWise --use_sh --epochs 200 --load 4874200 --gif_fps 30 --verbose %VERBOSE% --openpose %OPENPOSE_JSON% --person_idx %PERSON_IDX%
+
+
+pause
