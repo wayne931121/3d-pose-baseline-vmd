@@ -1,0 +1,1494 @@
+
+(C:\ai1) C:\Users\TEST\OpenMMD 1.0\3d-pose-baseline-vmd>call activate C://ai1 
+
+(C:\ai1) C:\Users\TEST\OpenMMD 1.0\3d-pose-baseline-vmd>conda.bat activate C://ai1 
+Failed to run 'conda activate C://ai1'.
+
+(C:\ai1) C:\Users\TEST\OpenMMD 1.0\3d-pose-baseline-vmd>rem idk why chcp 65001 need run after conda activate, or it will activate failed 
+
+(C:\ai1) C:\Users\TEST\OpenMMD 1.0\3d-pose-baseline-vmd>chcp 65001 
+Active code page: 65001
+
+(C:\ai1) C:\Users\TEST\OpenMMD 1.0\3d-pose-baseline-vmd>set USE_LIBUV=0 
+
+(C:\ai1) C:\Users\TEST\OpenMMD 1.0\3d-pose-baseline-vmd>set KMP_DUPLICATE_LIB_OK=TRUE 
+
+(C:\ai1) C:\Users\TEST\OpenMMD 1.0\3d-pose-baseline-vmd>python src/openpose_3dpose_sandbox_vmd.py --camera_frame --residual --batch_norm --dropout 0.5 --max_norm --evaluateActionWise --use_sh --epochs 200 --load 4874200 --gif_fps 30 --verbose 3 --openpose C:\_json --person_idx 1 
+experiments\All\dropout_0.5\epochs_200\lr_0.001\residual\depth_2\ls1024\bs64\np\maxnorm\batch_normalization\use_stacked_hourglass\predict_17
+Reading subject 1, action Directions
+data/h36m/S1\StackedHourglass/Directions*.h5
+data/h36m/S1\StackedHourglass\Directions.54138969.h5
+data/h36m/S1\StackedHourglass\Directions.55011271.h5
+data/h36m/S1\StackedHourglass\Directions.58860488.h5
+data/h36m/S1\StackedHourglass\Directions.60457274.h5
+data/h36m/S1\StackedHourglass\Directions_1.54138969.h5
+data/h36m/S1\StackedHourglass\Directions_1.55011271.h5
+data/h36m/S1\StackedHourglass\Directions_1.58860488.h5
+data/h36m/S1\StackedHourglass\Directions_1.60457274.h5
+Reading subject 1, action Discussion
+data/h36m/S1\StackedHourglass/Discussion*.h5
+data/h36m/S1\StackedHourglass\Discussion.54138969.h5
+data/h36m/S1\StackedHourglass\Discussion.55011271.h5
+data/h36m/S1\StackedHourglass\Discussion.58860488.h5
+data/h36m/S1\StackedHourglass\Discussion.60457274.h5
+data/h36m/S1\StackedHourglass\Discussion_1.54138969.h5
+data/h36m/S1\StackedHourglass\Discussion_1.55011271.h5
+data/h36m/S1\StackedHourglass\Discussion_1.58860488.h5
+data/h36m/S1\StackedHourglass\Discussion_1.60457274.h5
+Reading subject 1, action Eating
+data/h36m/S1\StackedHourglass/Eating*.h5
+data/h36m/S1\StackedHourglass\Eating.54138969.h5
+data/h36m/S1\StackedHourglass\Eating.55011271.h5
+data/h36m/S1\StackedHourglass\Eating.58860488.h5
+data/h36m/S1\StackedHourglass\Eating.60457274.h5
+data/h36m/S1\StackedHourglass\Eating_2.54138969.h5
+data/h36m/S1\StackedHourglass\Eating_2.55011271.h5
+data/h36m/S1\StackedHourglass\Eating_2.58860488.h5
+data/h36m/S1\StackedHourglass\Eating_2.60457274.h5
+Reading subject 1, action Greeting
+data/h36m/S1\StackedHourglass/Greeting*.h5
+data/h36m/S1\StackedHourglass\Greeting.54138969.h5
+data/h36m/S1\StackedHourglass\Greeting.55011271.h5
+data/h36m/S1\StackedHourglass\Greeting.58860488.h5
+data/h36m/S1\StackedHourglass\Greeting.60457274.h5
+data/h36m/S1\StackedHourglass\Greeting_1.54138969.h5
+data/h36m/S1\StackedHourglass\Greeting_1.55011271.h5
+data/h36m/S1\StackedHourglass\Greeting_1.58860488.h5
+data/h36m/S1\StackedHourglass\Greeting_1.60457274.h5
+Reading subject 1, action Phoning
+data/h36m/S1\StackedHourglass/Phoning*.h5
+data/h36m/S1\StackedHourglass\Phoning.54138969.h5
+data/h36m/S1\StackedHourglass\Phoning.55011271.h5
+data/h36m/S1\StackedHourglass\Phoning.58860488.h5
+data/h36m/S1\StackedHourglass\Phoning.60457274.h5
+data/h36m/S1\StackedHourglass\Phoning_1.54138969.h5
+data/h36m/S1\StackedHourglass\Phoning_1.55011271.h5
+data/h36m/S1\StackedHourglass\Phoning_1.58860488.h5
+data/h36m/S1\StackedHourglass\Phoning_1.60457274.h5
+Reading subject 1, action Photo
+data/h36m/S1\StackedHourglass/Photo*.h5
+data/h36m/S1\StackedHourglass\Photo.54138969.h5
+data/h36m/S1\StackedHourglass\Photo.55011271.h5
+data/h36m/S1\StackedHourglass\Photo.58860488.h5
+data/h36m/S1\StackedHourglass\Photo.60457274.h5
+data/h36m/S1\StackedHourglass\Photo_1.54138969.h5
+data/h36m/S1\StackedHourglass\Photo_1.55011271.h5
+data/h36m/S1\StackedHourglass\Photo_1.58860488.h5
+data/h36m/S1\StackedHourglass\Photo_1.60457274.h5
+Reading subject 1, action Posing
+data/h36m/S1\StackedHourglass/Posing*.h5
+data/h36m/S1\StackedHourglass\Posing.54138969.h5
+data/h36m/S1\StackedHourglass\Posing.55011271.h5
+data/h36m/S1\StackedHourglass\Posing.58860488.h5
+data/h36m/S1\StackedHourglass\Posing.60457274.h5
+data/h36m/S1\StackedHourglass\Posing_1.54138969.h5
+data/h36m/S1\StackedHourglass\Posing_1.55011271.h5
+data/h36m/S1\StackedHourglass\Posing_1.58860488.h5
+data/h36m/S1\StackedHourglass\Posing_1.60457274.h5
+Reading subject 1, action Purchases
+data/h36m/S1\StackedHourglass/Purchases*.h5
+data/h36m/S1\StackedHourglass\Purchases.54138969.h5
+data/h36m/S1\StackedHourglass\Purchases.55011271.h5
+data/h36m/S1\StackedHourglass\Purchases.58860488.h5
+data/h36m/S1\StackedHourglass\Purchases.60457274.h5
+data/h36m/S1\StackedHourglass\Purchases_1.54138969.h5
+data/h36m/S1\StackedHourglass\Purchases_1.55011271.h5
+data/h36m/S1\StackedHourglass\Purchases_1.58860488.h5
+data/h36m/S1\StackedHourglass\Purchases_1.60457274.h5
+Reading subject 1, action Sitting
+data/h36m/S1\StackedHourglass/Sitting*.h5
+data/h36m/S1\StackedHourglass\Sitting_1.54138969.h5
+data/h36m/S1\StackedHourglass\Sitting_1.55011271.h5
+data/h36m/S1\StackedHourglass\Sitting_1.58860488.h5
+data/h36m/S1\StackedHourglass\Sitting_1.60457274.h5
+data/h36m/S1\StackedHourglass\Sitting_2.54138969.h5
+data/h36m/S1\StackedHourglass\Sitting_2.55011271.h5
+data/h36m/S1\StackedHourglass\Sitting_2.58860488.h5
+data/h36m/S1\StackedHourglass\Sitting_2.60457274.h5
+Reading subject 1, action SittingDown
+data/h36m/S1\StackedHourglass/SittingDown*.h5
+data/h36m/S1\StackedHourglass\SittingDown.54138969.h5
+data/h36m/S1\StackedHourglass\SittingDown.55011271.h5
+data/h36m/S1\StackedHourglass\SittingDown.58860488.h5
+data/h36m/S1\StackedHourglass\SittingDown.60457274.h5
+data/h36m/S1\StackedHourglass\SittingDown_2.54138969.h5
+data/h36m/S1\StackedHourglass\SittingDown_2.55011271.h5
+data/h36m/S1\StackedHourglass\SittingDown_2.58860488.h5
+data/h36m/S1\StackedHourglass\SittingDown_2.60457274.h5
+Reading subject 1, action Smoking
+data/h36m/S1\StackedHourglass/Smoking*.h5
+data/h36m/S1\StackedHourglass\Smoking.54138969.h5
+data/h36m/S1\StackedHourglass\Smoking.55011271.h5
+data/h36m/S1\StackedHourglass\Smoking.58860488.h5
+data/h36m/S1\StackedHourglass\Smoking.60457274.h5
+data/h36m/S1\StackedHourglass\Smoking_1.54138969.h5
+data/h36m/S1\StackedHourglass\Smoking_1.55011271.h5
+data/h36m/S1\StackedHourglass\Smoking_1.58860488.h5
+data/h36m/S1\StackedHourglass\Smoking_1.60457274.h5
+Reading subject 1, action Waiting
+data/h36m/S1\StackedHourglass/Waiting*.h5
+data/h36m/S1\StackedHourglass\Waiting.54138969.h5
+data/h36m/S1\StackedHourglass\Waiting.55011271.h5
+data/h36m/S1\StackedHourglass\Waiting.58860488.h5
+data/h36m/S1\StackedHourglass\Waiting.60457274.h5
+data/h36m/S1\StackedHourglass\Waiting_1.54138969.h5
+data/h36m/S1\StackedHourglass\Waiting_1.55011271.h5
+data/h36m/S1\StackedHourglass\Waiting_1.58860488.h5
+data/h36m/S1\StackedHourglass\Waiting_1.60457274.h5
+Reading subject 1, action WalkDog
+data/h36m/S1\StackedHourglass/WalkDog*.h5
+data/h36m/S1\StackedHourglass\WalkDog.54138969.h5
+data/h36m/S1\StackedHourglass\WalkDog.55011271.h5
+data/h36m/S1\StackedHourglass\WalkDog.58860488.h5
+data/h36m/S1\StackedHourglass\WalkDog.60457274.h5
+data/h36m/S1\StackedHourglass\WalkDog_1.54138969.h5
+data/h36m/S1\StackedHourglass\WalkDog_1.55011271.h5
+data/h36m/S1\StackedHourglass\WalkDog_1.58860488.h5
+data/h36m/S1\StackedHourglass\WalkDog_1.60457274.h5
+Reading subject 1, action Walking
+data/h36m/S1\StackedHourglass/Walking*.h5
+data/h36m/S1\StackedHourglass\Walking.54138969.h5
+data/h36m/S1\StackedHourglass\Walking.55011271.h5
+data/h36m/S1\StackedHourglass\Walking.58860488.h5
+data/h36m/S1\StackedHourglass\Walking.60457274.h5
+data/h36m/S1\StackedHourglass\Walking_1.54138969.h5
+data/h36m/S1\StackedHourglass\Walking_1.55011271.h5
+data/h36m/S1\StackedHourglass\Walking_1.58860488.h5
+data/h36m/S1\StackedHourglass\Walking_1.60457274.h5
+Reading subject 1, action WalkTogether
+data/h36m/S1\StackedHourglass/WalkTogether*.h5
+data/h36m/S1\StackedHourglass\WalkTogether.54138969.h5
+data/h36m/S1\StackedHourglass\WalkTogether.55011271.h5
+data/h36m/S1\StackedHourglass\WalkTogether.58860488.h5
+data/h36m/S1\StackedHourglass\WalkTogether.60457274.h5
+data/h36m/S1\StackedHourglass\WalkTogether_1.54138969.h5
+data/h36m/S1\StackedHourglass\WalkTogether_1.55011271.h5
+data/h36m/S1\StackedHourglass\WalkTogether_1.58860488.h5
+data/h36m/S1\StackedHourglass\WalkTogether_1.60457274.h5
+Reading subject 5, action Directions
+data/h36m/S5\StackedHourglass/Directions*.h5
+data/h36m/S5\StackedHourglass\Directions_1.54138969.h5
+data/h36m/S5\StackedHourglass\Directions_1.55011271.h5
+data/h36m/S5\StackedHourglass\Directions_1.58860488.h5
+data/h36m/S5\StackedHourglass\Directions_1.60457274.h5
+data/h36m/S5\StackedHourglass\Directions_2.54138969.h5
+data/h36m/S5\StackedHourglass\Directions_2.55011271.h5
+data/h36m/S5\StackedHourglass\Directions_2.58860488.h5
+data/h36m/S5\StackedHourglass\Directions_2.60457274.h5
+Reading subject 5, action Discussion
+data/h36m/S5\StackedHourglass/Discussion*.h5
+data/h36m/S5\StackedHourglass\Discussion_2.54138969.h5
+data/h36m/S5\StackedHourglass\Discussion_2.55011271.h5
+data/h36m/S5\StackedHourglass\Discussion_2.58860488.h5
+data/h36m/S5\StackedHourglass\Discussion_2.60457274.h5
+data/h36m/S5\StackedHourglass\Discussion_3.54138969.h5
+data/h36m/S5\StackedHourglass\Discussion_3.55011271.h5
+data/h36m/S5\StackedHourglass\Discussion_3.58860488.h5
+data/h36m/S5\StackedHourglass\Discussion_3.60457274.h5
+Reading subject 5, action Eating
+data/h36m/S5\StackedHourglass/Eating*.h5
+data/h36m/S5\StackedHourglass\Eating.54138969.h5
+data/h36m/S5\StackedHourglass\Eating.55011271.h5
+data/h36m/S5\StackedHourglass\Eating.58860488.h5
+data/h36m/S5\StackedHourglass\Eating.60457274.h5
+data/h36m/S5\StackedHourglass\Eating_1.54138969.h5
+data/h36m/S5\StackedHourglass\Eating_1.55011271.h5
+data/h36m/S5\StackedHourglass\Eating_1.58860488.h5
+data/h36m/S5\StackedHourglass\Eating_1.60457274.h5
+Reading subject 5, action Greeting
+data/h36m/S5\StackedHourglass/Greeting*.h5
+data/h36m/S5\StackedHourglass\Greeting_1.54138969.h5
+data/h36m/S5\StackedHourglass\Greeting_1.55011271.h5
+data/h36m/S5\StackedHourglass\Greeting_1.58860488.h5
+data/h36m/S5\StackedHourglass\Greeting_1.60457274.h5
+data/h36m/S5\StackedHourglass\Greeting_2.54138969.h5
+data/h36m/S5\StackedHourglass\Greeting_2.55011271.h5
+data/h36m/S5\StackedHourglass\Greeting_2.58860488.h5
+data/h36m/S5\StackedHourglass\Greeting_2.60457274.h5
+Reading subject 5, action Phoning
+data/h36m/S5\StackedHourglass/Phoning*.h5
+data/h36m/S5\StackedHourglass\Phoning.54138969.h5
+data/h36m/S5\StackedHourglass\Phoning.55011271.h5
+data/h36m/S5\StackedHourglass\Phoning.58860488.h5
+data/h36m/S5\StackedHourglass\Phoning.60457274.h5
+data/h36m/S5\StackedHourglass\Phoning_1.54138969.h5
+data/h36m/S5\StackedHourglass\Phoning_1.55011271.h5
+data/h36m/S5\StackedHourglass\Phoning_1.58860488.h5
+data/h36m/S5\StackedHourglass\Phoning_1.60457274.h5
+Reading subject 5, action Photo
+data/h36m/S5\StackedHourglass/Photo*.h5
+data/h36m/S5\StackedHourglass\Photo.54138969.h5
+data/h36m/S5\StackedHourglass\Photo.55011271.h5
+data/h36m/S5\StackedHourglass\Photo.58860488.h5
+data/h36m/S5\StackedHourglass\Photo.60457274.h5
+data/h36m/S5\StackedHourglass\Photo_2.54138969.h5
+data/h36m/S5\StackedHourglass\Photo_2.55011271.h5
+data/h36m/S5\StackedHourglass\Photo_2.58860488.h5
+data/h36m/S5\StackedHourglass\Photo_2.60457274.h5
+Reading subject 5, action Posing
+data/h36m/S5\StackedHourglass/Posing*.h5
+data/h36m/S5\StackedHourglass\Posing.54138969.h5
+data/h36m/S5\StackedHourglass\Posing.55011271.h5
+data/h36m/S5\StackedHourglass\Posing.58860488.h5
+data/h36m/S5\StackedHourglass\Posing.60457274.h5
+data/h36m/S5\StackedHourglass\Posing_1.54138969.h5
+data/h36m/S5\StackedHourglass\Posing_1.55011271.h5
+data/h36m/S5\StackedHourglass\Posing_1.58860488.h5
+data/h36m/S5\StackedHourglass\Posing_1.60457274.h5
+Reading subject 5, action Purchases
+data/h36m/S5\StackedHourglass/Purchases*.h5
+data/h36m/S5\StackedHourglass\Purchases.54138969.h5
+data/h36m/S5\StackedHourglass\Purchases.55011271.h5
+data/h36m/S5\StackedHourglass\Purchases.58860488.h5
+data/h36m/S5\StackedHourglass\Purchases.60457274.h5
+data/h36m/S5\StackedHourglass\Purchases_1.54138969.h5
+data/h36m/S5\StackedHourglass\Purchases_1.55011271.h5
+data/h36m/S5\StackedHourglass\Purchases_1.58860488.h5
+data/h36m/S5\StackedHourglass\Purchases_1.60457274.h5
+Reading subject 5, action Sitting
+data/h36m/S5\StackedHourglass/Sitting*.h5
+data/h36m/S5\StackedHourglass\Sitting.54138969.h5
+data/h36m/S5\StackedHourglass\Sitting.55011271.h5
+data/h36m/S5\StackedHourglass\Sitting.58860488.h5
+data/h36m/S5\StackedHourglass\Sitting.60457274.h5
+data/h36m/S5\StackedHourglass\Sitting_1.54138969.h5
+data/h36m/S5\StackedHourglass\Sitting_1.55011271.h5
+data/h36m/S5\StackedHourglass\Sitting_1.58860488.h5
+data/h36m/S5\StackedHourglass\Sitting_1.60457274.h5
+Reading subject 5, action SittingDown
+data/h36m/S5\StackedHourglass/SittingDown*.h5
+data/h36m/S5\StackedHourglass\SittingDown.54138969.h5
+data/h36m/S5\StackedHourglass\SittingDown.55011271.h5
+data/h36m/S5\StackedHourglass\SittingDown.58860488.h5
+data/h36m/S5\StackedHourglass\SittingDown.60457274.h5
+data/h36m/S5\StackedHourglass\SittingDown_1.54138969.h5
+data/h36m/S5\StackedHourglass\SittingDown_1.55011271.h5
+data/h36m/S5\StackedHourglass\SittingDown_1.58860488.h5
+data/h36m/S5\StackedHourglass\SittingDown_1.60457274.h5
+Reading subject 5, action Smoking
+data/h36m/S5\StackedHourglass/Smoking*.h5
+data/h36m/S5\StackedHourglass\Smoking.54138969.h5
+data/h36m/S5\StackedHourglass\Smoking.55011271.h5
+data/h36m/S5\StackedHourglass\Smoking.58860488.h5
+data/h36m/S5\StackedHourglass\Smoking.60457274.h5
+data/h36m/S5\StackedHourglass\Smoking_1.54138969.h5
+data/h36m/S5\StackedHourglass\Smoking_1.55011271.h5
+data/h36m/S5\StackedHourglass\Smoking_1.58860488.h5
+data/h36m/S5\StackedHourglass\Smoking_1.60457274.h5
+Reading subject 5, action Waiting
+data/h36m/S5\StackedHourglass/Waiting*.h5
+data/h36m/S5\StackedHourglass\Waiting_1.54138969.h5
+data/h36m/S5\StackedHourglass\Waiting_1.55011271.h5
+data/h36m/S5\StackedHourglass\Waiting_1.58860488.h5
+data/h36m/S5\StackedHourglass\Waiting_1.60457274.h5
+data/h36m/S5\StackedHourglass\Waiting_2.54138969.h5
+data/h36m/S5\StackedHourglass\Waiting_2.55011271.h5
+data/h36m/S5\StackedHourglass\Waiting_2.58860488.h5
+data/h36m/S5\StackedHourglass\Waiting_2.60457274.h5
+Reading subject 5, action WalkDog
+data/h36m/S5\StackedHourglass/WalkDog*.h5
+data/h36m/S5\StackedHourglass\WalkDog.54138969.h5
+data/h36m/S5\StackedHourglass\WalkDog.55011271.h5
+data/h36m/S5\StackedHourglass\WalkDog.58860488.h5
+data/h36m/S5\StackedHourglass\WalkDog.60457274.h5
+data/h36m/S5\StackedHourglass\WalkDog_1.54138969.h5
+data/h36m/S5\StackedHourglass\WalkDog_1.55011271.h5
+data/h36m/S5\StackedHourglass\WalkDog_1.58860488.h5
+data/h36m/S5\StackedHourglass\WalkDog_1.60457274.h5
+Reading subject 5, action Walking
+data/h36m/S5\StackedHourglass/Walking*.h5
+data/h36m/S5\StackedHourglass\Walking.54138969.h5
+data/h36m/S5\StackedHourglass\Walking.55011271.h5
+data/h36m/S5\StackedHourglass\Walking.58860488.h5
+data/h36m/S5\StackedHourglass\Walking.60457274.h5
+data/h36m/S5\StackedHourglass\Walking_1.54138969.h5
+data/h36m/S5\StackedHourglass\Walking_1.55011271.h5
+data/h36m/S5\StackedHourglass\Walking_1.58860488.h5
+data/h36m/S5\StackedHourglass\Walking_1.60457274.h5
+Reading subject 5, action WalkTogether
+data/h36m/S5\StackedHourglass/WalkTogether*.h5
+data/h36m/S5\StackedHourglass\WalkTogether.54138969.h5
+data/h36m/S5\StackedHourglass\WalkTogether.55011271.h5
+data/h36m/S5\StackedHourglass\WalkTogether.58860488.h5
+data/h36m/S5\StackedHourglass\WalkTogether.60457274.h5
+data/h36m/S5\StackedHourglass\WalkTogether_1.54138969.h5
+data/h36m/S5\StackedHourglass\WalkTogether_1.55011271.h5
+data/h36m/S5\StackedHourglass\WalkTogether_1.58860488.h5
+data/h36m/S5\StackedHourglass\WalkTogether_1.60457274.h5
+Reading subject 6, action Directions
+data/h36m/S6\StackedHourglass/Directions*.h5
+data/h36m/S6\StackedHourglass\Directions.54138969.h5
+data/h36m/S6\StackedHourglass\Directions.55011271.h5
+data/h36m/S6\StackedHourglass\Directions.58860488.h5
+data/h36m/S6\StackedHourglass\Directions.60457274.h5
+data/h36m/S6\StackedHourglass\Directions_1.54138969.h5
+data/h36m/S6\StackedHourglass\Directions_1.55011271.h5
+data/h36m/S6\StackedHourglass\Directions_1.58860488.h5
+data/h36m/S6\StackedHourglass\Directions_1.60457274.h5
+Reading subject 6, action Discussion
+data/h36m/S6\StackedHourglass/Discussion*.h5
+data/h36m/S6\StackedHourglass\Discussion.54138969.h5
+data/h36m/S6\StackedHourglass\Discussion.55011271.h5
+data/h36m/S6\StackedHourglass\Discussion.58860488.h5
+data/h36m/S6\StackedHourglass\Discussion.60457274.h5
+data/h36m/S6\StackedHourglass\Discussion_1.54138969.h5
+data/h36m/S6\StackedHourglass\Discussion_1.55011271.h5
+data/h36m/S6\StackedHourglass\Discussion_1.58860488.h5
+data/h36m/S6\StackedHourglass\Discussion_1.60457274.h5
+Reading subject 6, action Eating
+data/h36m/S6\StackedHourglass/Eating*.h5
+data/h36m/S6\StackedHourglass\Eating_1.54138969.h5
+data/h36m/S6\StackedHourglass\Eating_1.55011271.h5
+data/h36m/S6\StackedHourglass\Eating_1.58860488.h5
+data/h36m/S6\StackedHourglass\Eating_1.60457274.h5
+data/h36m/S6\StackedHourglass\Eating_2.54138969.h5
+data/h36m/S6\StackedHourglass\Eating_2.55011271.h5
+data/h36m/S6\StackedHourglass\Eating_2.58860488.h5
+data/h36m/S6\StackedHourglass\Eating_2.60457274.h5
+Reading subject 6, action Greeting
+data/h36m/S6\StackedHourglass/Greeting*.h5
+data/h36m/S6\StackedHourglass\Greeting.54138969.h5
+data/h36m/S6\StackedHourglass\Greeting.55011271.h5
+data/h36m/S6\StackedHourglass\Greeting.58860488.h5
+data/h36m/S6\StackedHourglass\Greeting.60457274.h5
+data/h36m/S6\StackedHourglass\Greeting_1.54138969.h5
+data/h36m/S6\StackedHourglass\Greeting_1.55011271.h5
+data/h36m/S6\StackedHourglass\Greeting_1.58860488.h5
+data/h36m/S6\StackedHourglass\Greeting_1.60457274.h5
+Reading subject 6, action Phoning
+data/h36m/S6\StackedHourglass/Phoning*.h5
+data/h36m/S6\StackedHourglass\Phoning.54138969.h5
+data/h36m/S6\StackedHourglass\Phoning.55011271.h5
+data/h36m/S6\StackedHourglass\Phoning.58860488.h5
+data/h36m/S6\StackedHourglass\Phoning.60457274.h5
+data/h36m/S6\StackedHourglass\Phoning_1.54138969.h5
+data/h36m/S6\StackedHourglass\Phoning_1.55011271.h5
+data/h36m/S6\StackedHourglass\Phoning_1.58860488.h5
+data/h36m/S6\StackedHourglass\Phoning_1.60457274.h5
+Reading subject 6, action Photo
+data/h36m/S6\StackedHourglass/Photo*.h5
+data/h36m/S6\StackedHourglass\Photo.54138969.h5
+data/h36m/S6\StackedHourglass\Photo.55011271.h5
+data/h36m/S6\StackedHourglass\Photo.58860488.h5
+data/h36m/S6\StackedHourglass\Photo.60457274.h5
+data/h36m/S6\StackedHourglass\Photo_1.54138969.h5
+data/h36m/S6\StackedHourglass\Photo_1.55011271.h5
+data/h36m/S6\StackedHourglass\Photo_1.58860488.h5
+data/h36m/S6\StackedHourglass\Photo_1.60457274.h5
+Reading subject 6, action Posing
+data/h36m/S6\StackedHourglass/Posing*.h5
+data/h36m/S6\StackedHourglass\Posing.54138969.h5
+data/h36m/S6\StackedHourglass\Posing.55011271.h5
+data/h36m/S6\StackedHourglass\Posing.58860488.h5
+data/h36m/S6\StackedHourglass\Posing.60457274.h5
+data/h36m/S6\StackedHourglass\Posing_2.54138969.h5
+data/h36m/S6\StackedHourglass\Posing_2.55011271.h5
+data/h36m/S6\StackedHourglass\Posing_2.58860488.h5
+data/h36m/S6\StackedHourglass\Posing_2.60457274.h5
+Reading subject 6, action Purchases
+data/h36m/S6\StackedHourglass/Purchases*.h5
+data/h36m/S6\StackedHourglass\Purchases.54138969.h5
+data/h36m/S6\StackedHourglass\Purchases.55011271.h5
+data/h36m/S6\StackedHourglass\Purchases.58860488.h5
+data/h36m/S6\StackedHourglass\Purchases.60457274.h5
+data/h36m/S6\StackedHourglass\Purchases_1.54138969.h5
+data/h36m/S6\StackedHourglass\Purchases_1.55011271.h5
+data/h36m/S6\StackedHourglass\Purchases_1.58860488.h5
+data/h36m/S6\StackedHourglass\Purchases_1.60457274.h5
+Reading subject 6, action Sitting
+data/h36m/S6\StackedHourglass/Sitting*.h5
+data/h36m/S6\StackedHourglass\Sitting_1.54138969.h5
+data/h36m/S6\StackedHourglass\Sitting_1.55011271.h5
+data/h36m/S6\StackedHourglass\Sitting_1.58860488.h5
+data/h36m/S6\StackedHourglass\Sitting_1.60457274.h5
+data/h36m/S6\StackedHourglass\Sitting_2.54138969.h5
+data/h36m/S6\StackedHourglass\Sitting_2.55011271.h5
+data/h36m/S6\StackedHourglass\Sitting_2.58860488.h5
+data/h36m/S6\StackedHourglass\Sitting_2.60457274.h5
+Reading subject 6, action SittingDown
+data/h36m/S6\StackedHourglass/SittingDown*.h5
+data/h36m/S6\StackedHourglass\SittingDown.54138969.h5
+data/h36m/S6\StackedHourglass\SittingDown.55011271.h5
+data/h36m/S6\StackedHourglass\SittingDown.58860488.h5
+data/h36m/S6\StackedHourglass\SittingDown.60457274.h5
+data/h36m/S6\StackedHourglass\SittingDown_1.54138969.h5
+data/h36m/S6\StackedHourglass\SittingDown_1.55011271.h5
+data/h36m/S6\StackedHourglass\SittingDown_1.58860488.h5
+data/h36m/S6\StackedHourglass\SittingDown_1.60457274.h5
+Reading subject 6, action Smoking
+data/h36m/S6\StackedHourglass/Smoking*.h5
+data/h36m/S6\StackedHourglass\Smoking.54138969.h5
+data/h36m/S6\StackedHourglass\Smoking.55011271.h5
+data/h36m/S6\StackedHourglass\Smoking.58860488.h5
+data/h36m/S6\StackedHourglass\Smoking.60457274.h5
+data/h36m/S6\StackedHourglass\Smoking_1.54138969.h5
+data/h36m/S6\StackedHourglass\Smoking_1.55011271.h5
+data/h36m/S6\StackedHourglass\Smoking_1.58860488.h5
+data/h36m/S6\StackedHourglass\Smoking_1.60457274.h5
+Reading subject 6, action Waiting
+data/h36m/S6\StackedHourglass/Waiting*.h5
+data/h36m/S6\StackedHourglass\Waiting.54138969.h5
+data/h36m/S6\StackedHourglass\Waiting.55011271.h5
+data/h36m/S6\StackedHourglass\Waiting.58860488.h5
+data/h36m/S6\StackedHourglass\Waiting.60457274.h5
+data/h36m/S6\StackedHourglass\Waiting_3.54138969.h5
+data/h36m/S6\StackedHourglass\Waiting_3.55011271.h5
+data/h36m/S6\StackedHourglass\Waiting_3.58860488.h5
+data/h36m/S6\StackedHourglass\Waiting_3.60457274.h5
+Reading subject 6, action WalkDog
+data/h36m/S6\StackedHourglass/WalkDog*.h5
+data/h36m/S6\StackedHourglass\WalkDog.54138969.h5
+data/h36m/S6\StackedHourglass\WalkDog.55011271.h5
+data/h36m/S6\StackedHourglass\WalkDog.58860488.h5
+data/h36m/S6\StackedHourglass\WalkDog.60457274.h5
+data/h36m/S6\StackedHourglass\WalkDog_1.54138969.h5
+data/h36m/S6\StackedHourglass\WalkDog_1.55011271.h5
+data/h36m/S6\StackedHourglass\WalkDog_1.58860488.h5
+data/h36m/S6\StackedHourglass\WalkDog_1.60457274.h5
+Reading subject 6, action Walking
+data/h36m/S6\StackedHourglass/Walking*.h5
+data/h36m/S6\StackedHourglass\Walking.54138969.h5
+data/h36m/S6\StackedHourglass\Walking.55011271.h5
+data/h36m/S6\StackedHourglass\Walking.58860488.h5
+data/h36m/S6\StackedHourglass\Walking.60457274.h5
+data/h36m/S6\StackedHourglass\Walking_1.54138969.h5
+data/h36m/S6\StackedHourglass\Walking_1.55011271.h5
+data/h36m/S6\StackedHourglass\Walking_1.58860488.h5
+data/h36m/S6\StackedHourglass\Walking_1.60457274.h5
+Reading subject 6, action WalkTogether
+data/h36m/S6\StackedHourglass/WalkTogether*.h5
+data/h36m/S6\StackedHourglass\WalkTogether.54138969.h5
+data/h36m/S6\StackedHourglass\WalkTogether.55011271.h5
+data/h36m/S6\StackedHourglass\WalkTogether.58860488.h5
+data/h36m/S6\StackedHourglass\WalkTogether.60457274.h5
+data/h36m/S6\StackedHourglass\WalkTogether_1.54138969.h5
+data/h36m/S6\StackedHourglass\WalkTogether_1.55011271.h5
+data/h36m/S6\StackedHourglass\WalkTogether_1.58860488.h5
+data/h36m/S6\StackedHourglass\WalkTogether_1.60457274.h5
+Reading subject 7, action Directions
+data/h36m/S7\StackedHourglass/Directions*.h5
+data/h36m/S7\StackedHourglass\Directions.54138969.h5
+data/h36m/S7\StackedHourglass\Directions.55011271.h5
+data/h36m/S7\StackedHourglass\Directions.58860488.h5
+data/h36m/S7\StackedHourglass\Directions.60457274.h5
+data/h36m/S7\StackedHourglass\Directions_1.54138969.h5
+data/h36m/S7\StackedHourglass\Directions_1.55011271.h5
+data/h36m/S7\StackedHourglass\Directions_1.58860488.h5
+data/h36m/S7\StackedHourglass\Directions_1.60457274.h5
+Reading subject 7, action Discussion
+data/h36m/S7\StackedHourglass/Discussion*.h5
+data/h36m/S7\StackedHourglass\Discussion.54138969.h5
+data/h36m/S7\StackedHourglass\Discussion.55011271.h5
+data/h36m/S7\StackedHourglass\Discussion.58860488.h5
+data/h36m/S7\StackedHourglass\Discussion.60457274.h5
+data/h36m/S7\StackedHourglass\Discussion_1.54138969.h5
+data/h36m/S7\StackedHourglass\Discussion_1.55011271.h5
+data/h36m/S7\StackedHourglass\Discussion_1.58860488.h5
+data/h36m/S7\StackedHourglass\Discussion_1.60457274.h5
+Reading subject 7, action Eating
+data/h36m/S7\StackedHourglass/Eating*.h5
+data/h36m/S7\StackedHourglass\Eating.54138969.h5
+data/h36m/S7\StackedHourglass\Eating.55011271.h5
+data/h36m/S7\StackedHourglass\Eating.58860488.h5
+data/h36m/S7\StackedHourglass\Eating.60457274.h5
+data/h36m/S7\StackedHourglass\Eating_1.54138969.h5
+data/h36m/S7\StackedHourglass\Eating_1.55011271.h5
+data/h36m/S7\StackedHourglass\Eating_1.58860488.h5
+data/h36m/S7\StackedHourglass\Eating_1.60457274.h5
+Reading subject 7, action Greeting
+data/h36m/S7\StackedHourglass/Greeting*.h5
+data/h36m/S7\StackedHourglass\Greeting.54138969.h5
+data/h36m/S7\StackedHourglass\Greeting.55011271.h5
+data/h36m/S7\StackedHourglass\Greeting.58860488.h5
+data/h36m/S7\StackedHourglass\Greeting.60457274.h5
+data/h36m/S7\StackedHourglass\Greeting_1.54138969.h5
+data/h36m/S7\StackedHourglass\Greeting_1.55011271.h5
+data/h36m/S7\StackedHourglass\Greeting_1.58860488.h5
+data/h36m/S7\StackedHourglass\Greeting_1.60457274.h5
+Reading subject 7, action Phoning
+data/h36m/S7\StackedHourglass/Phoning*.h5
+data/h36m/S7\StackedHourglass\Phoning.54138969.h5
+data/h36m/S7\StackedHourglass\Phoning.55011271.h5
+data/h36m/S7\StackedHourglass\Phoning.58860488.h5
+data/h36m/S7\StackedHourglass\Phoning.60457274.h5
+data/h36m/S7\StackedHourglass\Phoning_2.54138969.h5
+data/h36m/S7\StackedHourglass\Phoning_2.55011271.h5
+data/h36m/S7\StackedHourglass\Phoning_2.58860488.h5
+data/h36m/S7\StackedHourglass\Phoning_2.60457274.h5
+Reading subject 7, action Photo
+data/h36m/S7\StackedHourglass/Photo*.h5
+data/h36m/S7\StackedHourglass\Photo.54138969.h5
+data/h36m/S7\StackedHourglass\Photo.55011271.h5
+data/h36m/S7\StackedHourglass\Photo.58860488.h5
+data/h36m/S7\StackedHourglass\Photo.60457274.h5
+data/h36m/S7\StackedHourglass\Photo_1.54138969.h5
+data/h36m/S7\StackedHourglass\Photo_1.55011271.h5
+data/h36m/S7\StackedHourglass\Photo_1.58860488.h5
+data/h36m/S7\StackedHourglass\Photo_1.60457274.h5
+Reading subject 7, action Posing
+data/h36m/S7\StackedHourglass/Posing*.h5
+data/h36m/S7\StackedHourglass\Posing.54138969.h5
+data/h36m/S7\StackedHourglass\Posing.55011271.h5
+data/h36m/S7\StackedHourglass\Posing.58860488.h5
+data/h36m/S7\StackedHourglass\Posing.60457274.h5
+data/h36m/S7\StackedHourglass\Posing_1.54138969.h5
+data/h36m/S7\StackedHourglass\Posing_1.55011271.h5
+data/h36m/S7\StackedHourglass\Posing_1.58860488.h5
+data/h36m/S7\StackedHourglass\Posing_1.60457274.h5
+Reading subject 7, action Purchases
+data/h36m/S7\StackedHourglass/Purchases*.h5
+data/h36m/S7\StackedHourglass\Purchases.54138969.h5
+data/h36m/S7\StackedHourglass\Purchases.55011271.h5
+data/h36m/S7\StackedHourglass\Purchases.58860488.h5
+data/h36m/S7\StackedHourglass\Purchases.60457274.h5
+data/h36m/S7\StackedHourglass\Purchases_1.54138969.h5
+data/h36m/S7\StackedHourglass\Purchases_1.55011271.h5
+data/h36m/S7\StackedHourglass\Purchases_1.58860488.h5
+data/h36m/S7\StackedHourglass\Purchases_1.60457274.h5
+Reading subject 7, action Sitting
+data/h36m/S7\StackedHourglass/Sitting*.h5
+data/h36m/S7\StackedHourglass\Sitting.54138969.h5
+data/h36m/S7\StackedHourglass\Sitting.55011271.h5
+data/h36m/S7\StackedHourglass\Sitting.58860488.h5
+data/h36m/S7\StackedHourglass\Sitting.60457274.h5
+data/h36m/S7\StackedHourglass\Sitting_1.54138969.h5
+data/h36m/S7\StackedHourglass\Sitting_1.55011271.h5
+data/h36m/S7\StackedHourglass\Sitting_1.58860488.h5
+data/h36m/S7\StackedHourglass\Sitting_1.60457274.h5
+Reading subject 7, action SittingDown
+data/h36m/S7\StackedHourglass/SittingDown*.h5
+data/h36m/S7\StackedHourglass\SittingDown.54138969.h5
+data/h36m/S7\StackedHourglass\SittingDown.55011271.h5
+data/h36m/S7\StackedHourglass\SittingDown.58860488.h5
+data/h36m/S7\StackedHourglass\SittingDown.60457274.h5
+data/h36m/S7\StackedHourglass\SittingDown_1.54138969.h5
+data/h36m/S7\StackedHourglass\SittingDown_1.55011271.h5
+data/h36m/S7\StackedHourglass\SittingDown_1.58860488.h5
+data/h36m/S7\StackedHourglass\SittingDown_1.60457274.h5
+Reading subject 7, action Smoking
+data/h36m/S7\StackedHourglass/Smoking*.h5
+data/h36m/S7\StackedHourglass\Smoking.54138969.h5
+data/h36m/S7\StackedHourglass\Smoking.55011271.h5
+data/h36m/S7\StackedHourglass\Smoking.58860488.h5
+data/h36m/S7\StackedHourglass\Smoking.60457274.h5
+data/h36m/S7\StackedHourglass\Smoking_1.54138969.h5
+data/h36m/S7\StackedHourglass\Smoking_1.55011271.h5
+data/h36m/S7\StackedHourglass\Smoking_1.58860488.h5
+data/h36m/S7\StackedHourglass\Smoking_1.60457274.h5
+Reading subject 7, action Waiting
+data/h36m/S7\StackedHourglass/Waiting*.h5
+data/h36m/S7\StackedHourglass\Waiting_1.54138969.h5
+data/h36m/S7\StackedHourglass\Waiting_1.55011271.h5
+data/h36m/S7\StackedHourglass\Waiting_1.58860488.h5
+data/h36m/S7\StackedHourglass\Waiting_1.60457274.h5
+data/h36m/S7\StackedHourglass\Waiting_2.54138969.h5
+data/h36m/S7\StackedHourglass\Waiting_2.55011271.h5
+data/h36m/S7\StackedHourglass\Waiting_2.58860488.h5
+data/h36m/S7\StackedHourglass\Waiting_2.60457274.h5
+Reading subject 7, action WalkDog
+data/h36m/S7\StackedHourglass/WalkDog*.h5
+data/h36m/S7\StackedHourglass\WalkDog.54138969.h5
+data/h36m/S7\StackedHourglass\WalkDog.55011271.h5
+data/h36m/S7\StackedHourglass\WalkDog.58860488.h5
+data/h36m/S7\StackedHourglass\WalkDog.60457274.h5
+data/h36m/S7\StackedHourglass\WalkDog_1.54138969.h5
+data/h36m/S7\StackedHourglass\WalkDog_1.55011271.h5
+data/h36m/S7\StackedHourglass\WalkDog_1.58860488.h5
+data/h36m/S7\StackedHourglass\WalkDog_1.60457274.h5
+Reading subject 7, action Walking
+data/h36m/S7\StackedHourglass/Walking*.h5
+data/h36m/S7\StackedHourglass\Walking_1.54138969.h5
+data/h36m/S7\StackedHourglass\Walking_1.55011271.h5
+data/h36m/S7\StackedHourglass\Walking_1.58860488.h5
+data/h36m/S7\StackedHourglass\Walking_1.60457274.h5
+data/h36m/S7\StackedHourglass\Walking_2.54138969.h5
+data/h36m/S7\StackedHourglass\Walking_2.55011271.h5
+data/h36m/S7\StackedHourglass\Walking_2.58860488.h5
+data/h36m/S7\StackedHourglass\Walking_2.60457274.h5
+Reading subject 7, action WalkTogether
+data/h36m/S7\StackedHourglass/WalkTogether*.h5
+data/h36m/S7\StackedHourglass\WalkTogether.54138969.h5
+data/h36m/S7\StackedHourglass\WalkTogether.55011271.h5
+data/h36m/S7\StackedHourglass\WalkTogether.58860488.h5
+data/h36m/S7\StackedHourglass\WalkTogether.60457274.h5
+data/h36m/S7\StackedHourglass\WalkTogether_1.54138969.h5
+data/h36m/S7\StackedHourglass\WalkTogether_1.55011271.h5
+data/h36m/S7\StackedHourglass\WalkTogether_1.58860488.h5
+data/h36m/S7\StackedHourglass\WalkTogether_1.60457274.h5
+Reading subject 8, action Directions
+data/h36m/S8\StackedHourglass/Directions*.h5
+data/h36m/S8\StackedHourglass\Directions.54138969.h5
+data/h36m/S8\StackedHourglass\Directions.55011271.h5
+data/h36m/S8\StackedHourglass\Directions.58860488.h5
+data/h36m/S8\StackedHourglass\Directions.60457274.h5
+data/h36m/S8\StackedHourglass\Directions_1.54138969.h5
+data/h36m/S8\StackedHourglass\Directions_1.55011271.h5
+data/h36m/S8\StackedHourglass\Directions_1.58860488.h5
+data/h36m/S8\StackedHourglass\Directions_1.60457274.h5
+Reading subject 8, action Discussion
+data/h36m/S8\StackedHourglass/Discussion*.h5
+data/h36m/S8\StackedHourglass\Discussion.54138969.h5
+data/h36m/S8\StackedHourglass\Discussion.55011271.h5
+data/h36m/S8\StackedHourglass\Discussion.58860488.h5
+data/h36m/S8\StackedHourglass\Discussion.60457274.h5
+data/h36m/S8\StackedHourglass\Discussion_1.54138969.h5
+data/h36m/S8\StackedHourglass\Discussion_1.55011271.h5
+data/h36m/S8\StackedHourglass\Discussion_1.58860488.h5
+data/h36m/S8\StackedHourglass\Discussion_1.60457274.h5
+Reading subject 8, action Eating
+data/h36m/S8\StackedHourglass/Eating*.h5
+data/h36m/S8\StackedHourglass\Eating.54138969.h5
+data/h36m/S8\StackedHourglass\Eating.55011271.h5
+data/h36m/S8\StackedHourglass\Eating.58860488.h5
+data/h36m/S8\StackedHourglass\Eating.60457274.h5
+data/h36m/S8\StackedHourglass\Eating_1.54138969.h5
+data/h36m/S8\StackedHourglass\Eating_1.55011271.h5
+data/h36m/S8\StackedHourglass\Eating_1.58860488.h5
+data/h36m/S8\StackedHourglass\Eating_1.60457274.h5
+Reading subject 8, action Greeting
+data/h36m/S8\StackedHourglass/Greeting*.h5
+data/h36m/S8\StackedHourglass\Greeting.54138969.h5
+data/h36m/S8\StackedHourglass\Greeting.55011271.h5
+data/h36m/S8\StackedHourglass\Greeting.58860488.h5
+data/h36m/S8\StackedHourglass\Greeting.60457274.h5
+data/h36m/S8\StackedHourglass\Greeting_1.54138969.h5
+data/h36m/S8\StackedHourglass\Greeting_1.55011271.h5
+data/h36m/S8\StackedHourglass\Greeting_1.58860488.h5
+data/h36m/S8\StackedHourglass\Greeting_1.60457274.h5
+Reading subject 8, action Phoning
+data/h36m/S8\StackedHourglass/Phoning*.h5
+data/h36m/S8\StackedHourglass\Phoning.54138969.h5
+data/h36m/S8\StackedHourglass\Phoning.55011271.h5
+data/h36m/S8\StackedHourglass\Phoning.58860488.h5
+data/h36m/S8\StackedHourglass\Phoning.60457274.h5
+data/h36m/S8\StackedHourglass\Phoning_1.54138969.h5
+data/h36m/S8\StackedHourglass\Phoning_1.55011271.h5
+data/h36m/S8\StackedHourglass\Phoning_1.58860488.h5
+data/h36m/S8\StackedHourglass\Phoning_1.60457274.h5
+Reading subject 8, action Photo
+data/h36m/S8\StackedHourglass/Photo*.h5
+data/h36m/S8\StackedHourglass\Photo.54138969.h5
+data/h36m/S8\StackedHourglass\Photo.55011271.h5
+data/h36m/S8\StackedHourglass\Photo.58860488.h5
+data/h36m/S8\StackedHourglass\Photo.60457274.h5
+data/h36m/S8\StackedHourglass\Photo_1.54138969.h5
+data/h36m/S8\StackedHourglass\Photo_1.55011271.h5
+data/h36m/S8\StackedHourglass\Photo_1.58860488.h5
+data/h36m/S8\StackedHourglass\Photo_1.60457274.h5
+Reading subject 8, action Posing
+data/h36m/S8\StackedHourglass/Posing*.h5
+data/h36m/S8\StackedHourglass\Posing.54138969.h5
+data/h36m/S8\StackedHourglass\Posing.55011271.h5
+data/h36m/S8\StackedHourglass\Posing.58860488.h5
+data/h36m/S8\StackedHourglass\Posing.60457274.h5
+data/h36m/S8\StackedHourglass\Posing_1.54138969.h5
+data/h36m/S8\StackedHourglass\Posing_1.55011271.h5
+data/h36m/S8\StackedHourglass\Posing_1.58860488.h5
+data/h36m/S8\StackedHourglass\Posing_1.60457274.h5
+Reading subject 8, action Purchases
+data/h36m/S8\StackedHourglass/Purchases*.h5
+data/h36m/S8\StackedHourglass\Purchases.54138969.h5
+data/h36m/S8\StackedHourglass\Purchases.55011271.h5
+data/h36m/S8\StackedHourglass\Purchases.58860488.h5
+data/h36m/S8\StackedHourglass\Purchases.60457274.h5
+data/h36m/S8\StackedHourglass\Purchases_1.54138969.h5
+data/h36m/S8\StackedHourglass\Purchases_1.55011271.h5
+data/h36m/S8\StackedHourglass\Purchases_1.58860488.h5
+data/h36m/S8\StackedHourglass\Purchases_1.60457274.h5
+Reading subject 8, action Sitting
+data/h36m/S8\StackedHourglass/Sitting*.h5
+data/h36m/S8\StackedHourglass\Sitting.54138969.h5
+data/h36m/S8\StackedHourglass\Sitting.55011271.h5
+data/h36m/S8\StackedHourglass\Sitting.58860488.h5
+data/h36m/S8\StackedHourglass\Sitting.60457274.h5
+data/h36m/S8\StackedHourglass\Sitting_1.54138969.h5
+data/h36m/S8\StackedHourglass\Sitting_1.55011271.h5
+data/h36m/S8\StackedHourglass\Sitting_1.58860488.h5
+data/h36m/S8\StackedHourglass\Sitting_1.60457274.h5
+Reading subject 8, action SittingDown
+data/h36m/S8\StackedHourglass/SittingDown*.h5
+data/h36m/S8\StackedHourglass\SittingDown.54138969.h5
+data/h36m/S8\StackedHourglass\SittingDown.55011271.h5
+data/h36m/S8\StackedHourglass\SittingDown.58860488.h5
+data/h36m/S8\StackedHourglass\SittingDown.60457274.h5
+data/h36m/S8\StackedHourglass\SittingDown_1.54138969.h5
+data/h36m/S8\StackedHourglass\SittingDown_1.55011271.h5
+data/h36m/S8\StackedHourglass\SittingDown_1.58860488.h5
+data/h36m/S8\StackedHourglass\SittingDown_1.60457274.h5
+Reading subject 8, action Smoking
+data/h36m/S8\StackedHourglass/Smoking*.h5
+data/h36m/S8\StackedHourglass\Smoking.54138969.h5
+data/h36m/S8\StackedHourglass\Smoking.55011271.h5
+data/h36m/S8\StackedHourglass\Smoking.58860488.h5
+data/h36m/S8\StackedHourglass\Smoking.60457274.h5
+data/h36m/S8\StackedHourglass\Smoking_1.54138969.h5
+data/h36m/S8\StackedHourglass\Smoking_1.55011271.h5
+data/h36m/S8\StackedHourglass\Smoking_1.58860488.h5
+data/h36m/S8\StackedHourglass\Smoking_1.60457274.h5
+Reading subject 8, action Waiting
+data/h36m/S8\StackedHourglass/Waiting*.h5
+data/h36m/S8\StackedHourglass\Waiting.54138969.h5
+data/h36m/S8\StackedHourglass\Waiting.55011271.h5
+data/h36m/S8\StackedHourglass\Waiting.58860488.h5
+data/h36m/S8\StackedHourglass\Waiting.60457274.h5
+data/h36m/S8\StackedHourglass\Waiting_1.54138969.h5
+data/h36m/S8\StackedHourglass\Waiting_1.55011271.h5
+data/h36m/S8\StackedHourglass\Waiting_1.58860488.h5
+data/h36m/S8\StackedHourglass\Waiting_1.60457274.h5
+Reading subject 8, action WalkDog
+data/h36m/S8\StackedHourglass/WalkDog*.h5
+data/h36m/S8\StackedHourglass\WalkDog.54138969.h5
+data/h36m/S8\StackedHourglass\WalkDog.55011271.h5
+data/h36m/S8\StackedHourglass\WalkDog.58860488.h5
+data/h36m/S8\StackedHourglass\WalkDog.60457274.h5
+data/h36m/S8\StackedHourglass\WalkDog_1.54138969.h5
+data/h36m/S8\StackedHourglass\WalkDog_1.55011271.h5
+data/h36m/S8\StackedHourglass\WalkDog_1.58860488.h5
+data/h36m/S8\StackedHourglass\WalkDog_1.60457274.h5
+Reading subject 8, action Walking
+data/h36m/S8\StackedHourglass/Walking*.h5
+data/h36m/S8\StackedHourglass\Walking.54138969.h5
+data/h36m/S8\StackedHourglass\Walking.55011271.h5
+data/h36m/S8\StackedHourglass\Walking.58860488.h5
+data/h36m/S8\StackedHourglass\Walking.60457274.h5
+data/h36m/S8\StackedHourglass\Walking_1.54138969.h5
+data/h36m/S8\StackedHourglass\Walking_1.55011271.h5
+data/h36m/S8\StackedHourglass\Walking_1.58860488.h5
+data/h36m/S8\StackedHourglass\Walking_1.60457274.h5
+Reading subject 8, action WalkTogether
+data/h36m/S8\StackedHourglass/WalkTogether*.h5
+data/h36m/S8\StackedHourglass\WalkTogether_1.54138969.h5
+data/h36m/S8\StackedHourglass\WalkTogether_1.55011271.h5
+data/h36m/S8\StackedHourglass\WalkTogether_1.58860488.h5
+data/h36m/S8\StackedHourglass\WalkTogether_1.60457274.h5
+data/h36m/S8\StackedHourglass\WalkTogether_2.54138969.h5
+data/h36m/S8\StackedHourglass\WalkTogether_2.55011271.h5
+data/h36m/S8\StackedHourglass\WalkTogether_2.58860488.h5
+data/h36m/S8\StackedHourglass\WalkTogether_2.60457274.h5
+Reading subject 9, action Directions
+data/h36m/S9\StackedHourglass/Directions*.h5
+data/h36m/S9\StackedHourglass\Directions.54138969.h5
+data/h36m/S9\StackedHourglass\Directions.55011271.h5
+data/h36m/S9\StackedHourglass\Directions.58860488.h5
+data/h36m/S9\StackedHourglass\Directions.60457274.h5
+data/h36m/S9\StackedHourglass\Directions_1.54138969.h5
+data/h36m/S9\StackedHourglass\Directions_1.55011271.h5
+data/h36m/S9\StackedHourglass\Directions_1.58860488.h5
+data/h36m/S9\StackedHourglass\Directions_1.60457274.h5
+Reading subject 9, action Discussion
+data/h36m/S9\StackedHourglass/Discussion*.h5
+data/h36m/S9\StackedHourglass\Discussion_1.54138969.h5
+data/h36m/S9\StackedHourglass\Discussion_1.55011271.h5
+data/h36m/S9\StackedHourglass\Discussion_1.58860488.h5
+data/h36m/S9\StackedHourglass\Discussion_1.60457274.h5
+data/h36m/S9\StackedHourglass\Discussion_2.54138969.h5
+data/h36m/S9\StackedHourglass\Discussion_2.55011271.h5
+data/h36m/S9\StackedHourglass\Discussion_2.58860488.h5
+data/h36m/S9\StackedHourglass\Discussion_2.60457274.h5
+Reading subject 9, action Eating
+data/h36m/S9\StackedHourglass/Eating*.h5
+data/h36m/S9\StackedHourglass\Eating.54138969.h5
+data/h36m/S9\StackedHourglass\Eating.55011271.h5
+data/h36m/S9\StackedHourglass\Eating.58860488.h5
+data/h36m/S9\StackedHourglass\Eating.60457274.h5
+data/h36m/S9\StackedHourglass\Eating_1.54138969.h5
+data/h36m/S9\StackedHourglass\Eating_1.55011271.h5
+data/h36m/S9\StackedHourglass\Eating_1.58860488.h5
+data/h36m/S9\StackedHourglass\Eating_1.60457274.h5
+Reading subject 9, action Greeting
+data/h36m/S9\StackedHourglass/Greeting*.h5
+data/h36m/S9\StackedHourglass\Greeting.54138969.h5
+data/h36m/S9\StackedHourglass\Greeting.55011271.h5
+data/h36m/S9\StackedHourglass\Greeting.58860488.h5
+data/h36m/S9\StackedHourglass\Greeting.60457274.h5
+data/h36m/S9\StackedHourglass\Greeting_1.54138969.h5
+data/h36m/S9\StackedHourglass\Greeting_1.55011271.h5
+data/h36m/S9\StackedHourglass\Greeting_1.58860488.h5
+data/h36m/S9\StackedHourglass\Greeting_1.60457274.h5
+Reading subject 9, action Phoning
+data/h36m/S9\StackedHourglass/Phoning*.h5
+data/h36m/S9\StackedHourglass\Phoning.54138969.h5
+data/h36m/S9\StackedHourglass\Phoning.55011271.h5
+data/h36m/S9\StackedHourglass\Phoning.58860488.h5
+data/h36m/S9\StackedHourglass\Phoning.60457274.h5
+data/h36m/S9\StackedHourglass\Phoning_1.54138969.h5
+data/h36m/S9\StackedHourglass\Phoning_1.55011271.h5
+data/h36m/S9\StackedHourglass\Phoning_1.58860488.h5
+data/h36m/S9\StackedHourglass\Phoning_1.60457274.h5
+Reading subject 9, action Photo
+data/h36m/S9\StackedHourglass/Photo*.h5
+data/h36m/S9\StackedHourglass\Photo.54138969.h5
+data/h36m/S9\StackedHourglass\Photo.55011271.h5
+data/h36m/S9\StackedHourglass\Photo.58860488.h5
+data/h36m/S9\StackedHourglass\Photo.60457274.h5
+data/h36m/S9\StackedHourglass\Photo_1.54138969.h5
+data/h36m/S9\StackedHourglass\Photo_1.55011271.h5
+data/h36m/S9\StackedHourglass\Photo_1.58860488.h5
+data/h36m/S9\StackedHourglass\Photo_1.60457274.h5
+Reading subject 9, action Posing
+data/h36m/S9\StackedHourglass/Posing*.h5
+data/h36m/S9\StackedHourglass\Posing.54138969.h5
+data/h36m/S9\StackedHourglass\Posing.55011271.h5
+data/h36m/S9\StackedHourglass\Posing.58860488.h5
+data/h36m/S9\StackedHourglass\Posing.60457274.h5
+data/h36m/S9\StackedHourglass\Posing_1.54138969.h5
+data/h36m/S9\StackedHourglass\Posing_1.55011271.h5
+data/h36m/S9\StackedHourglass\Posing_1.58860488.h5
+data/h36m/S9\StackedHourglass\Posing_1.60457274.h5
+Reading subject 9, action Purchases
+data/h36m/S9\StackedHourglass/Purchases*.h5
+data/h36m/S9\StackedHourglass\Purchases.54138969.h5
+data/h36m/S9\StackedHourglass\Purchases.55011271.h5
+data/h36m/S9\StackedHourglass\Purchases.58860488.h5
+data/h36m/S9\StackedHourglass\Purchases.60457274.h5
+data/h36m/S9\StackedHourglass\Purchases_1.54138969.h5
+data/h36m/S9\StackedHourglass\Purchases_1.55011271.h5
+data/h36m/S9\StackedHourglass\Purchases_1.58860488.h5
+data/h36m/S9\StackedHourglass\Purchases_1.60457274.h5
+Reading subject 9, action Sitting
+data/h36m/S9\StackedHourglass/Sitting*.h5
+data/h36m/S9\StackedHourglass\Sitting.54138969.h5
+data/h36m/S9\StackedHourglass\Sitting.55011271.h5
+data/h36m/S9\StackedHourglass\Sitting.58860488.h5
+data/h36m/S9\StackedHourglass\Sitting.60457274.h5
+data/h36m/S9\StackedHourglass\Sitting_1.54138969.h5
+data/h36m/S9\StackedHourglass\Sitting_1.55011271.h5
+data/h36m/S9\StackedHourglass\Sitting_1.58860488.h5
+data/h36m/S9\StackedHourglass\Sitting_1.60457274.h5
+Reading subject 9, action SittingDown
+data/h36m/S9\StackedHourglass/SittingDown*.h5
+data/h36m/S9\StackedHourglass\SittingDown.54138969.h5
+data/h36m/S9\StackedHourglass\SittingDown.55011271.h5
+data/h36m/S9\StackedHourglass\SittingDown.58860488.h5
+data/h36m/S9\StackedHourglass\SittingDown.60457274.h5
+data/h36m/S9\StackedHourglass\SittingDown_1.54138969.h5
+data/h36m/S9\StackedHourglass\SittingDown_1.55011271.h5
+data/h36m/S9\StackedHourglass\SittingDown_1.58860488.h5
+data/h36m/S9\StackedHourglass\SittingDown_1.60457274.h5
+Reading subject 9, action Smoking
+data/h36m/S9\StackedHourglass/Smoking*.h5
+data/h36m/S9\StackedHourglass\Smoking.54138969.h5
+data/h36m/S9\StackedHourglass\Smoking.55011271.h5
+data/h36m/S9\StackedHourglass\Smoking.58860488.h5
+data/h36m/S9\StackedHourglass\Smoking.60457274.h5
+data/h36m/S9\StackedHourglass\Smoking_1.54138969.h5
+data/h36m/S9\StackedHourglass\Smoking_1.55011271.h5
+data/h36m/S9\StackedHourglass\Smoking_1.58860488.h5
+data/h36m/S9\StackedHourglass\Smoking_1.60457274.h5
+Reading subject 9, action Waiting
+data/h36m/S9\StackedHourglass/Waiting*.h5
+data/h36m/S9\StackedHourglass\Waiting.54138969.h5
+data/h36m/S9\StackedHourglass\Waiting.55011271.h5
+data/h36m/S9\StackedHourglass\Waiting.58860488.h5
+data/h36m/S9\StackedHourglass\Waiting.60457274.h5
+data/h36m/S9\StackedHourglass\Waiting_1.54138969.h5
+data/h36m/S9\StackedHourglass\Waiting_1.55011271.h5
+data/h36m/S9\StackedHourglass\Waiting_1.58860488.h5
+data/h36m/S9\StackedHourglass\Waiting_1.60457274.h5
+Reading subject 9, action WalkDog
+data/h36m/S9\StackedHourglass/WalkDog*.h5
+data/h36m/S9\StackedHourglass\WalkDog.54138969.h5
+data/h36m/S9\StackedHourglass\WalkDog.55011271.h5
+data/h36m/S9\StackedHourglass\WalkDog.58860488.h5
+data/h36m/S9\StackedHourglass\WalkDog.60457274.h5
+data/h36m/S9\StackedHourglass\WalkDog_1.54138969.h5
+data/h36m/S9\StackedHourglass\WalkDog_1.55011271.h5
+data/h36m/S9\StackedHourglass\WalkDog_1.58860488.h5
+data/h36m/S9\StackedHourglass\WalkDog_1.60457274.h5
+Reading subject 9, action Walking
+data/h36m/S9\StackedHourglass/Walking*.h5
+data/h36m/S9\StackedHourglass\Walking.54138969.h5
+data/h36m/S9\StackedHourglass\Walking.55011271.h5
+data/h36m/S9\StackedHourglass\Walking.58860488.h5
+data/h36m/S9\StackedHourglass\Walking.60457274.h5
+data/h36m/S9\StackedHourglass\Walking_1.54138969.h5
+data/h36m/S9\StackedHourglass\Walking_1.55011271.h5
+data/h36m/S9\StackedHourglass\Walking_1.58860488.h5
+data/h36m/S9\StackedHourglass\Walking_1.60457274.h5
+Reading subject 9, action WalkTogether
+data/h36m/S9\StackedHourglass/WalkTogether*.h5
+data/h36m/S9\StackedHourglass\WalkTogether.54138969.h5
+data/h36m/S9\StackedHourglass\WalkTogether.55011271.h5
+data/h36m/S9\StackedHourglass\WalkTogether.58860488.h5
+data/h36m/S9\StackedHourglass\WalkTogether.60457274.h5
+data/h36m/S9\StackedHourglass\WalkTogether_1.54138969.h5
+data/h36m/S9\StackedHourglass\WalkTogether_1.55011271.h5
+data/h36m/S9\StackedHourglass\WalkTogether_1.58860488.h5
+data/h36m/S9\StackedHourglass\WalkTogether_1.60457274.h5
+Reading subject 11, action Directions
+data/h36m/S11\StackedHourglass/Directions*.h5
+data/h36m/S11\StackedHourglass\Directions.55011271.h5
+data/h36m/S11\StackedHourglass\Directions.58860488.h5
+data/h36m/S11\StackedHourglass\Directions.60457274.h5
+data/h36m/S11\StackedHourglass\Directions_1.54138969.h5
+data/h36m/S11\StackedHourglass\Directions_1.55011271.h5
+data/h36m/S11\StackedHourglass\Directions_1.58860488.h5
+data/h36m/S11\StackedHourglass\Directions_1.60457274.h5
+Reading subject 11, action Discussion
+data/h36m/S11\StackedHourglass/Discussion*.h5
+data/h36m/S11\StackedHourglass\Discussion_1.54138969.h5
+data/h36m/S11\StackedHourglass\Discussion_1.55011271.h5
+data/h36m/S11\StackedHourglass\Discussion_1.58860488.h5
+data/h36m/S11\StackedHourglass\Discussion_1.60457274.h5
+data/h36m/S11\StackedHourglass\Discussion_2.54138969.h5
+data/h36m/S11\StackedHourglass\Discussion_2.55011271.h5
+data/h36m/S11\StackedHourglass\Discussion_2.58860488.h5
+data/h36m/S11\StackedHourglass\Discussion_2.60457274.h5
+Reading subject 11, action Eating
+data/h36m/S11\StackedHourglass/Eating*.h5
+data/h36m/S11\StackedHourglass\Eating.54138969.h5
+data/h36m/S11\StackedHourglass\Eating.55011271.h5
+data/h36m/S11\StackedHourglass\Eating.58860488.h5
+data/h36m/S11\StackedHourglass\Eating.60457274.h5
+data/h36m/S11\StackedHourglass\Eating_1.54138969.h5
+data/h36m/S11\StackedHourglass\Eating_1.55011271.h5
+data/h36m/S11\StackedHourglass\Eating_1.58860488.h5
+data/h36m/S11\StackedHourglass\Eating_1.60457274.h5
+Reading subject 11, action Greeting
+data/h36m/S11\StackedHourglass/Greeting*.h5
+data/h36m/S11\StackedHourglass\Greeting.54138969.h5
+data/h36m/S11\StackedHourglass\Greeting.55011271.h5
+data/h36m/S11\StackedHourglass\Greeting.58860488.h5
+data/h36m/S11\StackedHourglass\Greeting.60457274.h5
+data/h36m/S11\StackedHourglass\Greeting_2.54138969.h5
+data/h36m/S11\StackedHourglass\Greeting_2.55011271.h5
+data/h36m/S11\StackedHourglass\Greeting_2.58860488.h5
+data/h36m/S11\StackedHourglass\Greeting_2.60457274.h5
+Reading subject 11, action Phoning
+data/h36m/S11\StackedHourglass/Phoning*.h5
+data/h36m/S11\StackedHourglass\Phoning_2.54138969.h5
+data/h36m/S11\StackedHourglass\Phoning_2.55011271.h5
+data/h36m/S11\StackedHourglass\Phoning_2.58860488.h5
+data/h36m/S11\StackedHourglass\Phoning_2.60457274.h5
+data/h36m/S11\StackedHourglass\Phoning_3.54138969.h5
+data/h36m/S11\StackedHourglass\Phoning_3.55011271.h5
+data/h36m/S11\StackedHourglass\Phoning_3.58860488.h5
+data/h36m/S11\StackedHourglass\Phoning_3.60457274.h5
+Reading subject 11, action Photo
+data/h36m/S11\StackedHourglass/Photo*.h5
+data/h36m/S11\StackedHourglass\Photo.54138969.h5
+data/h36m/S11\StackedHourglass\Photo.55011271.h5
+data/h36m/S11\StackedHourglass\Photo.58860488.h5
+data/h36m/S11\StackedHourglass\Photo.60457274.h5
+data/h36m/S11\StackedHourglass\Photo_1.54138969.h5
+data/h36m/S11\StackedHourglass\Photo_1.55011271.h5
+data/h36m/S11\StackedHourglass\Photo_1.58860488.h5
+data/h36m/S11\StackedHourglass\Photo_1.60457274.h5
+Reading subject 11, action Posing
+data/h36m/S11\StackedHourglass/Posing*.h5
+data/h36m/S11\StackedHourglass\Posing.54138969.h5
+data/h36m/S11\StackedHourglass\Posing.55011271.h5
+data/h36m/S11\StackedHourglass\Posing.58860488.h5
+data/h36m/S11\StackedHourglass\Posing.60457274.h5
+data/h36m/S11\StackedHourglass\Posing_1.54138969.h5
+data/h36m/S11\StackedHourglass\Posing_1.55011271.h5
+data/h36m/S11\StackedHourglass\Posing_1.58860488.h5
+data/h36m/S11\StackedHourglass\Posing_1.60457274.h5
+Reading subject 11, action Purchases
+data/h36m/S11\StackedHourglass/Purchases*.h5
+data/h36m/S11\StackedHourglass\Purchases.54138969.h5
+data/h36m/S11\StackedHourglass\Purchases.55011271.h5
+data/h36m/S11\StackedHourglass\Purchases.58860488.h5
+data/h36m/S11\StackedHourglass\Purchases.60457274.h5
+data/h36m/S11\StackedHourglass\Purchases_1.54138969.h5
+data/h36m/S11\StackedHourglass\Purchases_1.55011271.h5
+data/h36m/S11\StackedHourglass\Purchases_1.58860488.h5
+data/h36m/S11\StackedHourglass\Purchases_1.60457274.h5
+Reading subject 11, action Sitting
+data/h36m/S11\StackedHourglass/Sitting*.h5
+data/h36m/S11\StackedHourglass\Sitting.54138969.h5
+data/h36m/S11\StackedHourglass\Sitting.55011271.h5
+data/h36m/S11\StackedHourglass\Sitting.58860488.h5
+data/h36m/S11\StackedHourglass\Sitting.60457274.h5
+data/h36m/S11\StackedHourglass\Sitting_1.54138969.h5
+data/h36m/S11\StackedHourglass\Sitting_1.55011271.h5
+data/h36m/S11\StackedHourglass\Sitting_1.58860488.h5
+data/h36m/S11\StackedHourglass\Sitting_1.60457274.h5
+Reading subject 11, action SittingDown
+data/h36m/S11\StackedHourglass/SittingDown*.h5
+data/h36m/S11\StackedHourglass\SittingDown.54138969.h5
+data/h36m/S11\StackedHourglass\SittingDown.55011271.h5
+data/h36m/S11\StackedHourglass\SittingDown.58860488.h5
+data/h36m/S11\StackedHourglass\SittingDown.60457274.h5
+data/h36m/S11\StackedHourglass\SittingDown_1.54138969.h5
+data/h36m/S11\StackedHourglass\SittingDown_1.55011271.h5
+data/h36m/S11\StackedHourglass\SittingDown_1.58860488.h5
+data/h36m/S11\StackedHourglass\SittingDown_1.60457274.h5
+Reading subject 11, action Smoking
+data/h36m/S11\StackedHourglass/Smoking*.h5
+data/h36m/S11\StackedHourglass\Smoking.54138969.h5
+data/h36m/S11\StackedHourglass\Smoking.55011271.h5
+data/h36m/S11\StackedHourglass\Smoking.58860488.h5
+data/h36m/S11\StackedHourglass\Smoking.60457274.h5
+data/h36m/S11\StackedHourglass\Smoking_2.54138969.h5
+data/h36m/S11\StackedHourglass\Smoking_2.55011271.h5
+data/h36m/S11\StackedHourglass\Smoking_2.58860488.h5
+data/h36m/S11\StackedHourglass\Smoking_2.60457274.h5
+Reading subject 11, action Waiting
+data/h36m/S11\StackedHourglass/Waiting*.h5
+data/h36m/S11\StackedHourglass\Waiting.54138969.h5
+data/h36m/S11\StackedHourglass\Waiting.55011271.h5
+data/h36m/S11\StackedHourglass\Waiting.58860488.h5
+data/h36m/S11\StackedHourglass\Waiting.60457274.h5
+data/h36m/S11\StackedHourglass\Waiting_1.54138969.h5
+data/h36m/S11\StackedHourglass\Waiting_1.55011271.h5
+data/h36m/S11\StackedHourglass\Waiting_1.58860488.h5
+data/h36m/S11\StackedHourglass\Waiting_1.60457274.h5
+Reading subject 11, action WalkDog
+data/h36m/S11\StackedHourglass/WalkDog*.h5
+data/h36m/S11\StackedHourglass\WalkDog.54138969.h5
+data/h36m/S11\StackedHourglass\WalkDog.55011271.h5
+data/h36m/S11\StackedHourglass\WalkDog.58860488.h5
+data/h36m/S11\StackedHourglass\WalkDog.60457274.h5
+data/h36m/S11\StackedHourglass\WalkDog_1.54138969.h5
+data/h36m/S11\StackedHourglass\WalkDog_1.55011271.h5
+data/h36m/S11\StackedHourglass\WalkDog_1.58860488.h5
+data/h36m/S11\StackedHourglass\WalkDog_1.60457274.h5
+Reading subject 11, action Walking
+data/h36m/S11\StackedHourglass/Walking*.h5
+data/h36m/S11\StackedHourglass\Walking.54138969.h5
+data/h36m/S11\StackedHourglass\Walking.55011271.h5
+data/h36m/S11\StackedHourglass\Walking.58860488.h5
+data/h36m/S11\StackedHourglass\Walking.60457274.h5
+data/h36m/S11\StackedHourglass\Walking_1.54138969.h5
+data/h36m/S11\StackedHourglass\Walking_1.55011271.h5
+data/h36m/S11\StackedHourglass\Walking_1.58860488.h5
+data/h36m/S11\StackedHourglass\Walking_1.60457274.h5
+Reading subject 11, action WalkTogether
+data/h36m/S11\StackedHourglass/WalkTogether*.h5
+data/h36m/S11\StackedHourglass\WalkTogether.54138969.h5
+data/h36m/S11\StackedHourglass\WalkTogether.55011271.h5
+data/h36m/S11\StackedHourglass\WalkTogether.58860488.h5
+data/h36m/S11\StackedHourglass\WalkTogether.60457274.h5
+data/h36m/S11\StackedHourglass\WalkTogether_1.54138969.h5
+data/h36m/S11\StackedHourglass\WalkTogether_1.55011271.h5
+data/h36m/S11\StackedHourglass\WalkTogether_1.58860488.h5
+data/h36m/S11\StackedHourglass\WalkTogether_1.60457274.h5
+Reading subject 1, action Directions
+data/h36m/S1\MyPoses/3D_positions\Directions*.h5
+data/h36m/S1\MyPoses/3D_positions\Directions 1.h5
+data/h36m/S1\MyPoses/3D_positions\Directions.h5
+Reading subject 1, action Discussion
+data/h36m/S1\MyPoses/3D_positions\Discussion*.h5
+data/h36m/S1\MyPoses/3D_positions\Discussion 1.h5
+data/h36m/S1\MyPoses/3D_positions\Discussion.h5
+Reading subject 1, action Eating
+data/h36m/S1\MyPoses/3D_positions\Eating*.h5
+data/h36m/S1\MyPoses/3D_positions\Eating 2.h5
+data/h36m/S1\MyPoses/3D_positions\Eating.h5
+Reading subject 1, action Greeting
+data/h36m/S1\MyPoses/3D_positions\Greeting*.h5
+data/h36m/S1\MyPoses/3D_positions\Greeting 1.h5
+data/h36m/S1\MyPoses/3D_positions\Greeting.h5
+Reading subject 1, action Phoning
+data/h36m/S1\MyPoses/3D_positions\Phoning*.h5
+data/h36m/S1\MyPoses/3D_positions\Phoning 1.h5
+data/h36m/S1\MyPoses/3D_positions\Phoning.h5
+Reading subject 1, action Photo
+data/h36m/S1\MyPoses/3D_positions\Photo*.h5
+data/h36m/S1\MyPoses/3D_positions\Photo 1.h5
+data/h36m/S1\MyPoses/3D_positions\Photo.h5
+Reading subject 1, action Posing
+data/h36m/S1\MyPoses/3D_positions\Posing*.h5
+data/h36m/S1\MyPoses/3D_positions\Posing 1.h5
+data/h36m/S1\MyPoses/3D_positions\Posing.h5
+Reading subject 1, action Purchases
+data/h36m/S1\MyPoses/3D_positions\Purchases*.h5
+data/h36m/S1\MyPoses/3D_positions\Purchases 1.h5
+data/h36m/S1\MyPoses/3D_positions\Purchases.h5
+Reading subject 1, action Sitting
+data/h36m/S1\MyPoses/3D_positions\Sitting*.h5
+data/h36m/S1\MyPoses/3D_positions\Sitting 1.h5
+data/h36m/S1\MyPoses/3D_positions\Sitting 2.h5
+Reading subject 1, action SittingDown
+data/h36m/S1\MyPoses/3D_positions\SittingDown*.h5
+data/h36m/S1\MyPoses/3D_positions\SittingDown 2.h5
+data/h36m/S1\MyPoses/3D_positions\SittingDown.h5
+Reading subject 1, action Smoking
+data/h36m/S1\MyPoses/3D_positions\Smoking*.h5
+data/h36m/S1\MyPoses/3D_positions\Smoking 1.h5
+data/h36m/S1\MyPoses/3D_positions\Smoking.h5
+Reading subject 1, action Waiting
+data/h36m/S1\MyPoses/3D_positions\Waiting*.h5
+data/h36m/S1\MyPoses/3D_positions\Waiting 1.h5
+data/h36m/S1\MyPoses/3D_positions\Waiting.h5
+Reading subject 1, action WalkDog
+data/h36m/S1\MyPoses/3D_positions\WalkDog*.h5
+data/h36m/S1\MyPoses/3D_positions\WalkDog 1.h5
+data/h36m/S1\MyPoses/3D_positions\WalkDog.h5
+Reading subject 1, action Walking
+data/h36m/S1\MyPoses/3D_positions\Walking*.h5
+data/h36m/S1\MyPoses/3D_positions\Walking 1.h5
+data/h36m/S1\MyPoses/3D_positions\Walking.h5
+Reading subject 1, action WalkTogether
+data/h36m/S1\MyPoses/3D_positions\WalkTogether*.h5
+data/h36m/S1\MyPoses/3D_positions\WalkTogether 1.h5
+data/h36m/S1\MyPoses/3D_positions\WalkTogether.h5
+Reading subject 5, action Directions
+data/h36m/S5\MyPoses/3D_positions\Directions*.h5
+data/h36m/S5\MyPoses/3D_positions\Directions 1.h5
+data/h36m/S5\MyPoses/3D_positions\Directions 2.h5
+Reading subject 5, action Discussion
+data/h36m/S5\MyPoses/3D_positions\Discussion*.h5
+data/h36m/S5\MyPoses/3D_positions\Discussion 2.h5
+data/h36m/S5\MyPoses/3D_positions\Discussion 3.h5
+Reading subject 5, action Eating
+data/h36m/S5\MyPoses/3D_positions\Eating*.h5
+data/h36m/S5\MyPoses/3D_positions\Eating 1.h5
+data/h36m/S5\MyPoses/3D_positions\Eating.h5
+Reading subject 5, action Greeting
+data/h36m/S5\MyPoses/3D_positions\Greeting*.h5
+data/h36m/S5\MyPoses/3D_positions\Greeting 1.h5
+data/h36m/S5\MyPoses/3D_positions\Greeting 2.h5
+Reading subject 5, action Phoning
+data/h36m/S5\MyPoses/3D_positions\Phoning*.h5
+data/h36m/S5\MyPoses/3D_positions\Phoning 1.h5
+data/h36m/S5\MyPoses/3D_positions\Phoning.h5
+Reading subject 5, action Photo
+data/h36m/S5\MyPoses/3D_positions\Photo*.h5
+data/h36m/S5\MyPoses/3D_positions\Photo 2.h5
+data/h36m/S5\MyPoses/3D_positions\Photo.h5
+Reading subject 5, action Posing
+data/h36m/S5\MyPoses/3D_positions\Posing*.h5
+data/h36m/S5\MyPoses/3D_positions\Posing 1.h5
+data/h36m/S5\MyPoses/3D_positions\Posing.h5
+Reading subject 5, action Purchases
+data/h36m/S5\MyPoses/3D_positions\Purchases*.h5
+data/h36m/S5\MyPoses/3D_positions\Purchases 1.h5
+data/h36m/S5\MyPoses/3D_positions\Purchases.h5
+Reading subject 5, action Sitting
+data/h36m/S5\MyPoses/3D_positions\Sitting*.h5
+data/h36m/S5\MyPoses/3D_positions\Sitting 1.h5
+data/h36m/S5\MyPoses/3D_positions\Sitting.h5
+Reading subject 5, action SittingDown
+data/h36m/S5\MyPoses/3D_positions\SittingDown*.h5
+data/h36m/S5\MyPoses/3D_positions\SittingDown 1.h5
+data/h36m/S5\MyPoses/3D_positions\SittingDown.h5
+Reading subject 5, action Smoking
+data/h36m/S5\MyPoses/3D_positions\Smoking*.h5
+data/h36m/S5\MyPoses/3D_positions\Smoking 1.h5
+data/h36m/S5\MyPoses/3D_positions\Smoking.h5
+Reading subject 5, action Waiting
+data/h36m/S5\MyPoses/3D_positions\Waiting*.h5
+data/h36m/S5\MyPoses/3D_positions\Waiting 1.h5
+data/h36m/S5\MyPoses/3D_positions\Waiting 2.h5
+Reading subject 5, action WalkDog
+data/h36m/S5\MyPoses/3D_positions\WalkDog*.h5
+data/h36m/S5\MyPoses/3D_positions\WalkDog 1.h5
+data/h36m/S5\MyPoses/3D_positions\WalkDog.h5
+Reading subject 5, action Walking
+data/h36m/S5\MyPoses/3D_positions\Walking*.h5
+data/h36m/S5\MyPoses/3D_positions\Walking 1.h5
+data/h36m/S5\MyPoses/3D_positions\Walking.h5
+Reading subject 5, action WalkTogether
+data/h36m/S5\MyPoses/3D_positions\WalkTogether*.h5
+data/h36m/S5\MyPoses/3D_positions\WalkTogether 1.h5
+data/h36m/S5\MyPoses/3D_positions\WalkTogether.h5
+Reading subject 6, action Directions
+data/h36m/S6\MyPoses/3D_positions\Directions*.h5
+data/h36m/S6\MyPoses/3D_positions\Directions 1.h5
+data/h36m/S6\MyPoses/3D_positions\Directions.h5
+Reading subject 6, action Discussion
+data/h36m/S6\MyPoses/3D_positions\Discussion*.h5
+data/h36m/S6\MyPoses/3D_positions\Discussion 1.h5
+data/h36m/S6\MyPoses/3D_positions\Discussion.h5
+Reading subject 6, action Eating
+data/h36m/S6\MyPoses/3D_positions\Eating*.h5
+data/h36m/S6\MyPoses/3D_positions\Eating 1.h5
+data/h36m/S6\MyPoses/3D_positions\Eating 2.h5
+Reading subject 6, action Greeting
+data/h36m/S6\MyPoses/3D_positions\Greeting*.h5
+data/h36m/S6\MyPoses/3D_positions\Greeting 1.h5
+data/h36m/S6\MyPoses/3D_positions\Greeting.h5
+Reading subject 6, action Phoning
+data/h36m/S6\MyPoses/3D_positions\Phoning*.h5
+data/h36m/S6\MyPoses/3D_positions\Phoning 1.h5
+data/h36m/S6\MyPoses/3D_positions\Phoning.h5
+Reading subject 6, action Photo
+data/h36m/S6\MyPoses/3D_positions\Photo*.h5
+data/h36m/S6\MyPoses/3D_positions\Photo 1.h5
+data/h36m/S6\MyPoses/3D_positions\Photo.h5
+Reading subject 6, action Posing
+data/h36m/S6\MyPoses/3D_positions\Posing*.h5
+data/h36m/S6\MyPoses/3D_positions\Posing 2.h5
+data/h36m/S6\MyPoses/3D_positions\Posing.h5
+Reading subject 6, action Purchases
+data/h36m/S6\MyPoses/3D_positions\Purchases*.h5
+data/h36m/S6\MyPoses/3D_positions\Purchases 1.h5
+data/h36m/S6\MyPoses/3D_positions\Purchases.h5
+Reading subject 6, action Sitting
+data/h36m/S6\MyPoses/3D_positions\Sitting*.h5
+data/h36m/S6\MyPoses/3D_positions\Sitting 1.h5
+data/h36m/S6\MyPoses/3D_positions\Sitting 2.h5
+Reading subject 6, action SittingDown
+data/h36m/S6\MyPoses/3D_positions\SittingDown*.h5
+data/h36m/S6\MyPoses/3D_positions\SittingDown 1.h5
+data/h36m/S6\MyPoses/3D_positions\SittingDown.h5
+Reading subject 6, action Smoking
+data/h36m/S6\MyPoses/3D_positions\Smoking*.h5
+data/h36m/S6\MyPoses/3D_positions\Smoking 1.h5
+data/h36m/S6\MyPoses/3D_positions\Smoking.h5
+Reading subject 6, action Waiting
+data/h36m/S6\MyPoses/3D_positions\Waiting*.h5
+data/h36m/S6\MyPoses/3D_positions\Waiting 3.h5
+data/h36m/S6\MyPoses/3D_positions\Waiting.h5
+Reading subject 6, action WalkDog
+data/h36m/S6\MyPoses/3D_positions\WalkDog*.h5
+data/h36m/S6\MyPoses/3D_positions\WalkDog 1.h5
+data/h36m/S6\MyPoses/3D_positions\WalkDog.h5
+Reading subject 6, action Walking
+data/h36m/S6\MyPoses/3D_positions\Walking*.h5
+data/h36m/S6\MyPoses/3D_positions\Walking 1.h5
+data/h36m/S6\MyPoses/3D_positions\Walking.h5
+Reading subject 6, action WalkTogether
+data/h36m/S6\MyPoses/3D_positions\WalkTogether*.h5
+data/h36m/S6\MyPoses/3D_positions\WalkTogether 1.h5
+data/h36m/S6\MyPoses/3D_positions\WalkTogether.h5
+Reading subject 7, action Directions
+data/h36m/S7\MyPoses/3D_positions\Directions*.h5
+data/h36m/S7\MyPoses/3D_positions\Directions 1.h5
+data/h36m/S7\MyPoses/3D_positions\Directions.h5
+Reading subject 7, action Discussion
+data/h36m/S7\MyPoses/3D_positions\Discussion*.h5
+data/h36m/S7\MyPoses/3D_positions\Discussion 1.h5
+data/h36m/S7\MyPoses/3D_positions\Discussion.h5
+Reading subject 7, action Eating
+data/h36m/S7\MyPoses/3D_positions\Eating*.h5
+data/h36m/S7\MyPoses/3D_positions\Eating 1.h5
+data/h36m/S7\MyPoses/3D_positions\Eating.h5
+Reading subject 7, action Greeting
+data/h36m/S7\MyPoses/3D_positions\Greeting*.h5
+data/h36m/S7\MyPoses/3D_positions\Greeting 1.h5
+data/h36m/S7\MyPoses/3D_positions\Greeting.h5
+Reading subject 7, action Phoning
+data/h36m/S7\MyPoses/3D_positions\Phoning*.h5
+data/h36m/S7\MyPoses/3D_positions\Phoning 2.h5
+data/h36m/S7\MyPoses/3D_positions\Phoning.h5
+Reading subject 7, action Photo
+data/h36m/S7\MyPoses/3D_positions\Photo*.h5
+data/h36m/S7\MyPoses/3D_positions\Photo 1.h5
+data/h36m/S7\MyPoses/3D_positions\Photo.h5
+Reading subject 7, action Posing
+data/h36m/S7\MyPoses/3D_positions\Posing*.h5
+data/h36m/S7\MyPoses/3D_positions\Posing 1.h5
+data/h36m/S7\MyPoses/3D_positions\Posing.h5
+Reading subject 7, action Purchases
+data/h36m/S7\MyPoses/3D_positions\Purchases*.h5
+data/h36m/S7\MyPoses/3D_positions\Purchases 1.h5
+data/h36m/S7\MyPoses/3D_positions\Purchases.h5
+Reading subject 7, action Sitting
+data/h36m/S7\MyPoses/3D_positions\Sitting*.h5
+data/h36m/S7\MyPoses/3D_positions\Sitting 1.h5
+data/h36m/S7\MyPoses/3D_positions\Sitting.h5
+Reading subject 7, action SittingDown
+data/h36m/S7\MyPoses/3D_positions\SittingDown*.h5
+data/h36m/S7\MyPoses/3D_positions\SittingDown 1.h5
+data/h36m/S7\MyPoses/3D_positions\SittingDown.h5
+Reading subject 7, action Smoking
+data/h36m/S7\MyPoses/3D_positions\Smoking*.h5
+data/h36m/S7\MyPoses/3D_positions\Smoking 1.h5
+data/h36m/S7\MyPoses/3D_positions\Smoking.h5
+Reading subject 7, action Waiting
+data/h36m/S7\MyPoses/3D_positions\Waiting*.h5
+data/h36m/S7\MyPoses/3D_positions\Waiting 1.h5
+data/h36m/S7\MyPoses/3D_positions\Waiting 2.h5
+Reading subject 7, action WalkDog
+data/h36m/S7\MyPoses/3D_positions\WalkDog*.h5
+data/h36m/S7\MyPoses/3D_positions\WalkDog 1.h5
+data/h36m/S7\MyPoses/3D_positions\WalkDog.h5
+Reading subject 7, action Walking
+data/h36m/S7\MyPoses/3D_positions\Walking*.h5
+data/h36m/S7\MyPoses/3D_positions\Walking 1.h5
+data/h36m/S7\MyPoses/3D_positions\Walking 2.h5
+Reading subject 7, action WalkTogether
+data/h36m/S7\MyPoses/3D_positions\WalkTogether*.h5
+data/h36m/S7\MyPoses/3D_positions\WalkTogether 1.h5
+data/h36m/S7\MyPoses/3D_positions\WalkTogether.h5
+Reading subject 8, action Directions
+data/h36m/S8\MyPoses/3D_positions\Directions*.h5
+data/h36m/S8\MyPoses/3D_positions\Directions 1.h5
+data/h36m/S8\MyPoses/3D_positions\Directions.h5
+Reading subject 8, action Discussion
+data/h36m/S8\MyPoses/3D_positions\Discussion*.h5
+data/h36m/S8\MyPoses/3D_positions\Discussion 1.h5
+data/h36m/S8\MyPoses/3D_positions\Discussion.h5
+Reading subject 8, action Eating
+data/h36m/S8\MyPoses/3D_positions\Eating*.h5
+data/h36m/S8\MyPoses/3D_positions\Eating 1.h5
+data/h36m/S8\MyPoses/3D_positions\Eating.h5
+Reading subject 8, action Greeting
+data/h36m/S8\MyPoses/3D_positions\Greeting*.h5
+data/h36m/S8\MyPoses/3D_positions\Greeting 1.h5
+data/h36m/S8\MyPoses/3D_positions\Greeting.h5
+Reading subject 8, action Phoning
+data/h36m/S8\MyPoses/3D_positions\Phoning*.h5
+data/h36m/S8\MyPoses/3D_positions\Phoning 1.h5
+data/h36m/S8\MyPoses/3D_positions\Phoning.h5
+Reading subject 8, action Photo
+data/h36m/S8\MyPoses/3D_positions\Photo*.h5
+data/h36m/S8\MyPoses/3D_positions\Photo 1.h5
+data/h36m/S8\MyPoses/3D_positions\Photo.h5
+Reading subject 8, action Posing
+data/h36m/S8\MyPoses/3D_positions\Posing*.h5
+data/h36m/S8\MyPoses/3D_positions\Posing 1.h5
+data/h36m/S8\MyPoses/3D_positions\Posing.h5
+Reading subject 8, action Purchases
+data/h36m/S8\MyPoses/3D_positions\Purchases*.h5
+data/h36m/S8\MyPoses/3D_positions\Purchases 1.h5
+data/h36m/S8\MyPoses/3D_positions\Purchases.h5
+Reading subject 8, action Sitting
+data/h36m/S8\MyPoses/3D_positions\Sitting*.h5
+data/h36m/S8\MyPoses/3D_positions\Sitting 1.h5
+data/h36m/S8\MyPoses/3D_positions\Sitting.h5
+Reading subject 8, action SittingDown
+data/h36m/S8\MyPoses/3D_positions\SittingDown*.h5
+data/h36m/S8\MyPoses/3D_positions\SittingDown 1.h5
+data/h36m/S8\MyPoses/3D_positions\SittingDown.h5
+Reading subject 8, action Smoking
+data/h36m/S8\MyPoses/3D_positions\Smoking*.h5
+data/h36m/S8\MyPoses/3D_positions\Smoking 1.h5
+data/h36m/S8\MyPoses/3D_positions\Smoking.h5
+Reading subject 8, action Waiting
+data/h36m/S8\MyPoses/3D_positions\Waiting*.h5
+data/h36m/S8\MyPoses/3D_positions\Waiting 1.h5
+data/h36m/S8\MyPoses/3D_positions\Waiting.h5
+Reading subject 8, action WalkDog
+data/h36m/S8\MyPoses/3D_positions\WalkDog*.h5
+data/h36m/S8\MyPoses/3D_positions\WalkDog 1.h5
+data/h36m/S8\MyPoses/3D_positions\WalkDog.h5
+Reading subject 8, action Walking
+data/h36m/S8\MyPoses/3D_positions\Walking*.h5
+data/h36m/S8\MyPoses/3D_positions\Walking 1.h5
+data/h36m/S8\MyPoses/3D_positions\Walking.h5
+Reading subject 8, action WalkTogether
+data/h36m/S8\MyPoses/3D_positions\WalkTogether*.h5
+data/h36m/S8\MyPoses/3D_positions\WalkTogether 1.h5
+data/h36m/S8\MyPoses/3D_positions\WalkTogether 2.h5
+Reading subject 9, action Directions
+data/h36m/S9\MyPoses/3D_positions\Directions*.h5
+data/h36m/S9\MyPoses/3D_positions\Directions 1.h5
+data/h36m/S9\MyPoses/3D_positions\Directions.h5
+Reading subject 9, action Discussion
+data/h36m/S9\MyPoses/3D_positions\Discussion*.h5
+data/h36m/S9\MyPoses/3D_positions\Discussion 1.h5
+data/h36m/S9\MyPoses/3D_positions\Discussion 2.h5
+Reading subject 9, action Eating
+data/h36m/S9\MyPoses/3D_positions\Eating*.h5
+data/h36m/S9\MyPoses/3D_positions\Eating 1.h5
+data/h36m/S9\MyPoses/3D_positions\Eating.h5
+Reading subject 9, action Greeting
+data/h36m/S9\MyPoses/3D_positions\Greeting*.h5
+data/h36m/S9\MyPoses/3D_positions\Greeting 1.h5
+data/h36m/S9\MyPoses/3D_positions\Greeting.h5
+Reading subject 9, action Phoning
+data/h36m/S9\MyPoses/3D_positions\Phoning*.h5
+data/h36m/S9\MyPoses/3D_positions\Phoning 1.h5
+data/h36m/S9\MyPoses/3D_positions\Phoning.h5
+Reading subject 9, action Photo
+data/h36m/S9\MyPoses/3D_positions\Photo*.h5
+data/h36m/S9\MyPoses/3D_positions\Photo 1.h5
+data/h36m/S9\MyPoses/3D_positions\Photo.h5
+Reading subject 9, action Posing
+data/h36m/S9\MyPoses/3D_positions\Posing*.h5
+data/h36m/S9\MyPoses/3D_positions\Posing 1.h5
+data/h36m/S9\MyPoses/3D_positions\Posing.h5
+Reading subject 9, action Purchases
+data/h36m/S9\MyPoses/3D_positions\Purchases*.h5
+data/h36m/S9\MyPoses/3D_positions\Purchases 1.h5
+data/h36m/S9\MyPoses/3D_positions\Purchases.h5
+Reading subject 9, action Sitting
+data/h36m/S9\MyPoses/3D_positions\Sitting*.h5
+data/h36m/S9\MyPoses/3D_positions\Sitting 1.h5
+data/h36m/S9\MyPoses/3D_positions\Sitting.h5
+Reading subject 9, action SittingDown
+data/h36m/S9\MyPoses/3D_positions\SittingDown*.h5
+data/h36m/S9\MyPoses/3D_positions\SittingDown 1.h5
+data/h36m/S9\MyPoses/3D_positions\SittingDown.h5
+Reading subject 9, action Smoking
+data/h36m/S9\MyPoses/3D_positions\Smoking*.h5
+data/h36m/S9\MyPoses/3D_positions\Smoking 1.h5
+data/h36m/S9\MyPoses/3D_positions\Smoking.h5
+Reading subject 9, action Waiting
+data/h36m/S9\MyPoses/3D_positions\Waiting*.h5
+data/h36m/S9\MyPoses/3D_positions\Waiting 1.h5
+data/h36m/S9\MyPoses/3D_positions\Waiting.h5
+Reading subject 9, action WalkDog
+data/h36m/S9\MyPoses/3D_positions\WalkDog*.h5
+data/h36m/S9\MyPoses/3D_positions\WalkDog 1.h5
+data/h36m/S9\MyPoses/3D_positions\WalkDog.h5
+Reading subject 9, action Walking
+data/h36m/S9\MyPoses/3D_positions\Walking*.h5
+data/h36m/S9\MyPoses/3D_positions\Walking 1.h5
+data/h36m/S9\MyPoses/3D_positions\Walking.h5
+Reading subject 9, action WalkTogether
+data/h36m/S9\MyPoses/3D_positions\WalkTogether*.h5
+data/h36m/S9\MyPoses/3D_positions\WalkTogether 1.h5
+data/h36m/S9\MyPoses/3D_positions\WalkTogether.h5
+Reading subject 11, action Directions
+data/h36m/S11\MyPoses/3D_positions\Directions*.h5
+data/h36m/S11\MyPoses/3D_positions\Directions 1.h5
+data/h36m/S11\MyPoses/3D_positions\Directions.h5
+Reading subject 11, action Discussion
+data/h36m/S11\MyPoses/3D_positions\Discussion*.h5
+data/h36m/S11\MyPoses/3D_positions\Discussion 1.h5
+data/h36m/S11\MyPoses/3D_positions\Discussion 2.h5
+Reading subject 11, action Eating
+data/h36m/S11\MyPoses/3D_positions\Eating*.h5
+data/h36m/S11\MyPoses/3D_positions\Eating 1.h5
+data/h36m/S11\MyPoses/3D_positions\Eating.h5
+Reading subject 11, action Greeting
+data/h36m/S11\MyPoses/3D_positions\Greeting*.h5
+data/h36m/S11\MyPoses/3D_positions\Greeting 2.h5
+data/h36m/S11\MyPoses/3D_positions\Greeting.h5
+Reading subject 11, action Phoning
+data/h36m/S11\MyPoses/3D_positions\Phoning*.h5
+data/h36m/S11\MyPoses/3D_positions\Phoning 2.h5
+data/h36m/S11\MyPoses/3D_positions\Phoning 3.h5
+Reading subject 11, action Photo
+data/h36m/S11\MyPoses/3D_positions\Photo*.h5
+data/h36m/S11\MyPoses/3D_positions\Photo 1.h5
+data/h36m/S11\MyPoses/3D_positions\Photo.h5
+Reading subject 11, action Posing
+data/h36m/S11\MyPoses/3D_positions\Posing*.h5
+data/h36m/S11\MyPoses/3D_positions\Posing 1.h5
+data/h36m/S11\MyPoses/3D_positions\Posing.h5
+Reading subject 11, action Purchases
+data/h36m/S11\MyPoses/3D_positions\Purchases*.h5
+data/h36m/S11\MyPoses/3D_positions\Purchases 1.h5
+data/h36m/S11\MyPoses/3D_positions\Purchases.h5
+Reading subject 11, action Sitting
+data/h36m/S11\MyPoses/3D_positions\Sitting*.h5
+data/h36m/S11\MyPoses/3D_positions\Sitting 1.h5
+data/h36m/S11\MyPoses/3D_positions\Sitting.h5
+Reading subject 11, action SittingDown
+data/h36m/S11\MyPoses/3D_positions\SittingDown*.h5
+data/h36m/S11\MyPoses/3D_positions\SittingDown 1.h5
+data/h36m/S11\MyPoses/3D_positions\SittingDown.h5
+Reading subject 11, action Smoking
+data/h36m/S11\MyPoses/3D_positions\Smoking*.h5
+data/h36m/S11\MyPoses/3D_positions\Smoking 2.h5
+data/h36m/S11\MyPoses/3D_positions\Smoking.h5
+Reading subject 11, action Waiting
+data/h36m/S11\MyPoses/3D_positions\Waiting*.h5
+data/h36m/S11\MyPoses/3D_positions\Waiting 1.h5
+data/h36m/S11\MyPoses/3D_positions\Waiting.h5
+Reading subject 11, action WalkDog
+data/h36m/S11\MyPoses/3D_positions\WalkDog*.h5
+data/h36m/S11\MyPoses/3D_positions\WalkDog 1.h5
+data/h36m/S11\MyPoses/3D_positions\WalkDog.h5
+Reading subject 11, action Walking
+data/h36m/S11\MyPoses/3D_positions\Walking*.h5
+data/h36m/S11\MyPoses/3D_positions\Walking 1.h5
+data/h36m/S11\MyPoses/3D_positions\Walking.h5
+Reading subject 11, action WalkTogether
+data/h36m/S11\MyPoses/3D_positions\WalkTogether*.h5
+data/h36m/S11\MyPoses/3D_positions\WalkTogether 1.h5
+data/h36m/S11\MyPoses/3D_positions\WalkTogether.h5
+[1;32m$cdebug-20251013-235202: [00m[1;32m$cdebug-20251013-235220: [00m1
+[1;32m$cdebug-20251013-235235: [00m[1;32m$cdebug-20251013-235236: [00mTerminate batch job (Y/N)? Terminate batch job (Y/N)? 
+
+(C:\ai1) C:\Users\TEST\OpenMMD 1.0\3d-pose-baseline-vmd>pause
+Press any key to continue . . . 
+Terminate batch job (Y/N)? 
+
+(C:\ai1) C:\Users\TEST\OpenMMD 1.0\3d-pose-baseline-vmd>

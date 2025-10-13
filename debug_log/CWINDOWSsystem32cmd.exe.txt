@@ -1,0 +1,77 @@
+Active code page: 65001
+
+(C:\ai1) C:\Users\原神\Downloads\OpenMMD 1.0\3d-pose-baseline-vmd>set USE_LIBUV=0
+
+(C:\ai1) C:\Users\原神\Downloads\OpenMMD 1.0\3d-pose-baseline-vmd>set KMP_DUPLICATE_LIB_OK=TRUE
+
+(C:\ai1) C:\Users\原神\Downloads\OpenMMD 1.0\3d-pose-baseline-vmd>python src/openpose_3dpose_sandbox_vmd.py --camera_frame --residual --batch_norm --dropout 0.5 --max_norm --evaluateActionWise --use_sh --epochs 200 --load 4874200 --gif_fps 30 --verbose 3 --openpose C:\_json --person_idx 1
+2025-10-13 22:38:18.221413: I tensorflow/core/util/port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+2025-10-13 22:38:20.045767: I tensorflow/core/util/port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+experiments\All\dropout_0.5\epochs_200\lr_0.001\residual\depth_2\ls1024\bs64\np\maxnorm\batch_normalization\use_stacked_hourglass\predict_17
+A subdirectory or file -p already exists.
+Error occurred while processing: -p.
+A subdirectory or file experiments\All\dropout_0.5\epochs_200\lr_0.001\residual\depth_2\ls1024\bs64\np\maxnorm\batch_normalization\use_stacked_hourglass\predict_17\log already exists.
+Error occurred while processing: experiments\All\dropout_0.5\epochs_200\lr_0.001\residual\depth_2\ls1024\bs64\np\maxnorm\batch_normalization\use_stacked_hourglass\predict_17\log.
+WARNING:tensorflow:From C:\Users\原神\Downloads\OpenMMD 1.0\3d-pose-baseline-vmd\src\openpose_3dpose_sandbox_vmd.py:486: The name tf.app.run is deprecated.Please use tf.compat.v1.app.run instead.
+
+WARNING:tensorflow:From C:\Users\原神\Downloads\OpenMMD 1.0\3d-pose-baseline-vmd\src\openpose_3dpose_sandbox_vmd.py:486: The name tf.app.run is deprecated.Please use tf.compat.v1.app.run instead.
+
+I1013 22:38:21.666901  3964 openpose_3dpose_sandbox_vmd.py:269] FLAGS.person_idx=1
+I1013 22:38:21.666901  3964 openpose_3dpose_sandbox_vmd.py:52] start reading data
+I1013 22:38:21.674938  3964 openpose_3dpose_sandbox_vmd.py:64] reading test_000000000000_keypoints.json
+I1013 22:38:21.674938  3964 openpose_3dpose_sandbox_vmd.py:143] found [387.702, 419.698, 384.842, 471.978, 338.133, 472.009, 277.018, 428.339, 218.886, 387.771, 434.242, 466.247, 486.663, 428.383, 550.617, 384.892, 387.728, 629.306, 361.387, 632.203, 376.035, 754.464, 384.753, 853.501, 422.611, 629.21, 425.395, 754.375, 428.316, 865.049, 381.814, 408.129, 404.955, 408.069, 361.627, 425.379, 413.856, 425.39, 431.361, 897.181, 448.827, 894.076, 419.673, 873.807, 387.731, 897.097, 373.136, 894.241, 387.659, 870.764] for frame 0
+I1013 22:38:21.674938  3964 openpose_3dpose_sandbox_vmd.py:64] reading test_000000000001_keypoints.json
+$cdebug-20251013-223821: print(_tmp_data)
+[387.701, 416.799, 0.871078, 387.608, 469.146, 0.882918, 338.195, 469.169, 0.855172, 279.92, 428.343, 0.823495, 218.939, 390.534, 0.899398, 434.312, 463.372, 0.830912, 489.555, 428.295, 0.812408, 547.875, 384.908, 0.90695, 387.726, 623.488, 0.776712, 361.371, 626.391, 0.782172, 378.8, 754.272, 0.862487, 384.79, 850.63, 0.830274, 422.629, 623.409, 0.757049, 425.432, 751.548, 0.857706, 428.291, 856.308, 0.834671, 381.822, 408.07, 0.965638, 404.957, 408.012, 0.958116, 364.324, 422.615, 0.870776, 413.873, 422.568, 0.807465, 431.366, 894.229, 0.963895, 451.528, 888.378, 0.959173, 419.661, 870.866, 0.670667, 390.535, 894.135, 0.821777, 376.027, 891.271, 0.81604, 387.698, 867.873, 0.639782]
+$cdebug-20251013-223829: print(_tmp_data.shape)
+'list' object has no attribute 'shape'
+$cdebug-20251013-223836: print(_tmp_data.dshape)
+'list' object has no attribute 'dshape'
+$cdebug-20251013-223839: print(dir(_tmp_data))
+['__add__', '__class__', '__class_getitem__', '__contains__', '__delattr__', '__delitem__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__getitem__', '__gt__', '__hash__', '__iadd__', '__imul__', '__init__', '__init_subclass__', '__iter__', '__le__', '__len__', '__lt__', '__mul__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__reversed__', '__rmul__', '__setattr__', '__setitem__', '__sizeof__', '__str__', '__subclasshook__', 'append', 'clear', 'copy', 'count', 'extend', 'index', 'insert', 'pop', 'remove', 'reverse', 'sort']
+$cdebug-20251013-223847: print(len(_tmp_data))
+75
+$cdebug-20251013-223901: print(_tmp_points)
+[[0], [0], [0], [0], [0], [0], [0], [0], [0], [0], [0], [0], [0], [0], [0], [0], [0], [0], [0], [0], [0], [0], [0], [0], [0], [0], [0], [0], [0], [0], [0],[0], [0], [0], [0], [0]]
+$cdebug-20251013-223912: print(_tmp_points.shape)
+'list' object has no attribute 'shape'
+$cdebug-20251013-223922: print(len(_tmp_points))
+36
+$cdebug-20251013-223930: list(range(0,len(_tmp_data),3))
+$cdebug-20251013-224002: print(list(range(0,len(_tmp_data),3)))
+[0, 3, 6, 9, 12, 15, 18, 21, 24, 27, 30, 33, 36, 39, 42, 45, 48, 51, 54, 57, 60, 63, 66, 69, 72]
+$cdebug-20251013-224009: for o in range(0,len(_tmp_data),3):\br  print(n,_data_idx,o)\br  _tmp_points[n][_data_idx] = _tmp_data[o]\br  n += 1\br  _tmp_points[n][_data_idx] = _tmp_data[o+1]\br  n += 1
+0 0 0
+2 0 3
+4 0 6
+6 0 9
+8 0 12
+10 0 15
+12 0 18
+14 0 21
+16 0 24
+18 0 27
+20 0 30
+22 0 33
+24 0 36
+26 0 39
+28 0 42
+30 0 45
+32 0 48
+34 0 51
+36 0 54
+list index out of range
+$cdebug-20251013-224216: _tmp_points[n][_data_idx]
+list index out of range
+$cdebug-20251013-224337: print(n,_data_idx,o)
+36 0 54
+$cdebug-20251013-224346: _tmp_points[n]
+list index out of range
+$cdebug-20251013-224358: len(_tmp_points)
+$cdebug-20251013-224408: print(len(_tmp_points))
+36
+$cdebug-20251013-224413: print(_tmp_points*2)
+[[387.701], [416.799], [387.608], [469.146], [338.195], [469.169], [279.92], [428.343], [218.939], [390.534], [434.312], [463.372], [489.555], [428.295], [547.875], [384.908], [387.726], [623.488], [361.371], [626.391], [378.8], [754.272], [384.79], [850.63], [422.629], [623.409], [425.432], [751.548], [428.291], [856.308], [381.822], [408.07], [404.957], [408.012], [364.324], [422.615], [387.701], [416.799], [387.608], [469.146], [338.195], [469.169], [279.92], [428.343], [218.939], [390.534], [434.312], [463.372], [489.555], [428.295], [547.875], [384.908], [387.726], [623.488], [361.371], [626.391], [378.8], [754.272], [384.79], [850.63], [422.629], [623.409], [425.432], [751.548], [428.291], [856.308], [381.822], [408.07], [404.957], [408.012], [364.324], [422.615]]
+$cdebug-20251013-224440: print(_tmp_points)
+[[387.701], [416.799], [387.608], [469.146], [338.195], [469.169], [279.92], [428.343], [218.939], [390.534], [434.312], [463.372], [489.555], [428.295], [547.875], [384.908], [387.726], [623.488], [361.371], [626.391], [378.8], [754.272], [384.79], [850.63], [422.629], [623.409], [425.432], [751.548], [428.291], [856.308], [381.822], [408.07], [404.957], [408.012], [364.324], [422.615]]
+$cdebug-20251013-224443:

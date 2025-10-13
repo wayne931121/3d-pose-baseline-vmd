@@ -1,0 +1,12 @@
+#suggest python=3.6
+opencv-python
+numpy
+matplotlib
+tensorflow
+h5py
+keras
+python-dateutil
+pytz
+pyparsing
+six
+imageio
