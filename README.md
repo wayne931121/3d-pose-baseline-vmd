@@ -15,6 +15,10 @@ I used 5 hours to debug.
 
 debug at: https://github.com/wayne931121/3d-pose-baseline-vmd/tree/master/src
 
+# My ENV
+
+https://github.com/wayne931121/3d-pose-baseline-vmd/blob/master/environment.yml
+
 # Also See:
 
 https://github.com/CMU-Perceptual-Computing-Lab/openpose
