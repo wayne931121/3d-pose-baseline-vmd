@@ -14,3 +14,16 @@ Because It not tell me the correct packages version he used.
 I used 5 hours to debug.
 
 debug at: https://github.com/wayne931121/3d-pose-baseline-vmd/tree/master/src
+
+# Also See:
+
+https://github.com/CMU-Perceptual-Computing-Lab/openpose
+
+https://github.com/CMU-Perceptual-Computing-Lab/openpose/issues/1204
+
+https://github.com/miu200521358/VMD-3d-pose-baseline-multi
+
+https://github.com/errno-mmd/VMD-Lifting
+
+https://github.com/DenisTome/Lifting-from-the-Deep-release
+
