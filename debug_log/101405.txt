@@ -1,0 +1,82 @@
+Active code page: 65001
+
+(C:\ai1) C:\TEST\OpenMMD 1.0\VMD-3d-pose-baseline-multi-master>set USE_LIBUV=0
+
+(C:\ai1) C:\TEST\OpenMMD 1.0\VMD-3d-pose-baseline-multi-master>set KMP_DUPLICATE_LIB_OK=TRUE
+
+(C:\ai1) C:\TEST\OpenMMD 1.0\VMD-3d-pose-baseline-multi-master>cmd
+Microsoft Windows [Version 10.0.22631.5335]
+(c) Microsoft Corporation. 著作權所有，並保留一切權利。
+
+(C:\ai1) C:\TEST\OpenMMD 1.0\VMD-3d-pose-baseline-multi-master>3DToVmd_en.bat
+Please enter the full path of individual index directory.({Movie name}_json_{Execution date and time}_idx00)
+There is a directory such as pos.txt.
+This setting is available only in Half - width alphanumeric characters and is mandatory.
+** Individual directory path: C:\TEST\testv\_json_3d_20251014_163924_idx01
+--------------
+Enter the relative or absolute path of the bone structure CSV file of the trace target model.
+If nothing is entered and ENTER is pressed, the file of "born\animasa_miku_born.csv" is read.
+** Bone structure CSV file:
+--------------
+Please output your feet with IK, or enter yes or no.
+If you enter no, output it with FK
+If nothing is entered and ENTER is pressed, it is output with IK.
+** Foot IK Whether to output[yes/no]:
+--------------
+Please input the Y axis correction value of the heel with a numerical value (decimal possible).
+Entering a negative value approaches the ground, entering a positive value moves away from the ground.
+Although it corrects automatically to some extent automatically, if you can not correct it, please set it.
+If you do not enter anything and press ENTER, no correction will be made.
+You can set up to 5 items by separating them with a comma.
+** Heel position correction:
+--------------
+Please enter the magnification multiplied by the center Z movement with a numerical value (decimal possible).
+The smaller the value, the smaller the width of the center Z movement.
+As a guide, it is better to reduce the magnification as the distance from the camera is shorter.
+If nothing is entered and ENTER is pressed, processing is performed with the magnification "0".
+When 0 is input, center Z axis movement is not performed.
+You can set up to 5 items by separating them with a comma.
+** Center Z moving magnification:
+--------------
+Specify the degree of motion smoothing
+Please enter only an integer of 1 or more.
+The larger the frequency, the smoother it is. (The behavior will be smaller instead)
+If nothing is entered and ENTER is pressed, it smoothes 1 times.
+You can set up to 5 items by separating them with a comma.
+** Smoothing frequency:
+--------------
+Specify the amount of movement to be used for decimation of movement key (IK, center) with numerical value (decimal possible)
+When there is a movement within the specified range, it is thinned out.
+If nothing is entered and ENTER is pressed, thinning is performed with the movement amount of "0.5".
+When moving thinning amount is set to 0, thinning is not performed.
+You can set up to 5 items by separating them with a comma.
+** Movement key thinning amount:
+--------------
+Specify the angle (decimal possible from 0 to 180 degrees) to be used for decimating rotation keys
+It will be thinned out if there is a rotation within the specified angle.
+If you do not enter anything and you press ENTER, 3 censor.
+You can set up to 5 items by separating them with a comma.
+** Rotating Key Culling Angle:
+--------------
+Please output detailed logs or enter yes or no.
+If nothing is entered and ENTER is pressed, only the normal log is output.
+��Detailed log[yes/no]: no
+-----------------------------
+baseline directory: C:\TEST\testv\_json_3d_20251014_163924_idx01
+Heel position correction: 0
+Center XY movement magnification: 30
+Center Z moving magnification: 0
+Smoothness: 1
+Movement thinning amount: 0.5
+Rotation thinning angle: 3
+INFO:applications.pos2vmd_multi:トレースモデル: born\animasa_miku_born.csv
+INFO:applications.pos2vmd_multi:開始フレームインデックス: 0
+INFO:applications.pos2vmd_multi:傾きモーション読み込み開始 上半身2: False
+INFO:applications.pos2vmd_multi:角度計算開始
+INFO:applications.pos2vmd_multi:センター計算開始
+INFO:applications.pos2vmd_multi:IK計算開始
+INFO:applications.pos2vmd_multi:円滑化開始
+INFO:applications.pos2vmd_multi:間引き開始
+INFO:applications.pos2vmd_multi:間引き VMD出力開始
+INFO:applications.pos2vmd_multi:間引き VMDファイル出力完了: C:\TEST\testv\_json_3d_20251014_163924_idx01/animasa_miku_born_20251014_170017_depthなし_h0.0_z0.0_d1_s1_p0.5_r3.0_reduce.vmd
+(C:\ai1) C:\TEST\OpenMMD 1.0\VMD-3d-pose-baseline-multi-master>

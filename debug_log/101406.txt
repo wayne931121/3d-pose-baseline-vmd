@@ -1,0 +1,46 @@
+Active code page: 65001
+
+(C:\ai1) C:\TEST\OpenMMD 1.0\3d-pose-baseline-vmd>set USE_LIBUV=0
+
+(C:\ai1) C:\TEST\OpenMMD 1.0\3d-pose-baseline-vmd>set KMP_DUPLICATE_LIB_OK=TRUE
+
+(C:\ai1) C:\TEST\OpenMMD 1.0\3d-pose-baseline-vmd>set PERSON_IDX=1
+
+(C:\ai1) C:\TEST\OpenMMD 1.0\3d-pose-baseline-vmd>set IS_DEBUG=warn
+
+(C:\ai1) C:\TEST\OpenMMD 1.0\3d-pose-baseline-vmd>set VERBOSE=1
+
+(C:\ai1) C:\TEST\OpenMMD 1.0\3d-pose-baseline-vmd>set OPENPOSE_JSON=C:\TEST\testv\_json
+
+(C:\ai1) C:\TEST\OpenMMD 1.0\3d-pose-baseline-vmd>python src/openpose_3dpose_sandbox_vmd.py --camera_frame --residual --batch_norm --dropout 0.5 --max_norm --evaluateActionWise --use_sh --epochs 200 --load 4874200 --gif_fps 30 --verbose 1 --openpose C:\TEST\testv\_json --person_idx 1
+2025-10-14 17:27:11.946316: W tensorflow/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'cudart64_110.dll'; dlerror: cudart64_110.dll not found
+2025-10-14 17:27:11.946678: I tensorflow/stream_executor/cuda/cudart_stub.cc:29] Ignore above cudart dlerror if you do not have a GPU set up on your machine.
+experiments\All\dropout_0.5\epochs_200\lr_0.001\residual\depth_2\ls1024\bs64\np\maxnorm\batch_normalization\use_stacked_hourglass\predict_17
+A subdirectory or file -p already exists.
+Error occurred while processing: -p.
+A subdirectory or file experiments\All\dropout_0.5\epochs_200\lr_0.001\residual\depth_2\ls1024\bs64\np\maxnorm\batch_normalization\use_stacked_hourglass\predict_17\log already exists.
+Error occurred while processing: experiments\All\dropout_0.5\epochs_200\lr_0.001\residual\depth_2\ls1024\bs64\np\maxnorm\batch_normalization\use_stacked_hourglass\predict_17\log.
+2025-10-14 17:27:15.505972: W tensorflow/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'cudart64_110.dll'; dlerror: cudart64_110.dll not found
+2025-10-14 17:27:15.506578: W tensorflow/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'cublas64_11.dll'; dlerror: cublas64_11.dll not found
+2025-10-14 17:27:15.506982: W tensorflow/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'cublasLt64_11.dll'; dlerror: cublasLt64_11.dll not found
+2025-10-14 17:27:15.507399: W tensorflow/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'cufft64_10.dll'; dlerror: cufft64_10.dll not found
+2025-10-14 17:27:15.557460: W tensorflow/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'cusparse64_11.dll'; dlerror: cusparse64_11.dll not found
+2025-10-14 17:27:15.558326: W tensorflow/core/common_runtime/gpu/gpu_device.cc:1934] Cannot dlopen some GPU libraries. Please make sure the missing libraries mentioned above are installed properly if you would like to use GPU. Follow the guide at https://www.tensorflow.org/install/gpu for how to download and setup the required libraries for your platform.
+Skipping registering GPU devices...
+Traceback (most recent call last):
+  File "C:\TEST\OpenMMD 1.0\3d-pose-baseline-vmd\src\openpose_3dpose_sandbox_vmd.py", line 532, in <module>
+    tf.app.run()
+  File "C:\ai1\lib\site-packages\tensorflow\python\platform\app.py", line 36, in run
+    _run(main=main, argv=argv, flags_parser=_parse_flags_tolerate_undef)
+  File "C:\ai1\lib\site-packages\absl\app.py", line 316, in run
+    _run_main(main, args)
+  File "C:\ai1\lib\site-packages\absl\app.py", line 261, in _run_main
+    sys.exit(main(argv))
+  File "C:\TEST\OpenMMD 1.0\3d-pose-baseline-vmd\src\openpose_3dpose_sandbox_vmd.py", line 322, in main
+    smoothed = read_openpose_json(now_str, idx, subdir)
+  File "C:\TEST\OpenMMD 1.0\3d-pose-baseline-vmd\src\openpose_3dpose_sandbox_vmd.py", line 223, in read_openpose_json
+    forward += cache[frame+neighbor]
+KeyError: 1030
+
+(C:\ai1) C:\TEST\OpenMMD 1.0\3d-pose-baseline-vmd>pause
+Press any key to continue . . .

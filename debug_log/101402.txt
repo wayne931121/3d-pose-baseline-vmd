@@ -1,0 +1,34 @@
+Active code page: 65001
+
+(C:\ai1) C:\TEST\OpenMMD 1.0\3d-pose-baseline-vmd>set USE_LIBUV=0
+
+(C:\ai1) C:\TEST\OpenMMD 1.0\3d-pose-baseline-vmd>set KMP_DUPLICATE_LIB_OK=TRUE
+
+(C:\ai1) C:\TEST\OpenMMD 1.0\3d-pose-baseline-vmd>set PERSON_IDX=1
+
+(C:\ai1) C:\TEST\OpenMMD 1.0\3d-pose-baseline-vmd>set IS_DEBUG=warn
+
+(C:\ai1) C:\TEST\OpenMMD 1.0\3d-pose-baseline-vmd>set VERBOSE=1
+
+(C:\ai1) C:\TEST\OpenMMD 1.0\3d-pose-baseline-vmd>python src/openpose_3dpose_sandbox_vmd.py --camera_frame --residual --batch_norm --dropout 0.5 --max_norm --evaluateActionWise --use_sh --epochs 200 --load 4874200 --gif_fps 30 --verbose 1 --openpose C:\TEST\testv\_json --person_idx 1
+2025-10-14 16:11:21.964533: W tensorflow/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'cudart64_110.dll'; dlerror: cudart64_110.dll not found
+2025-10-14 16:11:21.964628: I tensorflow/stream_executor/cuda/cudart_stub.cc:29] Ignore above cudart dlerror if you do not have a GPU set up on your machine.
+experiments\All\dropout_0.5\epochs_200\lr_0.001\residual\depth_2\ls1024\bs64\np\maxnorm\batch_normalization\use_stacked_hourglass\predict_17
+A subdirectory or file -p already exists.
+Error occurred while processing: -p.
+A subdirectory or file experiments\All\dropout_0.5\epochs_200\lr_0.001\residual\depth_2\ls1024\bs64\np\maxnorm\batch_normalization\use_stacked_hourglass\predict_17\log already exists.
+Error occurred while processing: experiments\All\dropout_0.5\epochs_200\lr_0.001\residual\depth_2\ls1024\bs64\np\maxnorm\batch_normalization\use_stacked_hourglass\predict_17\log.
+2025-10-14 16:11:24.445022: W tensorflow/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'cudart64_110.dll'; dlerror: cudart64_110.dll not found
+2025-10-14 16:11:24.445612: W tensorflow/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'cublas64_11.dll'; dlerror: cublas64_11.dll not found
+2025-10-14 16:11:24.446082: W tensorflow/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'cublasLt64_11.dll'; dlerror: cublasLt64_11.dll not found
+2025-10-14 16:11:24.446548: W tensorflow/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'cufft64_10.dll'; dlerror: cufft64_10.dll not found
+2025-10-14 16:11:24.495677: W tensorflow/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'cusparse64_11.dll'; dlerror: cusparse64_11.dll not found
+2025-10-14 16:11:24.496672: W tensorflow/core/common_runtime/gpu/gpu_device.cc:1934] Cannot dlopen some GPU libraries. Please make sure the missing libraries mentioned above are installed properly if you would like to use GPU. Follow the guide at https://www.tensorflow.org/install/gpu for how to download and setup the required libraries for your platform.
+Skipping registering GPU devices...
+$cdebug-20251014-161124: print(n, past_xy)
+name 'n' is not defined
+$cdebug-20251014-161133: print(past_xy)
+[401.889, 541.448, 384.521, 618.243, 332.083, 611.248, 314.55, 702.049, 283.253, 771.942, 440.28, 621.713, 457.658, 709.099, 457.876, 792.911, 380.989, 792.754, 349.568, 792.672, 346.167, 921.874, 349.705, 956.86, 415.844, 792.819, 405.203, 935.77, 398.386, 1054.58, 387.964, 527.532, 408.963, 534.432, 373.797, 541.477, 429.734, 544.943, 398.365, 1099.95, 409.012, 1096.38, 387.982, 1065.04, 349.401, 995.213, 335.623, 988.344, 360.033, 953.3]
+$cdebug-20251014-161139: print(smoothed)
+{}
+$cdebug-20251014-161230:
