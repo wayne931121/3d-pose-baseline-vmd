@@ -1,4 +1,4 @@
-Warning: to success run the code, I used 5 hour to debug. but when I debug at 20251013, I just "guess" what is this code doing and modify the error lines.
+Warning: to success run the code, I used 5 hour to debug. but when I debug (at 20251013), I just "guess" what is this code doing and modify the error lines.
 
 so if some code went error or it is not the originally meaning, you can modify by yourself.
 
