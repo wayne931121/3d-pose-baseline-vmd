@@ -33,6 +33,14 @@ https://github.com/wayne931121/3d-pose-baseline-vmd/blob/master/environment.yml
  - CUDA 12.1 device with cudnn (installed and setted up env path)
  - NVIDIA GeForce RTX 4050 (6GB, installed driver)
 
+# Download h36m
+
+See: http://vision.imar.ro/human3.6m/description.php
+
+or
+
+See: https://github.com/anibali/h36m-fetch?tab=readme-ov-file#usage
+
 # Train (create model)
 
 See: https://github.com/ArashHosseini/3d-pose-baseline
