@@ -6,7 +6,7 @@ so if some code went error or it is not the originally meaning, you can modify b
 
 what I modify:
 
-https://github.com/wayne931121/3d-pose-baseline-vmd/blob/master/src/openpose_3dpose_sandbox_vmd.py#L110
+https://github.com/wayne931121/3d-pose-baseline-vmd/blob/master/src/openpose_3dpose_sandbox_vmd.py#L123
 
 and so on...
 
