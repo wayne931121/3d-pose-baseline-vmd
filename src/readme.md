@@ -12,7 +12,7 @@ and so on...
 
 # Notice
 
-You should use only ansi code (english) in both path and filename, or it may cause error (tensorflow file writer).
+You should use only ansi encoding (english) in both path and filename, or it may cause error (tensorflow file writer).
 
 # Conclusion
 
