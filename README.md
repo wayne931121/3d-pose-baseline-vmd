@@ -56,6 +56,11 @@ See: https://github.com/ArashHosseini/3d-pose-baseline
 
 For more details, read: https://github.com/wayne931121/3d-pose-baseline-vmd/blob/master/src/predict_3dpose.py
 
+the model will store like this: 
+```
+experiments\All\dropout_0.5\epochs_1\lr_0.001\residual\depth_2\ls1024\bs64\np\maxnorm\batch_normalization\use_stacked_hourglass\predict_17checkpoint-24371.meta
+```
+
 ### Example:
 train
 ```
