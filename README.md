@@ -19,6 +19,12 @@ debug at: https://github.com/wayne931121/3d-pose-baseline-vmd/tree/master/src
 
 https://github.com/wayne931121/3d-pose-baseline-vmd/blob/master/environment.yml
 
+## Key Points
+
+- tensorflow and some other relation packages version
+- matplotlib version
+- numpy version
+
 # MY DEVICE INFO
 
  - Windows 11
