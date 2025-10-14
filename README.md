@@ -11,7 +11,7 @@ It has many bug.
 
 Because It not tell me the correct packages version he used. 
 
-I used 5 hours to debug.
+I used 10 hours to debug.
 
 debug at: https://github.com/wayne931121/3d-pose-baseline-vmd/tree/master/src
 
