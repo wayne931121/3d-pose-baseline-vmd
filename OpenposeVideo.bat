@@ -1,5 +1,7 @@
 chcp 65001
 
+REM ! THIS FILE ORIGINALLY FROM https://github.com/peterljq/OpenMMD/blob/master/OpenPose-Video.bat
+
 @echo on
 
 
@@ -137,5 +139,6 @@ echo Openpose analysis finished.
 echo Next step: using 3d-pose-baseline-vmd to process the JSON files.
 
 echo %OUTPUT_JSON_DIR%
+
 
 pause
