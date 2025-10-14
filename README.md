@@ -56,6 +56,16 @@ See: https://github.com/ArashHosseini/3d-pose-baseline
 
 For more details, read: https://github.com/wayne931121/3d-pose-baseline-vmd/blob/master/src/predict_3dpose.py
 
+### Example:
+train
+```
+python src/predict_3dpose.py --camera_frame --residual --batch_norm --dropout 0.5 --max_norm --evaluateActionWise --use_sh --epochs 1
+```
+use
+```
+python src/openpose_3dpose_sandbox_vmd.py --camera_frame --residual --batch_norm --dropout 0.5 --max_norm --evaluateActionWise --use_sh --epochs 1 --load 24371 --gif_fps 30 --verbose 1 --openpose C:\TEST\testv\_json --person_idx 1
+```
+
 # Also See:
 
 https://github.com/CMU-Perceptual-Computing-Lab/openpose
