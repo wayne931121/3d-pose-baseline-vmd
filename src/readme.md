@@ -18,7 +18,7 @@ and so on...
 
 # Debug Log
 
-See: https://github.com/wayne931121/3d-pose-baseline-vmd/tree/master/debug_log
+https://github.com/wayne931121/3d-pose-baseline-vmd/tree/master/debug_log
 
 # Conclusion
 
