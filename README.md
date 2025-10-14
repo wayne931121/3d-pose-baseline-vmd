@@ -23,7 +23,7 @@ https://github.com/wayne931121/3d-pose-baseline-vmd/blob/master/environment.yml
 
  - Windows 11
  - Miniforge Conda
- - CUDA 12.1 device with cudnn (installed end setted up env path)
+ - CUDA 12.1 device with cudnn (installed and setted up env path)
  - NVIDIA GeForce RTX 4050 (6GB, installed driver)
 
 # Also See:
