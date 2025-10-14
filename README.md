@@ -21,6 +21,7 @@ https://github.com/wayne931121/3d-pose-baseline-vmd/blob/master/environment.yml
 
 ## Key Points
 
+- python and pip version (or you may install or build package failed)
 - tensorflow and some other relation packages version
 - matplotlib version
 - numpy version
