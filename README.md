@@ -33,7 +33,7 @@ https://github.com/wayne931121/3d-pose-baseline-vmd/blob/master/environment.yml
  - CUDA 12.1 device with cudnn (installed and setted up env path)
  - NVIDIA GeForce RTX 4050 (6GB, installed driver)
 
-# Train
+# Train (create model)
 
 See: https://github.com/ArashHosseini/3d-pose-baseline
 
