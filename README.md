@@ -44,9 +44,9 @@ Put files like this
 3d-pose-baseline-vmd/
    data/
        h36m/
-           S1
+           S1/
            ...
-   src
+   src/
    ...
 ```
 
