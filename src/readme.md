@@ -14,7 +14,7 @@ and so on...
 
 - You should use only ansi encoding (english) in both path and filename, or it may cause error (in tensorflow file writer).
 - If you file in C://, you should use administrator mode to run your script, or you don't have write permission.
-- If you env in C://, you should use administrator mode to install or build packages, or you don't have write permission.
+- If you env in C://, you should use administrator mode to install and build packages, or you don't have write permission.
 
 # Conclusion
 
