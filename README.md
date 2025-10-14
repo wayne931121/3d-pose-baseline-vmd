@@ -39,6 +39,17 @@ See: http://vision.imar.ro/human3.6m/description.php
 
 See: https://github.com/anibali/h36m-fetch?tab=readme-ov-file#usage
 
+Put files like this
+```
+3d-pose-baseline-vmd/
+   data/
+       h36m/
+           S1
+           ...
+   src
+   ...
+```
+
 # Train (create model)
 
 See: https://github.com/ArashHosseini/3d-pose-baseline
