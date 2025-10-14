@@ -16,6 +16,10 @@ and so on...
 - If you file in C://, you should use administrator mode to run your script, or you don't have write permission.
 - If you env in C://, you should use administrator mode to install and build packages, or you don't have write permission.
 
+# Debug Log
+
+See: https://github.com/wayne931121/3d-pose-baseline-vmd/tree/master/debug_log
+
 # Conclusion
 
 Finally the code success run and I success get vmd file
