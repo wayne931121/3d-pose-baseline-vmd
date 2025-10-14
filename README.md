@@ -7,7 +7,7 @@ forked from https://github.com/miu200521358/3d-pose-baseline-vmd
 
 # Notice
 
-If you just want to find a free tool which can convert video to vmd file, here is a better repositorie:
+If you just want to find a free tool which can convert video to vmd file, here is a better and easier repositorie:
 
 https://github.com/wayne931121/VMD-Lifting
 
