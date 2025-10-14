@@ -36,10 +36,10 @@ def show_anim_curves(anim_dict, _plt):
     for o in range(0,36,2):
         x = val[:,o]
         y = val[:,o+1]
-        logger.debug("x")
-        logger.debug(x)
-        logger.debug("y")
-        logger.debug(y)
+        # logger.debug("x")
+        # logger.debug(x)
+        # logger.debug("y")
+        # logger.debug(y)
         _plt.plot(x, 'r--', linewidth=0.2)
         _plt.plot(y, 'g', linewidth=0.2)
     return _plt
@@ -59,22 +59,36 @@ def read_openpose_json(now_str, idx, subdir, smooth=True, *args):
     _past_tmp_points = []
     _past_tmp_data = []
     _tmp_data = []
+    empty = 0
     ### extract x,y and ignore confidence score
     for file_name in json_files:
-        logger.debug("reading {0}".format(file_name))
+        # logger.debug("reading {0}".format(file_name))
         _file = os.path.join(openpose_output_dir, file_name)
         if not os.path.isfile(_file): raise Exception("No file found!!, {0}".format(_file))
         data = json.load(open(_file))
-
+        
+        
+        
+        
         # 12桁の数字文字列から、フレームINDEX取得
         frame_indx = re.findall("(\d{12})", file_name)
+        
+        #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        if not data["people"]:
+            empty-=1
+            continue
         
         if int(frame_indx[0]) <= 0:
             # 最初のフレームはそのまま登録するため、INDEXをそのまま指定
             _tmp_data = data["people"][idx]["pose_keypoints_2d"]
         else:
+            #import cdebug
+            #print(155555555555555555555555555555555)
+            #cdebug.main(locals())
             # 前フレームと一番近い人物データを採用する
-            past_xy = cache[int(frame_indx[0]) - 1]
+            ##########!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            #print(int(frame_indx[0]),empty, cache)
+            past_xy = cache[int(frame_indx[0]) - 1 + empty]
 
             # データが取れていたら、そのINDEX数分配列を生成。取れてなかったら、とりあえずINDEX分確保
             target_num = len(data["people"]) if len(data["people"]) >= idx + 1 else idx + 1
@@ -82,17 +96,17 @@ def read_openpose_json(now_str, idx, subdir, smooth=True, *args):
             _tmp_points = [[0 for i in range(target_num)] for j in range(36)]
             #_tmp_points = [[0 for i in range(target_num)] for j in range(len(_tmp_data))]
             
-            # logger.debug("_past_tmp_points")
-            # logger.debug(_past_tmp_points)
+            # # logger.debug("_past_tmp_points")
+            # # logger.debug(_past_tmp_points)
 
             for _data_idx in range(idx + 1):
                 if len(data["people"]) - 1 < _data_idx:
                     for o in range(len(_past_tmp_points)):
                         # 人物データが取れていない場合、とりあえず前回のをコピっとく
-                        # logger.debug("o={0}, _data_idx={1}".format(o, _data_idx))
-                        # logger.debug(_tmp_points)
-                        # logger.debug(_tmp_points[o][_data_idx])
-                        # logger.debug(_past_tmp_points[o][_data_idx])
+                        # # logger.debug("o={0}, _data_idx={1}".format(o, _data_idx))
+                        # # logger.debug(_tmp_points)
+                        # # logger.debug(_tmp_points[o][_data_idx])
+                        # # logger.debug(_past_tmp_points[o][_data_idx])
                         _tmp_points[o][_data_idx] = _past_tmp_points[o][_data_idx]
                     
                     # データも前回のを引き継ぐ
@@ -107,14 +121,13 @@ def read_openpose_json(now_str, idx, subdir, smooth=True, *args):
                     #import cdebug
                     #cdebug.main(locals())
                     #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!edit by wayne931121 20251013
-                    #!!!!Here use 36 because line 82, in my test, len(_tmp_data) is 72 which cause error index out of range.
                     for o in range(0,36,3):
                     #for o in range(0,len(_tmp_data),3):
-                        # logger.debug("o: {0}".format(o))
-                        # logger.debug("len(_tmp_points): {0}".format(len(_tmp_points)))
-                        # logger.debug("len(_tmp_points[o]): {0}".format(len(_tmp_points[n])))
-                        # logger.debug("_tmp_data[o]")
-                        # logger.debug(_tmp_data[o])
+                        # # logger.debug("o: {0}".format(o))
+                        # # logger.debug("len(_tmp_points): {0}".format(len(_tmp_points)))
+                        # # logger.debug("len(_tmp_points[o]): {0}".format(len(_tmp_points[n])))
+                        # # logger.debug("_tmp_data[o]")
+                        # # logger.debug(_tmp_data[o])
                         _tmp_points[n][_data_idx] = _tmp_data[o]
                         n += 1
                         _tmp_points[n][_data_idx] = _tmp_data[o+1]
@@ -124,11 +137,21 @@ def read_openpose_json(now_str, idx, subdir, smooth=True, *args):
                     _past_tmp_data = _tmp_data            
                     _past_tmp_points = _tmp_points
 
-            # logger.debug("_tmp_points")
-            # logger.debug(_tmp_points)
+            # # logger.debug("_tmp_points")
+            # # logger.debug(_tmp_points)
 
             # 各INDEXの前回と最も近い値を持つINDEXを取得
             nearest_idx_list = []
+            #import cdebug
+            #ls = globals()
+            #ls.update(locals())
+            #cdebug.main(ls)
+            #if past_xy==[]:
+            #    return {}
+            # exit if no smoothing
+            #if not past_xy:
+            #    # return frames cache incl. 18 joints (x,y)
+            #    return cache
             for n, plist in enumerate(_tmp_points):
                 nearest_idx_list.append(get_nearest_idx(plist, past_xy[n]))
 
@@ -136,7 +159,7 @@ def read_openpose_json(now_str, idx, subdir, smooth=True, *args):
             
             # 最も多くヒットしたINDEXを処理対象とする
             target_idx = most_common_idx[0][0]
-            logger.debug("target_idx={0}".format(target_idx))
+            # logger.debug("target_idx={0}".format(target_idx))
 
         _data = _tmp_data
         
@@ -146,9 +169,10 @@ def read_openpose_json(now_str, idx, subdir, smooth=True, *args):
             xy.append(_data[o])
             xy.append(_data[o+1])
 
-        logger.debug("found {0} for frame {1}".format(xy, str(int(frame_indx[0]))))
+        # logger.debug("found {0} for frame {1}".format(xy, str(int(frame_indx[0]))))
         #add xy to frame
-        cache[int(frame_indx[0])] = xy
+        #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!edit by wayne931121 20251014
+        cache[int(frame_indx[0])+empty] = xy
     plt.figure(1)
     drop_curves_plot = show_anim_curves(cache, plt)
     pngName = '{0}/dirty_plot.png'.format(subdir)
@@ -157,10 +181,12 @@ def read_openpose_json(now_str, idx, subdir, smooth=True, *args):
     # exit if no smoothing
     if not smooth:
         # return frames cache incl. 18 joints (x,y)
+        #print(222222222222222222222222222222222222222222222,cache)
         return cache
 
     if len(json_files) == 1:
         logger.info("found single json file")
+        #print(333333333333333333333333333333333333333333333,cache)
         # return frames cache incl. 18 joints (x,y) on single image\json
         return cache
 
@@ -183,36 +209,57 @@ def read_openpose_json(now_str, idx, subdir, smooth=True, *args):
         _len = len(xy) # 36
 
         # create array of parallel frames (-3<n>3)
+        # for neighbor in range(1,4):
+            # # first n frames, get value of xy in postive lookahead frames(current frame + 3)
+            # if frame in first_frame_block:
+                # # print ("first_frame_block: len(cache)={0}, frame={1}, neighbor={2}".format(len(cache), frame, neighbor))
+                # forward += cache[frame+neighbor]
+            # # last n frames, get value of xy in negative lookahead frames(current frame - 3)
+            # elif frame in last_frame_block:
+                # # print ("last_frame_block: len(cache)={0}, frame={1}, neighbor={2}".format(len(cache), frame, neighbor))
+                # back += cache[frame-neighbor]
+            # else:
+                # # between frames, get value of xy in bi-directional frames(current frame -+ 3)     
+                # forward += cache[frame+neighbor]
+                # back += cache[frame-neighbor]
+        #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         for neighbor in range(1,4):
-            # first n frames, get value of xy in postive lookahead frames(current frame + 3)
-            if frame in first_frame_block:
-                # print ("first_frame_block: len(cache)={0}, frame={1}, neighbor={2}".format(len(cache), frame, neighbor))
+            try:
                 forward += cache[frame+neighbor]
-            # last n frames, get value of xy in negative lookahead frames(current frame - 3)
-            elif frame in last_frame_block:
-                # print ("last_frame_block: len(cache)={0}, frame={1}, neighbor={2}".format(len(cache), frame, neighbor))
+            except:
+                pass
+            try:
                 back += cache[frame-neighbor]
-            else:
-                # between frames, get value of xy in bi-directional frames(current frame -+ 3)     
-                forward += cache[frame+neighbor]
-                back += cache[frame-neighbor]
-
+            except:
+                pass
         # build frame range vector 
         frames_joint_median = [0 for i in range(_len)]
         # more info about mapping in src/data_utils.py
         # for each 18joints*x,y  (x1,y1,x2,y2,...)~36 
+        # for x in range(0,_len,2):
+            # # set x and y
+            # y = x+1
+            # if frame in first_frame_block:
+                # # get vector of n frames forward for x and y, incl. current frame
+                # x_v = [xy[x], forward[x], forward[x+_len], forward[x+_len*2]]
+                # y_v = [xy[y], forward[y], forward[y+_len], forward[y+_len*2]]
+            # elif frame in last_frame_block:
+                # # get vector of n frames back for x and y, incl. current frame
+                # x_v =[xy[x], back[x], back[x+_len], back[x+_len*2]]
+                # y_v =[xy[y], back[y], back[y+_len], back[y+_len*2]]
+            # else:
+                # # get vector of n frames forward/back for x and y, incl. current frame
+                # # median value calc: find neighbor frames joint value and sorted them, use numpy median module
+                # # frame[x1,y1,[x2,y2],..]frame[x1,y1,[x2,y2],...], frame[x1,y1,[x2,y2],..]
+                # #                 ^---------------------|-------------------------^
+                # x_v =[xy[x], forward[x], forward[x+_len], forward[x+_len*2],
+                        # back[x], back[x+_len], back[x+_len*2]]
+                # y_v =[xy[y], forward[y], forward[y+_len], forward[y+_len*2],
+                        # back[y], back[y+_len], back[y+_len*2]]
         for x in range(0,_len,2):
             # set x and y
             y = x+1
-            if frame in first_frame_block:
-                # get vector of n frames forward for x and y, incl. current frame
-                x_v = [xy[x], forward[x], forward[x+_len], forward[x+_len*2]]
-                y_v = [xy[y], forward[y], forward[y+_len], forward[y+_len*2]]
-            elif frame in last_frame_block:
-                # get vector of n frames back for x and y, incl. current frame
-                x_v =[xy[x], back[x], back[x+_len], back[x+_len*2]]
-                y_v =[xy[y], back[y], back[y+_len], back[y+_len*2]]
-            else:
+            try:
                 # get vector of n frames forward/back for x and y, incl. current frame
                 # median value calc: find neighbor frames joint value and sorted them, use numpy median module
                 # frame[x1,y1,[x2,y2],..]frame[x1,y1,[x2,y2],...], frame[x1,y1,[x2,y2],..]
@@ -221,7 +268,15 @@ def read_openpose_json(now_str, idx, subdir, smooth=True, *args):
                         back[x], back[x+_len], back[x+_len*2]]
                 y_v =[xy[y], forward[y], forward[y+_len], forward[y+_len*2],
                         back[y], back[y+_len], back[y+_len*2]]
-
+            except:
+                try:
+                    # get vector of n frames back for x and y, incl. current frame
+                    x_v =[xy[x], back[x], back[x+_len], back[x+_len*2]]
+                    y_v =[xy[y], back[y], back[y+_len], back[y+_len*2]]
+                except:
+                    # get vector of n frames forward for x and y, incl. current frame
+                    x_v = [xy[x], forward[x], forward[x+_len], forward[x+_len*2]]
+                    y_v = [xy[y], forward[y], forward[y+_len], forward[y+_len*2]]
             # get median of vector
             x_med = np.median(sorted(x_v))
             y_med = np.median(sorted(y_v))
@@ -239,8 +294,8 @@ def read_openpose_json(now_str, idx, subdir, smooth=True, *args):
                     # get y from last frame
                     y_med = smoothed[frame-1][y]
 
-            #logger.debug("old X {0} sorted neighbor {1} new X {2}".format(xy[x],sorted(x_v), x_med))
-            #logger.debug("old Y {0} sorted neighbor {1} new Y {2}".format(xy[y],sorted(y_v), y_med))
+            ## logger.debug("old X {0} sorted neighbor {1} new X {2}".format(xy[x],sorted(x_v), x_med))
+            ## logger.debug("old Y {0} sorted neighbor {1} new Y {2}".format(xy[y],sorted(y_v), y_med))
 
             # build new array of joint x and y value
             frames_joint_median[x] = x_med 
@@ -250,6 +305,11 @@ def read_openpose_json(now_str, idx, subdir, smooth=True, *args):
         smoothed[frame] = frames_joint_median
 
     # return frames cache incl. smooth 18 joints (x,y)
+    #print(111111111111111111111111111111111111111111,smoothed)
+    #import cdebug
+    #ls = globals()
+    #ls.update(locals())
+    #cdebug.main(ls)
     return smoothed
 
 def get_nearest_idx(target_list, num):
@@ -260,8 +320,8 @@ def get_nearest_idx(target_list, num):
     @return 対象値に最も近い値のINDEX
     """
 
-    # logger.debug(target_list)
-    # logger.debug(num)
+    # # logger.debug(target_list)
+    # # logger.debug(num)
 
     # リスト要素と対象値の差分を計算し最小値のインデックスを取得
     idx = np.abs(np.asarray(target_list) - num).argmin()
@@ -272,7 +332,7 @@ def main(_):
     # 出力用日付
     now_str = "{0:%Y%m%d_%H%M%S}".format(datetime.datetime.now())
 
-    logger.debug("FLAGS.person_idx={0}".format(FLAGS.person_idx))
+    # logger.debug("FLAGS.person_idx={0}".format(FLAGS.person_idx))
 
     # 日付+indexディレクトリ作成
     subdir = '{0}/{1}_3d_{2}_idx{3:02d}'.format(os.path.dirname(openpose_output_dir), os.path.basename(openpose_output_dir), now_str, FLAGS.person_idx)
@@ -290,7 +350,7 @@ def main(_):
     idx = FLAGS.person_idx - 1
     smoothed = read_openpose_json(now_str, idx, subdir)
     logger.info("reading and smoothing done. start feeding 3d-pose-baseline")
-    logger.debug(smoothed)
+    # logger.debug(smoothed)
     plt.figure(2)
     smooth_curves_plot = show_anim_curves(smoothed, plt)
     pngName = subdir + '/smooth_plot.png'
@@ -316,10 +376,19 @@ def main(_):
             allow_soft_placement=True)) as sess:
         #plt.figure(3)
         batch_size = 128
+        #import cdebug
+        #cdebug.main(locals())
         model = create_model(sess, actions, batch_size)
+        #import cdebug
+        #cdebug.main(locals())
+        lee = len(smoothed.items())
         for n, (frame, xy) in enumerate(smoothed.items()):
-            logger.info("calc idx {0}, frame {1}".format(idx, frame))
-
+            
+            #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!edit by wayne931121 20251014
+            #logger.info("calc idx {0}, frame {1}".format(idx, frame))
+            
+            print("\r",frame,"/",lee,end="")
+            
             # map list into np array  
             joints_array = np.zeros((1, 36))
             joints_array[0] = [0 for i in range(36)]
@@ -348,8 +417,8 @@ def main(_):
             spine_x = enc_in[0][24]
             spine_y = enc_in[0][25]
 
-            # logger.debug("enc_in - 1")
-            # logger.debug(enc_in)
+            # # logger.debug("enc_in - 1")
+            # # logger.debug(enc_in)
 
             enc_in = enc_in[:, dim_to_use_2d]
             mu = data_mean_2d[dim_to_use_2d]
@@ -372,8 +441,8 @@ def main(_):
             max = 0
             min = 10000
 
-            # logger.debug("enc_in - 2")
-            # logger.debug(enc_in)
+            # # logger.debug("enc_in - 2")
+            # # logger.debug(enc_in)
 
             for i in range(poses3d.shape[0]):
                 for j in range(32):
@@ -394,13 +463,14 @@ def main(_):
             # Plot 3d predictions
             ax = plt.subplot(gs1[subplot_idx - 1], projection='3d')
             ax.view_init(18, 280)    
-            logger.debug(np.min(poses3d))
+            #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            ## logger.debug(np.min(poses3d))
             if np.min(poses3d) < -1000 and before_pose is not None:
                 poses3d = before_pose
 
             p3d = poses3d
-            # logger.debug("poses3d")
-            # logger.debug(poses3d)
+            # # logger.debug("poses3d")
+            # # logger.debug(poses3d)
 
             if level[FLAGS.verbose] == logging.INFO:
                 viz.show3Dpose(p3d, ax, lcolor="#9b59b6", rcolor="#2ecc71")
@@ -450,33 +520,35 @@ def write_pos_data(channels, ax, posf):
     for i in np.arange( len(I) ):
         x, y, z = [np.array( [vals[I[i], j], vals[J[i], j]] ) for j in range(3)]
         # for j in range(3):
-        #     logger.debug("i={0}, j={1}, [vals[I[i], j]={2}, vals[J[i], j]]={3}".format(str(i), str(j), str(vals[I[i], j]), str(vals[J[i], j])))
+        #     # logger.debug("i={0}, j={1}, [vals[I[i], j]={2}, vals[J[i], j]]={3}".format(str(i), str(j), str(vals[I[i], j]), str(vals[J[i], j])))
 
         # 始点がまだ出力されていない場合、出力
         if I[i] not in outputed:
             # 0: index, 1: x軸, 2:Y軸, 3:Z軸
-            logger.debug("I -> x={0}, y={1}, z={2}".format(x[0], y[0], z[0]))    
+            #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            ## logger.debug("I -> x={0}, y={1}, z={2}".format(x[0], y[0], z[0]))    
             posf.write(str(I[i]) + " "+ str(x[0]) +" "+ str(y[0]) +" "+ str(z[0]) + ", ")
             outputed.append(I[i])
 
         # 終点がまだ出力されていない場合、出力
         if J[i] not in outputed:
-            logger.debug("J -> x={0}, y={1}, z={2}".format(x[1], y[1], z[1]))    
+            #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            ## logger.debug("J -> x={0}, y={1}, z={2}".format(x[1], y[1], z[1]))    
             posf.write(str(J[i]) + " "+ str(x[1]) +" "+ str(y[1]) +" "+ str(z[1]) + ", ")
             outputed.append(J[i])
 
         # xyz.append([x, y, z])
 
         # lines = ax.plot(x, y, z)
-        # logger.debug("lines")
-        # logger.debug(dir(lines))
+        # # logger.debug("lines")
+        # # logger.debug(dir(lines))
         # for l in lines:
-        #     logger.debug("l.get_data: ")
-        #     logger.debug(l.get_data())
-        #     logger.debug("l.get_data orig: ")
-        #     logger.debug(l.get_data(True))
-        #     logger.debug("l.get_path: ")
-        #     logger.debug(l.get_path())
+        #     # logger.debug("l.get_data: ")
+        #     # logger.debug(l.get_data())
+        #     # logger.debug("l.get_data orig: ")
+        #     # logger.debug(l.get_data(True))
+        #     # logger.debug("l.get_path: ")
+        #     # logger.debug(l.get_path())
 
     #終わったら改行
     posf.write("\n")
