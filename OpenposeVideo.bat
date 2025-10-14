@@ -1,6 +1,7 @@
 chcp 65001
 
 REM ! THIS FILE ORIGINALLY FROM https://github.com/peterljq/OpenMMD/blob/master/OpenPose-Video.bat
+REM ! THIS FILE MODIFY BY WAYNE931121 20251013
 
 @echo on
 
@@ -142,3 +143,4 @@ echo %OUTPUT_JSON_DIR%
 
 
 pause
+
