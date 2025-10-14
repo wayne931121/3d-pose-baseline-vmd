@@ -107,6 +107,7 @@ def read_openpose_json(now_str, idx, subdir, smooth=True, *args):
                     #import cdebug
                     #cdebug.main(locals())
                     #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!edit by wayne931121 20251013
+                    #!!!!Here use 36 because line 82, in my test, len(_tmp_data) is 72 which cause error index out of range.
                     for o in range(0,36,3):
                     #for o in range(0,len(_tmp_data),3):
                         # logger.debug("o: {0}".format(o))
