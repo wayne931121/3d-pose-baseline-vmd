@@ -4,6 +4,13 @@ Official Website: https://github.com/una-dinosauria/3d-pose-baseline
 
 # wayne931121/3d-pose-baseline-vmd
 forked from https://github.com/miu200521358/3d-pose-baseline-vmd
+
+# Notice
+
+If you just want to find a free tool which can convert video to vmd file, here is a better repositorie:
+
+https://github.com/wayne931121/VMD-Lifting
+
 # Debugger wayne931121
 3d-pose-baseline-vmd debug by wayne931121 at 20251014. 
 
