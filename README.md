@@ -37,8 +37,6 @@ https://github.com/wayne931121/3d-pose-baseline-vmd/blob/master/environment.yml
 
 See: http://vision.imar.ro/human3.6m/description.php
 
-or
-
 See: https://github.com/anibali/h36m-fetch?tab=readme-ov-file#usage
 
 # Train (create model)
