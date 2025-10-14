@@ -10,6 +10,10 @@ https://github.com/wayne931121/3d-pose-baseline-vmd/blob/master/src/openpose_3dp
 
 and so on...
 
+# Notice
+
+You should only use ansi code (english) in both path and filename, or it may cause error (tensorflow file writer).
+
 # Conclusion
 
 Finally the code success run and I success get vmd file
