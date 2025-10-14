@@ -33,6 +33,12 @@ https://github.com/wayne931121/3d-pose-baseline-vmd/blob/master/environment.yml
  - CUDA 12.1 device with cudnn (installed and setted up env path)
  - NVIDIA GeForce RTX 4050 (6GB, installed driver)
 
+# Train
+
+See: https://github.com/ArashHosseini/3d-pose-baseline
+
+For more details, read: https://github.com/wayne931121/3d-pose-baseline-vmd/blob/master/src/predict_3dpose.py
+
 # Also See:
 
 https://github.com/CMU-Perceptual-Computing-Lab/openpose
