@@ -16,6 +16,20 @@ and so on...
 - If you file in C://, you should use administrator mode to run your script, or you don't have write permission.
 - If you env in C://, you should use administrator mode to install and build packages, or you don't have write permission.
 
+# MY DEBUG TOOLS
+
+## Cdebug
+- a python_debug_repl tool, write by me (wayne931121) .
+- https://pypi.org/project/cdebug/
+
+## Isdebug
+- a debug tool when pip install requirements.txt, write by me (wayne931121) .
+- https://pypi.org/project/isdebug/
+
+## Wfind
+- a useful tool for find file or folder, when I use the script not written by me, and I don't know where the output is, I directly use this code to search C disk, I am very satisfied with this code because it is more faster than windows file exploer.
+- https://pypi.org/project/wfind/
+
 # Debug Log
 
 https://github.com/wayne931121/3d-pose-baseline-vmd/tree/master/debug_log
